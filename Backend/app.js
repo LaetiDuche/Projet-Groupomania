@@ -5,8 +5,11 @@ const { Sequelize } = require('sequelize');
 
 require('dotenv').config({path: './.env'});
 
-//Connection à la base de donnée Mysql
+//Importations des routes
+const userRoute = require('./routes/userRoute');
 
+
+//Connection à la base de donnée
 const sequelize = new Sequelize(process.env.NAME_DB, process.env.USERNAME_DB, process.env.PASS_DB , {
   dialect: process.env.DIALECT_DB,
   host: 'localhost',
@@ -15,7 +18,7 @@ const sequelize = new Sequelize(process.env.NAME_DB, process.env.USERNAME_DB, pr
 
  try {
    sequelize.authenticate();
-  console.log('Connecté à la base de données MySQL!');
+  console.log('Connecté à la base de données !');
 } catch (error) {
   console.error('Impossible de se connecter, erreur suivante :', error);
 }
@@ -30,8 +33,8 @@ app.use((req, res, next) => {
 });
 
 
-
 app.use(express.json());
+app.use('/api/auth', userRoute);
 
 module.exports = sequelize;
 module.exports = app;
