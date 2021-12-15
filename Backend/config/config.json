@@ -1,22 +1,22 @@
 {
   "development": {
-    "username": "root",
-    "password": "laetimysql",
-    "database": "database_development_groupomania",
+    "username": "USERNAME_DB",
+    "password": "PASS_DB",
+    "database": "database_development_NAME_DB",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": "laetimysql",
-    "database": "database_test_groupomania",
+    "username": "USERNAME_DB",
+    "password": "PASS_DB",
+    "database": "database_test_NAME_DB",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": "laetimysql",
-    "database": "database_production_groupomania",
+    "username": "USERNAME_DB",
+    "password": "PASS_DB",
+    "database": "database_production_NAME_DB",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
