@@ -7,16 +7,16 @@
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": "laetimysql",
-    "database": "database_test_groupomania",
+    "username": "USERNAME_DB",
+    "password": "PASS_DB",
+    "database": "database_test_NAME_DB",
     "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": "laetimysql",
-    "database": "database_production_groupomania",
+    "username": "USERNAME_DB",
+    "password": "PASS_DB",
+    "database": "database_production_NAME_DB",
     "host": "localhost",
     "dialect": "mysql"
   }
