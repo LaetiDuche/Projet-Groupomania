@@ -4,8 +4,8 @@ const app = express();
 const path = require('path');
 const { Sequelize } = require('sequelize');
 
-/* require('dotenv').config({path: './.env'}); */
-const env = require('dotenv').load(); 
+require('dotenv').config({path: './.env'});
+
 
 //Importations des routes
 const userRoute = require('./routes/userRoute');
