@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Gif.init({
-    idUSERS: DataTypes.INTEGER,
+   
     title: DataTypes.STRING,
     gifs: DataTypes.STRING,
     attachment: DataTypes.STRING,
