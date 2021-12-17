@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   Gif.init({
    
     title: DataTypes.STRING,
-    gifs: DataTypes.STRING,
+    content: DataTypes.STRING,
     attachment: DataTypes.STRING,
     likes: DataTypes.INTEGER
   }, {
