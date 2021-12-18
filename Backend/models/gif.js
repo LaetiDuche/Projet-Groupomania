@@ -1,7 +1,7 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Gif extends Model {
     /**
@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Gif.init({
-   
     title: DataTypes.STRING,
     content: DataTypes.STRING,
     attachment: DataTypes.STRING,
