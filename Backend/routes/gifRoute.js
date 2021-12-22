@@ -3,11 +3,14 @@
 const express = require('express');
 const router = express.Router();
 
-const gifsCtrl = require('../controllers/gifsCtrl');
-const auth = require('../utils/jwt.utils');
+const gifCtrl = require('../controllers/gifsCtrl');
+const likeCtrl = require('../controllers/likes');
+const auth = require('../utils/jwt');
 const multer = require('../utils/multer_config')
 
-router.post('/gifs/new/', auth, multer, gifsCtrl.createGif);
-router.get('/gifs/', auth, multer, gifsCtrl.listGifs);
+router.get('/',  gifCtrl.getAllGifs);
+router.post('/', multer,  gifCtrl.createGif);
+router.delete('/', gifCtrl.deleteGif);
+router.post('/:id/like', likeCtrl.likeGif);
 
 module.exports = router;
