@@ -2,13 +2,15 @@
 
 const express = require('express');
 const router = express.Router();
-const userCtrl = require('../controllers/usersCtrl');
-const auth = require('../utils/jwt.utils');
+const userCtrl = require('../controllers/users');
+/* const auth = require('../utils/jwt.utils'); */
 
-router.post('/users/register',userCtrl.register);
-router.post('/users/login', userCtrl.login);
-router.get('/users/:id', auth, userCtrl.getUserProfile);
-router.put('/users/:id', auth, userCtrl.updateUserProfile);
-router.delete('/users/:id', auth, userCtrl.deleteUserProfile);
+router.post('/signup',userCtrl.signup);
+router.post('/login', userCtrl.login);
+router.get('/:id', userCtrl.getUserProfile);
+router.put('/:id', userCtrl.updateUserProfile);
+router.delete('/', userCtrl.deleteUserProfile);
+
+
 
 module.exports = router;
