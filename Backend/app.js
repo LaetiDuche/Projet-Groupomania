@@ -10,7 +10,7 @@ const helmet = require('helmet');
 //Importations des routes
 const userRoute = require('./routes/userRoute');
 const gifRoute = require('./routes/gifRoute');
-const likeRoute = require('./routes/likeRoute');
+/* const likeRoute = require('./routes/likeRoute'); */
 
 //Connection à la base de donnée
 const sequelize = new Sequelize(process.env.NAME_DB, process.env.USERNAME_DB, process.env.PASS_DB , {
@@ -51,8 +51,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.use('/api/gifs', gifRoute);
-app.use('/api/likes', likeRoute);
-app.use('/api/jwt.utils', userRoute);
+/* app.use('/api/likes', likeRoute); */
+app.use('/api/jwt', userRoute);
 
-module.exports = sequelize;
+/* module.exports = sequelize; */
 module.exports = app;
