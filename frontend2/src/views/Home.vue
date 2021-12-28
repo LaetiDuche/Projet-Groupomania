@@ -1,18 +1,37 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header />
+    <div class="wellcome mx-md-5 mx-3 my-3 my-md-5">
+      <p class="pt-5 text-center mx-2 fw-bold fs-2">
+        Bienvenue sur votre réseau social !
+      </p>
+      <img
+        class="logo mx-auto d-block"
+        src="../assets/icon-above-font.png"
+        alt="logo" height="150" 
+      />
+    </div>
+    <div></div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Header from "@/components/Header.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
-  }
-}
+    Header,
+  },
+};
 </script>
+
+<style scoped>
+.home {
+  background-color: #fdf7f7;
+}
+.wellcome {
+  box-shadow: 2px 2px 12px lightgrey;
+}
+</style>
