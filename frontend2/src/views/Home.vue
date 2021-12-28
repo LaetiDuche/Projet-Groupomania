@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <Header />
-    <div class="wellcome mx-md-5 mx-3 my-3 my-md-5">
+    <div class="wellcome mx-md-5 mx-3 my-3 my-md-5 rounded">
       <p class="pt-5 text-center mx-2 fw-bold fs-2">
-        Bienvenue sur votre réseau social !
+        Bienvenue sur le forum !
       </p>
       <img
         class="logo mx-auto d-block"
@@ -11,7 +11,6 @@
         alt="logo" height="150" 
       />
     </div>
-    <div></div>
   </div>
 </template>
 
@@ -27,7 +26,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang='scss'>
 .home {
   background-color: #fdf7f7;
 }

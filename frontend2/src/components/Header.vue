@@ -2,7 +2,7 @@
   <div>
     <b-navbar class="d-flex p-2">
       <b-navbar-brand class="mx-auto">
-        <img src="../assets/icon-left-font.png" alt="logo" height="48" width="190"/>
+        <router-link to="/"><img src="../assets/icon-left-font.png" alt="logo" height="48" width="190"/></router-link>
       </b-navbar-brand>
 
       <b-navbar-nav class="m-auto ms-md-auto my-auto ">
@@ -31,6 +31,7 @@ div {
 a {
   text-decoration: none;
   color: black;
+  font-weight: bold;
 }
 a:hover{
   color:#fd2d01;
