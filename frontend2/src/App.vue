@@ -10,7 +10,7 @@
 
 <style lang="scss">
 body{
-  background-color: #fdf7f7;
+  background-color: #eeeeee;
   font-family:'Quicksand';
 }
 </style>

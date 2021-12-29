@@ -28,7 +28,7 @@ export default {
 
 <style scoped lang='scss'>
 .home {
-  background-color: #fdf7f7;
+  background-color: #eeeeee;
 }
 .wellcome {
   box-shadow: 2px 2px 12px lightgrey;

@@ -6,31 +6,31 @@
       <h3 class="text-center mb-3">S'inscrire sur le forum</h3>
 
       <!--Formulaire d'inscription-->
-      <form class="row g-2" action="">
+      <form class="row g-2">
         <!--Username-->
-        <div>
+        <div class="form-group">
           <label classe='form-label mb-0' for="username">Nom utilisateur</label>
-          <input class="form-control" v-model="username" type="text" required>
+          <input class="form-control" id="username" v-model="username" type="text" required>
           <span class="d-block"></span>
         </div>
 
         <!--Email-->
-        <div>
+        <div class="form-group">
           <label classe='form-label mb-0' for="email">Email</label>
-          <input class="form-control" v-model="email" type="email" required>
+          <input class="form-control" id="email" v-model="email" type="email" required>
           <span class="d-block"></span>
         </div>
 
         <!--Password-->
-        <div>
+        <div class="form-group">
           <label classe='form-label mb-0' for="password">Mot de passe</label>
-          <input class="form-control" v-model="password" type="password" required>
+          <input class="form-control" id="password" v-model="password" type="password" required>
           <span class="d-block"></span>
         </div>
 
         <!--Bouton validation-->
         <div class="text-center">
-          <button class="btn btn-danger shadow-sm" type="submit" value="inscription">M'inscrire</button>
+          <button class="btn btn-danger shadow-sm" v-on:click="btnSignup" type="submit" value="inscription">M'inscrire</button>
         </div>
       </form>
     </div>
@@ -45,28 +45,45 @@ export default {
   components: {
     Header,
   },
-  computed: {
-    state() {
-      return this.username.length >= 4;
-    },
-    invalidFeedback() {
-      if (this.username.length > 0) {
-        return "Enter at least 4 characters.";
-      }
-      return "Please enter something.";
-    },
-  },
   data() {
     return {
       username: "",
-    };
+      email: "",
+      password: ""
+    }
   },
-};
+  methods: {
+    btnSignup(){
+      const postFormulaire = JSON.stringify({username: this.username, email: this.email, password: this.password});
+      async function signUp(postFormulaire){
+        try{
+          const response = await fetch('http://localhost:8080/api/user/signup', {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json'
+            },
+            body: postFormulaire,
+          });
+          if (response.ok){
+            const responseId = await response.json();
+            console.log(responseId);
+          }else{
+            console.error('Retour du serveur: ', response.status);
+          }
+        }catch(e){
+          console.log(e);
+        }
+      }
+      signUp(postFormulaire)
+      window.location.href = 'http://localhost:8080/signup#/login';
+    }
+  }
+}
 </script>
 
 <style lang='scss'>
 .signup {
-  background-color: #fdf7f7;
+  background-color: #eeeeee;
 }
 h3{
   font-weight: bold;
