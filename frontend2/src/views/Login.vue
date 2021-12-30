@@ -1,8 +1,14 @@
+<!--
+Page pour se connecter au forum
+Formulaire de connection (email, mot de passe)
+Création de la session utilisateur sécurisée et redirection sur le forum
+-->
+
 <template>
   <div class="login">
     <Header />
 
-    <div class="formulaire col-sm-8 col-md-6  mx-3 d-block  mx-sm-auto  mx-md-auto  mt-4  p-3 rounded">
+    <div class="formulaire shadow col-sm-8 col-md-6  mx-3 d-block  mx-sm-auto  mx-md-auto  mt-4  p-3 rounded">
       <h3 class="text-center mb-3">Se connecter</h3>
 
       <!--Formulaire de connexion-->
@@ -48,6 +54,7 @@ export default {
   },
    methods: {
     btnLogin(){
+      /*Vérification des données utilisateur */
       const postFormulaire = JSON.stringify({email: this.email, password: this.password});
       async function logIn(dataUserConnexion){
         try{
@@ -58,12 +65,15 @@ export default {
             },
             body: dataUserConnexion,
           });
+          /*Ouverture de la session utilisateur sécurisée*/ 
           if (response.ok){
             const responseId = await response.json();
             localStorage.setItem('Id', responseId.userId);
             localStorage.setItem('token', responseId.token);
             localStorage.setItem('isAdmin', responseId.isAdmin);
             localStorage.setItem('email', responseId.email);
+
+            /*Redirection sur le forum*/ 
             location.replace(location.origin + "/signup#/forum");
           }else{
             console.error('Retour du serveur: ', response.status);
@@ -86,7 +96,7 @@ h3{
   font-weight: bold;
 }
 .formulaire {
-  box-shadow: 2px 2px 12px lightgrey;
+  background-color: #ffffff;
 }
 .btn-danger{
   border-color: #fd2d01;

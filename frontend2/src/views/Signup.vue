@@ -1,11 +1,17 @@
+<!--
+Formulaire pour s'inscrire sur le forum (username, email, mot de passe)
+Envoie des données au server
+Redirection sur la page de connection
+-->
+
 <template>
   <div class="signup">
     <Header />
 
+     <!--Formulaire d'inscription-->
     <div class="formulaire shadow col-sm-8 col-md-6  mx-3 d-block  mx-sm-auto  mx-md-auto  mt-4  p-3 rounded">
       <h3 class="text-center mb-3">S'inscrire sur le forum</h3>
 
-      <!--Formulaire d'inscription-->
       <form class="row g-2">
         <!--Username-->
         <div class="form-group">
@@ -45,6 +51,8 @@ export default {
   components: {
     Header,
   },
+
+  /*Envoie des données utilsateur au server*/ 
   data() {
     return {
       username: "",
@@ -56,6 +64,7 @@ export default {
     btnSignup(){
       const postFormulaire = JSON.stringify({username: this.username, email: this.email, password: this.password});
       async function signUp(postFormulaire){
+ 
         try{
           const response = await fetch('http://localhost:8080/api/user/signup', {
             method: 'POST',
@@ -75,6 +84,8 @@ export default {
         }
       }
       signUp(postFormulaire)
+
+      /*Renvoie l'utilisateur sur la page de connection*/ 
       window.location.href = 'http://localhost:8080/signup#/login';
     }
   }
