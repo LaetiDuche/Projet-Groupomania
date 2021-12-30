@@ -2,7 +2,7 @@
   <div class="signup">
     <Header />
 
-    <div class="formulaire col-sm-8 col-md-6  mx-3 d-block  mx-sm-auto  mx-md-auto  mt-4  p-3 rounded">
+    <div class="formulaire shadow col-sm-8 col-md-6  mx-3 d-block  mx-sm-auto  mx-md-auto  mt-4  p-3 rounded">
       <h3 class="text-center mb-3">S'inscrire sur le forum</h3>
 
       <!--Formulaire d'inscription-->
@@ -88,9 +88,6 @@ export default {
 h3{
   font-weight: bold;
 }
-.formulaire {
-  box-shadow: 2px 2px 12px lightgrey;
-}
 .btn-danger{
   border-color: #fd2d01;
   background-color: #fd2d01;
@@ -100,7 +97,6 @@ h3{
       background-color: #ffffff;
       color: #fd2d01;
       border-color: #fd2d01;
-    }
-      
+    }  
 }
 </style>
