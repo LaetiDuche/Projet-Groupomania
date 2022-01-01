@@ -30,13 +30,13 @@ Redirection sur la page de connection
         <!--Password-->
         <div class="form-group">
           <label classe='form-label mb-0' for="password">Mot de passe</label>
-          <input class="form-control" id="password" v-model="password" type="password" required>
+          <input class="form-control" autocomplete="on" id="password" v-model="password" type="password" required>
           <span class="d-block"></span>
         </div>
 
         <!--Bouton validation-->
         <div class="text-center">
-          <button class="btn btn-danger shadow-sm" v-on:click="btnSignup" type="submit" value="inscription">M'inscrire</button>
+          <button class="btn btn-sm mt-2 btn-danger shadow-sm" v-on:click="btnSignup" type="submit" value="inscription">M'inscrire</button>
         </div>
       </form>
     </div>
@@ -55,9 +55,9 @@ export default {
   /*Envoie des données utilsateur au server*/ 
   data() {
     return {
-      username: "",
-      email: "",
-      password: ""
+      username: '',
+      email:'',
+      password: ''
     }
   },
   methods: {
@@ -66,10 +66,10 @@ export default {
       async function signUp(postFormulaire){
  
         try{
-          const response = await fetch('http://localhost:8080/api/user/signup', {
+          const response =  await fetch("http://localhost:8080/api/user/signup", {
             method: 'POST',
             headers: {
-              'Content-type': 'application/json'
+              'content-type': 'application/json'
             },
             body: postFormulaire,
           });
@@ -83,10 +83,10 @@ export default {
           console.log(e);
         }
       }
-      signUp(postFormulaire)
+      signUp(postFormulaire);
 
       /*Renvoie l'utilisateur sur la page de connection*/ 
-      window.location.href = 'http://localhost:8080/signup#/login';
+      window.location.href = "http://localhost:8080/signup#/login";
     }
   }
 }

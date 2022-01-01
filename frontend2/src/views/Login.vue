@@ -30,7 +30,7 @@ Création de la session utilisateur sécurisée et redirection sur le forum
 
         <!--Bouton connexion-->
         <div class="text-center">
-          <button class="btn btn-danger shadow-sm" v-on:click="btnLogin" type="submit" value="connexion">Me connecter</button>
+          <button class="btn btn-sm mt-2 btn-danger shadow-sm" v-on:click="btnLogin" type="submit" value="connexion">Me connecter</button>
         </div>
       </form>
     </div>
@@ -98,7 +98,7 @@ h3{
 .formulaire {
   background-color: #ffffff;
 }
-.btn-danger{
+/* .btn-danger{
   border-color: #fd2d01;
   background-color: #fd2d01;
   color: #ffffff;
@@ -108,5 +108,5 @@ h3{
       color: #fd2d01;
       border-color: #fd2d01;
     }
-}
+} */
 </style>

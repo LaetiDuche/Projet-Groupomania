@@ -13,20 +13,20 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
       </div>
 
       <!--Si l'utilisateur n'est pas connecté-->
-      <div class="m-auto ms-md-auto my-auto" v-if="id === null">
-        <b-nav-item class="mx-3 justify-content-lg-end" href="#">
+      <div class="m-auto d-flex my-auto" v-if="id === null">
+        <nav class="mx-3 " href="#">
           <router-link to="/signup">S'inscrire</router-link>
-        </b-nav-item>
+        </nav>
 
-        <b-nav-item class="mx-2 justify-content-lg-end" href="#">
+        <nav class="mx-2 " href="#">
           <router-link to="/login">Se connecter </router-link>
-        </b-nav-item>
+        </nav>
       </div>
 
       <!--Si l'utilisateur est connecté-->
-      <div class="dropdown dropstart ">
+      <div class="dropdown dropstart m-auto">
         <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle" height="22" alt="Avatar" loading="lazy"/>
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle" height="40" alt="Avatar" loading="lazy"/>
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li>
@@ -97,7 +97,7 @@ a {
   }
 }
 @media screen and (max-width: 440px) and (min-width: 320px) {
-  b-navbar {
+  .navbar {
     display: flex;
     flex-wrap: wrap;
     margin: 0;
