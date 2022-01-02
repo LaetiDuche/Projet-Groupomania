@@ -8,7 +8,7 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
     <nav class="navbar d-flex p-2">
       <div class="mx-auto">
         <router-link to="/">
-          <img src="../assets/icon-left-font.png" alt="logo" height="48" width="190"/>
+          <img  src="../assets/icon-left-font.png" alt="logo" height="48" width="190"/>
         </router-link>
       </div>
 
@@ -24,9 +24,9 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
       </div>
 
       <!--Si l'utilisateur est connecté-->
-      <div class="dropdown dropstart m-auto">
+      <div class="dropdown dropstart m-auto">  <!--v-else-->
         <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle" height="40" alt="Avatar" loading="lazy"/>
+          <img id="preview" v-if="imagePreview" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle" height="40" alt="Avatar" loading="lazy"/><!--  :src="imagePreview"--> 
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li>
@@ -36,7 +36,7 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
             <router-link to="/forum" class="dropdown-item">Forum</router-link>
           </li>
           <li>
-            <a class="dropdown-item" href="#" v-on:click="logout">Se déconnecter</a>
+            <router-link to="/" class="dropdown-item" v-on:click="logout">Se déconnecter</router-link>
           </li>
         </ul>
       </div>
@@ -45,6 +45,7 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
 </template>
 
 <script>
+/* import Profil from '../views/Profil.vue' */
 export default {
   name: "Header",
 
@@ -52,6 +53,7 @@ export default {
   data() {
     return {
       id: "",
+      imagePreview: true,
     };
   },
   mounted() {
@@ -69,7 +71,7 @@ export default {
       localStorage.removeItem('isAdmin');
 
       /*Retour à la page Home*/ 
-      this.$router.push('http://localhost:8080/');
+      /* this.$router.push('http://localhost:8080/'); */
     }
   }
 };
