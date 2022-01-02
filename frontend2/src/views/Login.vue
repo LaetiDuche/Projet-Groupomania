@@ -6,7 +6,7 @@ Création de la session utilisateur sécurisée et redirection sur le forum
 
 <template>
   <div class="login">
-    <Header />
+    <!-- <Header /> -->
 
     <div class="formulaire shadow col-sm-8 col-md-6  mx-3 d-block  mx-sm-auto  mx-md-auto  mt-4  p-3 rounded">
       <h3 class="text-center mb-3">Se connecter</h3>
@@ -39,13 +39,13 @@ Création de la session utilisateur sécurisée et redirection sur le forum
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
+/* import Header from "@/components/Header.vue"; */
 
 export default {
   name: "Login",
-  components: {
+  /* components: {
     Header,
-  },
+  }, */
   data() {
     return {
       email: "",

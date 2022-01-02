@@ -1,6 +1,6 @@
 <template>
   <div class="forum">
-    <Header />
+    <!-- <Header /> -->
 
     <div class="formulaire  mx-auto col-10 mt-4 p-3 rounded-3 shadow">
 
@@ -29,13 +29,13 @@
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
+/* import Header from "@/components/Header.vue"; */
 
 export default {
   name: "Forum",
-  components: {
+  /* components: {
     Header,
-  },
+  }, */
 };
 </script>
 

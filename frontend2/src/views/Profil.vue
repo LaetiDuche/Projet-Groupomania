@@ -7,7 +7,7 @@ Affichage de toutes ses publications
 
 <template>
   <div class="profil">
-    <Header />
+    <!-- <Header /> -->
     <div
       class="profil-user mx-auto col-10 col-sm-8 col-md-8 mt-4 p-3 rounded-3 shadow">
       <div class="mx-auto d-flex flex-column">
@@ -76,12 +76,12 @@ Affichage de toutes ses publications
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
+/* import Header from "@/components/Header.vue"; */
 export default {
   name: "Profil",
-  components: {
+  /* components: {
     Header,
-  },
+  }, */
   /*Modification du username*/
   data() {
     return {

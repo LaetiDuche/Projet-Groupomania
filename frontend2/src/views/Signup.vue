@@ -6,7 +6,7 @@ Redirection sur la page de connection
 
 <template>
   <div class="signup">
-    <Header />
+    <!-- <Header /> -->
 
      <!--Formulaire d'inscription-->
     <div class="formulaire shadow col-sm-8 col-md-6  mx-3 d-block  mx-sm-auto  mx-md-auto  mt-4  p-3 rounded">
@@ -45,12 +45,12 @@ Redirection sur la page de connection
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
+/* import Header from "@/components/Header.vue"; */
 export default {
   name: "Signup",
-  components: {
+  /* components: {
     Header,
-  },
+  }, */
 
   /*Envoie des données utilsateur au server*/ 
   data() {

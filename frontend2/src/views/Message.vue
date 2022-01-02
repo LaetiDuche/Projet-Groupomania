@@ -1,6 +1,6 @@
 <template>
   <div class="message">
-    <Header />
+    <!-- <Header /> -->
 
     <div class="formulaire mx-auto col-10 mt-4 p-3 rounded-3 shadow">
       <h3 class="text-center mb-3">Créer un nouveau message !</h3>
@@ -74,12 +74,12 @@
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
+/* import Header from "@/components/Header.vue"; */
 export default {
   name: "Message",
-  components: {
+  /* components: {
     Header,
-  },
+  }, */
   data() {
     return {
       imagePreview: null,
