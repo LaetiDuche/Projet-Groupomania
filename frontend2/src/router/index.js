@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Profil from '../views/Profil.vue'
+import Forum from '../views/Forum.vue'
+import Message from '../views/Message.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +29,16 @@ const routes = [
     path: '/profil',
     name: 'Profil',
     component: Profil
+  },
+  {
+    path: '/forum',
+    name: 'Forum',
+    component: Forum
+  },
+  {
+    path: '/message',
+    name: 'Message',
+    component: Message
   },
   {
     path: '/about',
