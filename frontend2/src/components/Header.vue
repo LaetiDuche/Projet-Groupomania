@@ -24,28 +24,29 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
       </div>
 
       <!--Si l'utilisateur est connecté-->
-      <div class="dropdown dropstart m-auto">  <!--v-else-->
+      <div class="dropdown  dropstart m-auto" v-else>  
         <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
           <img id="preview" v-if="imagePreview" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle" height="40" alt="Avatar" loading="lazy"/><!--  :src="imagePreview"--> 
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li>
-            <router-link to="/profil" class="dropdown-item">Mon profil</router-link>
+            <router-link to="/profil" class="dropdown-item">Mon profil</router-link>            
           </li>
           <li>
             <router-link to="/forum" class="dropdown-item">Forum</router-link>
           </li>
           <li>
-            <router-link to="/" class="dropdown-item" v-on:click="logout">Se déconnecter</router-link>
+            <a href="" role="button" class="dropdown-item" v-on:click="logout">Se déconnecter</a>
           </li>
         </ul>
       </div>
+
     </nav>
   </header>
 </template>
 
 <script>
-/* import Profil from '../views/Profil.vue' */
+
 export default {
   name: "Header",
 
@@ -71,7 +72,7 @@ export default {
       localStorage.removeItem('isAdmin');
 
       /*Retour à la page Home*/ 
-      /* this.$router.push('http://localhost:8080/'); */
+      location.replace(location.origin + "/");
     }
   }
 };
