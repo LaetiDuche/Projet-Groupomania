@@ -3,13 +3,19 @@
 const express = require('express');
 const router = express.Router();
 const userCtrl = require('../controllers/users');
-/* const auth = require('../utils/jwt.utils'); */
+const multer = require('../utils/multer_config');
+const authJwt = require('../utils/jwt');
+/* const jwt = require('jsonwebtoken'); */
 
-router.post('/signup',userCtrl.signup);
+/*User*/ 
+router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
-router.get('/:id', userCtrl.getUserProfile);
-router.put('/:id', userCtrl.updateUserProfile);
-router.delete('/', userCtrl.deleteUserProfile);
+
+/*Profil user*/ 
+
+router.get('/:id', authJwt, userCtrl.getUserProfile);
+router.put('/:id',authJwt, multer, userCtrl.updateUserProfile);
+router.delete('/:id',authJwt,  userCtrl.deleteUserProfile);
 
 
 
