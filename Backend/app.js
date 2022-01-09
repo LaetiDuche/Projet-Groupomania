@@ -1,8 +1,10 @@
 const express = require('express');
-/* const { Server } = require('http'); */
+/* const { Server } = require('http');
+const mysql = require("mysql2"); */
 const app = express();
 const path = require('path');
 const { Sequelize } = require('sequelize');
+const cors = require('cors');
 
 require('dotenv').config({path: './.env'});
 const helmet = require('helmet');
@@ -30,10 +32,10 @@ const sequelize = new Sequelize(process.env.NAME_DB, process.env.USERNAME_DB, pr
 //Sécurisation des requetes multi origine 
 
 //TEST SERVER
-app.get('/', function(req, res){
+/* app.get('/', function(req, res){
   res.setHeader('Content-type', 'text/html');
   res.status(200).send('<h1>Bonjour sur mon server </h1>');
-});
+}); */
 
 //Sécurisation des requetes multi origine
 app.use((req, res, next) => {
@@ -42,7 +44,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
-
+app.use(cors());
 app.use(helmet());
 
 app.use('/gifs', express.static(path.join(__dirname, 'gifs')));
@@ -50,9 +52,9 @@ app.use('/gifs', express.static(path.join(__dirname, 'gifs')));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-app.use('/api/gifs', gifRoute);
+app.use('/api/forum', gifRoute);
 /* app.use('/api/likes', likeRoute); */
-app.use('/api/jwt', userRoute);
+app.use('/api/users', userRoute);
 
-/* module.exports = sequelize; */
+module.exports = sequelize;
 module.exports = app;
