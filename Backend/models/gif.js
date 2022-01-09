@@ -18,12 +18,22 @@ module.exports = (sequelize, DataTypes) => {
       })
     }
   };
-  Gif.init({
-    title: DataTypes.STRING,
-    content: DataTypes.STRING,
-    attachment: DataTypes.STRING,
-    likes: DataTypes.INTEGER
-  }, {
+  Gif.init(
+    {
+    /* userId: DataTypes.INTEGER, */
+    title: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    gifs: {
+      type: DataTypes.STRING,
+      
+    },
+
+   /*  content: DataTypes.STRING, */
+    /* likes: DataTypes.INTEGER */
+  }, 
+  {
     sequelize,
     modelName: 'Gif',
   });
