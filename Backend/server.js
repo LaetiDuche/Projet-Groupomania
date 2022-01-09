@@ -16,7 +16,7 @@ const normalizePort = val => {
 };
 
 //Utiliser le port donné ou sinon le port 8080
-const port = normalizePort(process.env.PORT || '8080');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 const errorHandler = error => {
