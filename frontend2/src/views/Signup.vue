@@ -6,13 +6,12 @@ Redirection sur la page de connection
 
 <template>
   <div class="signup">
-    <!-- <Header /> -->
 
      <!--Formulaire d'inscription-->
     <div class="formulaire shadow col-sm-8 col-md-6  mx-3 d-block  mx-sm-auto  mx-md-auto  mt-4  p-3 rounded">
       <h3 class="text-center mb-3">S'inscrire sur le forum</h3>
 
-      <form class="row g-2">
+      <form class="row g-2" @submit="SignUp">
         <!--Username-->
         <div class="form-group">
           <label classe='form-label mb-0' for="username">Nom utilisateur</label>
@@ -36,7 +35,7 @@ Redirection sur la page de connection
 
         <!--Bouton validation-->
         <div class="text-center">
-          <button class="btn btn-sm mt-2 btn-danger shadow-sm" v-on:click="btnSignup" type="submit" value="inscription">M'inscrire</button>
+          <button class="btn btn-sm mt-2 btn-danger shadow-sm"  type="submit" value="inscription">M'inscrire</button>
         </div>
       </form>
     </div>
@@ -45,28 +44,25 @@ Redirection sur la page de connection
 </template>
 
 <script>
-/* import Header from "@/components/Header.vue"; */
 export default {
   name: "Signup",
-  /* components: {
-    Header,
-  }, */
 
   /*Envoie des données utilsateur au server*/ 
   data() {
     return {
-      username: '',
-      email:'',
-      password: ''
-    }
+      username: "",
+      email: "",
+      password: "",
+    };
   },
   methods: {
-    btnSignup(){
-      const postFormulaire = JSON.stringify({username: this.username, email: this.email, password: this.password});
+    SignUp(){
+
+      const postFormulaire = JSON.stringify({username: this.username, email: this.email, password: this.password, isAdmin: this.isAdmin});
       async function signUp(postFormulaire){
  
         try{
-          const response =  await fetch("http://localhost:8080/api/user/signup", {
+          const response =  await fetch("http://localhost:3000/api/users/signup", {
             method: 'POST',
             headers: {
               'content-type': 'application/json'
@@ -80,7 +76,7 @@ export default {
             console.error('Retour du serveur: ', response.status);
           }
         }catch(e){
-          console.log(e);
+          /* console.log(e); */
         }
       }
       signUp(postFormulaire);
