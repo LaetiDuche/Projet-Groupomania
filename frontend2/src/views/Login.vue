@@ -6,7 +6,6 @@ Création de la session utilisateur sécurisée et redirection sur le forum
 
 <template>
   <div class="login">
-    <!-- <Header /> -->
 
     <div class="formulaire shadow col-sm-8 col-md-6  mx-3 d-block  mx-sm-auto  mx-md-auto  mt-4  p-3 rounded">
       <h3 class="text-center mb-3">Se connecter</h3>
@@ -39,13 +38,9 @@ Création de la session utilisateur sécurisée et redirection sur le forum
 </template>
 
 <script>
-/* import Header from "@/components/Header.vue"; */
-
 export default {
   name: "Login",
-  /* components: {
-    Header,
-  }, */
+
   data() {
     return {
       email: "",
@@ -58,7 +53,7 @@ export default {
       const postFormulaire = JSON.stringify({email: this.email, password: this.password});
       async function logIn(dataUserConnexion){
         try{
-          const response = await fetch('http://localhost:8080/api/user/login', {
+          const response = await fetch('http://localhost:3000/api/users/login', {
             method: 'POST',
             headers: {
               'Content-type': 'application/json'
@@ -74,12 +69,13 @@ export default {
             localStorage.setItem('email', responseId.email);
 
             /*Redirection sur le forum*/ 
+            /* this.$router.push("forum"); */
             location.replace(location.origin + "/signup#/forum");
           }else{
             console.error('Retour du serveur: ', response.status);
           }
         }catch(e){
-          console.log(e);
+          /* console.log(e); */
         }
       }
       logIn(postFormulaire);
@@ -98,15 +94,5 @@ h3{
 .formulaire {
   background-color: #ffffff;
 }
-/* .btn-danger{
-  border-color: #fd2d01;
-  background-color: #fd2d01;
-  color: #ffffff;
-  font-weight: bold;
-    &:hover{
-      background-color: #ffffff;
-      color: #fd2d01;
-      border-color: #fd2d01;
-    }
-} */
+
 </style>
