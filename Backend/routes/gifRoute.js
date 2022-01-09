@@ -8,9 +8,9 @@ const likeCtrl = require('../controllers/likes');
 const auth = require('../utils/jwt');
 const multer = require('../utils/multer_config')
 
-router.get('/',  gifCtrl.getAllGifs);
-router.post('/', multer,  gifCtrl.createGif);
-router.delete('/', gifCtrl.deleteGif);
-router.post('/:id/like', likeCtrl.likeGif);
+router.get('/', auth,  gifCtrl.getAllGifs);
+router.post('/', auth , multer,  gifCtrl.createGif);
+router.delete('/', auth,  gifCtrl.deleteGif);
+router.post('/:id/like', auth, likeCtrl.likeGif);
 
 module.exports = router;
