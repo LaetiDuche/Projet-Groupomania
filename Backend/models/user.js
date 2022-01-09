@@ -15,12 +15,28 @@ module.exports = (sequelize, DataTypes) => {
       models.User.hasMany(models.Gif);
     }
   };
-  User.init({
-    email: DataTypes.STRING,
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-    isAdmin: DataTypes.BOOLEAN
-  }, {
+  User.init(
+    {
+    email: {
+      type: DataTypes.STRING,
+      unique: true, 
+      allowNull: false
+    },
+    username:{
+      type:  DataTypes.STRING,
+      allowNull: false
+    },
+    password:{
+      type: DataTypes.STRING,
+      allowNull: false
+    }, 
+    isAdmin:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+  }, 
+  {
     sequelize,
     modelName: 'User',
   });
