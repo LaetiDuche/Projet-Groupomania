@@ -20,18 +20,12 @@ module.exports = (sequelize, DataTypes) => {
   };
   Gif.init(
     {
-    /* userId: DataTypes.INTEGER, */
-    title: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    gifs: {
-      type: DataTypes.STRING,
-      
-    },
-
-   /*  content: DataTypes.STRING, */
-    /* likes: DataTypes.INTEGER */
+    id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    userId: DataTypes.INTEGER,
+    title: {type: DataTypes.STRING, allowNull: false},
+    gifs: {type: DataTypes.STRING, allowNull: false},
+    likes: DataTypes.INTEGER,
+    usersLiked: DataTypes.STRING,
   }, 
   {
     sequelize,
