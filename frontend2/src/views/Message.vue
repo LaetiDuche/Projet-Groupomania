@@ -5,7 +5,7 @@
     <div class="formulaire mx-auto col-10 mt-4 p-3 rounded-3 shadow">
       <h3 class="text-center mb-3">Créer un nouveau message !</h3>
 
-      <form class="row g-2" enctype='multipart/form-data'>
+      <form class="row g-2" action="#" method="post">
 
         <!--Titre du message-->
         <div class="form-group">
@@ -24,7 +24,7 @@
         <div class="form-group mx-auto">
 
           <!--Bouton télécharger un fichier-->
-          <button class="btn btn-sm mt-2 btn-danger shadow-sm"  @click="btnUpload">
+          <div class="btn btn-sm mt-2 btn-danger shadow-sm"  @click="btnUpload">
             <label classe="label form-label mb-0 " for="gif">Ajouter un gif</label>
             <input
               class="input form-control d-none"
@@ -35,18 +35,18 @@
               name="gif"
               accept="image/*"
               required
-              
             />
-          </button>
+            
+          </div>
 
           <!--Visualisation du fichier -->
-          <div  class="mx-auto text-center mt-2 border border-1 p-1"  id="gif-preview">
+          <div  class="d-flex mx-auto text-center mt-2  p-1"  id="gif-preview">
             <img
               v-if="imagePreview"
               :src="imagePreview"
               id="preview"
-              alt="image"
-              width="200"
+              alt="Responsive image"
+              class="img-fluid mx-auto"
             />
           </div>
           
@@ -58,7 +58,7 @@
             class="btn btn-sm mt-2 btn-danger shadow-sm"
             type="submit"
             value="creer"
-            v-on:click="btnPublier"
+            @click.prevent="btnPublier"
           >
             Publier
           </button>
@@ -90,26 +90,27 @@ export default {
     gifSelected(event) {
       this.imagePost = event.target.files[0];
       this.imagePreview = URL.createObjectURL(this.imagePost);
-
-
     },
     btnPublier() {
       /* const userId = parseInt(localStorage.getItem("Id"));*/
-      const dataMessage = JSON.stringify({title: this.title, gif: this.imagePreview}); 
-      async function gifForm (dataMessage){
+      const formData = new FormData()
+      console.log(this.imagePost)
+      formData.append('gif', this.imagePost)
+      //const dataMessage = JSON.stringify({title: this.title, gif: this.imagePreview}); 
+      async function gifForm (formData){
  
         try{
-          const response =  await fetch("http://localhost:3000/api/forum" , {
+          const response =  await fetch("http://localhost:3000/api/forum",  {
             method: 'POST',
             headers: {
-              'content-type': 'application/json',
-              'authorization': 'bearer ' + localStorage.getItem('token')
+              //'Content-Type': 'multipart/form-data',
+              'Authorization': 'bearer ' + localStorage.getItem('token')
             },
-            body: dataMessage,
+            body: formData,
           });
           if (response.ok){
             const responseId = await response.json();
-            window.location.href = " http://localhost:8080/signup/forum#";
+            window.location.href = " http://localhost:8080/signup#/forum";
             console.log(responseId);
           }else{
             console.error('Retour du serveur: ', response.status);
@@ -118,10 +119,8 @@ export default {
           /* console.log(e); */
         }
       }
-      gifForm(dataMessage);
+      gifForm(formData);
 
-      /*Renvoie l'utilisateur sur la page de connection*/ 
-      /* window.location.href = "http://localhost:8080/signup#/login"; */
     }
 
   },
