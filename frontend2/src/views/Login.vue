@@ -67,10 +67,12 @@ export default {
             localStorage.setItem('token', responseId.token);
             localStorage.setItem('isAdmin', responseId.isAdmin);
             localStorage.setItem('email', responseId.email);
+            localStorage.setItem('username', responseId.username);
+            localStorage.setItem('photo', responseId.photo);
 
             /*Redirection sur le forum*/ 
             /* this.$router.push("forum"); */
-            location.replace(location.origin + "/signup#/forum");
+            location.replace(location.origin + "#/forum");
           }else{
             console.error('Retour du serveur: ', response.status);
           }
