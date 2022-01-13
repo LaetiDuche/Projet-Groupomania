@@ -2,15 +2,22 @@
 
 const multer = require('multer');
 
-//Extensions des images acceptées
+//Extensions des images  acceptées
 const MIME_TYPES = {
-  'gifs/gif': 'gif',
+  'images/gifs/gif': 'gif',
+  'images/gifs/png': 'png',
+  'images/gifs/jpg': 'jpg',
+  'images/gifs/jpeg': 'jpeg',
+  'images/profil/png': 'png',
+  'images/profil/jpg': 'jpg',
+  'images/profil/jpeg': 'jpeg'
 };
 
-//Enregistrement des images dans le dossier
+//Enregistrement des images
 const storage = multer.diskStorage({
   destination: (req, file, callback) =>{
-    callback(null, 'gifs')
+    callback(null, 'images/gifs')
+    callback(null, 'images/profil')
   },
   filename: (req, file, callback) =>{
     const name = file.originalname.split(' ').join('_');
@@ -20,3 +27,6 @@ const storage = multer.diskStorage({
 });
 
 module.exports = multer({storage}).single('gif');
+module.exports = multer({storage}).single('photo');
+
+
