@@ -10,7 +10,7 @@ const multer = require('../utils/multer_config')
 
 router.get('/', auth,  gifCtrl.getAllGifs);
 router.post('/', auth , multer,  gifCtrl.createGif);
-router.delete('/', auth,  gifCtrl.deleteGif);
+router.delete('/:id', auth,  gifCtrl.deleteGif);
 router.post('/:id/like', auth, likeCtrl.likeGif);
 
 module.exports = router;
