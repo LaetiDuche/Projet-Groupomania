@@ -1,4 +1,4 @@
-const Gif = require('../models');
+const Gif = require('../models').Like;
 /* const jwtUtils = require('../utils/jwt'); */
 
 exports.likeGif = (req, res, next) => {
