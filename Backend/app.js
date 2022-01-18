@@ -1,7 +1,7 @@
 const express = require('express');
 /* const { Server } = require('http');
 const mysql = require("mysql2"); */
-const app = express();
+
 const path = require('path');
 const { Sequelize } = require('sequelize');
 const cors = require('cors');
@@ -13,6 +13,8 @@ const helmet = require('helmet');
 const userRoute = require('./routes/userRoute');
 const gifRoute = require('./routes/gifRoute');
 /* const likeRoute = require('./routes/likeRoute'); */
+
+const app = express();
 
 //Connection à la base de donnée
 const sequelize = new Sequelize(process.env.NAME_DB, process.env.USERNAME_DB, process.env.PASS_DB , {
@@ -37,6 +39,7 @@ const sequelize = new Sequelize(process.env.NAME_DB, process.env.USERNAME_DB, pr
   res.status(200).send('<h1>Bonjour sur mon server </h1>');
 }); */
 
+app.use(cors());
 //Sécurisation des requetes multi origine
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -44,13 +47,14 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
-app.use(cors());
+
 app.use(helmet());
 
 app.use('/gifs', express.static(path.join(__dirname, 'gifs')));
+app.use('/profil', express.static(path.join(__dirname, 'profil')));
 
-app.use(express.urlencoded({extended: true}));
-app.use(express.json());
+app.use(express.urlencoded({extended: true,limit: '70mb', parameterLimit: 700000 }));
+app.use(express.json({ limit: '70mb' }));
 
 app.use('/api/forum', gifRoute);
 /* app.use('/api/likes', likeRoute); */
