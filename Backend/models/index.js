@@ -20,7 +20,7 @@ if (config.use_env_variable) {
 const sequelize = new Sequelize(process.env.NAME_DB, process.env.USERNAME_DB, process.env.PASS_DB , {
   dialect: process.env.DIALECT_DB,
   host: 'localhost',
-  logging: false,
+ /*  logging: false, */
  });
 fs
   .readdirSync(__dirname)
@@ -41,5 +41,7 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.users = require('./User.js')(sequelize, Sequelize);
+db.gifs = require('./Gif.js')(sequelize, Sequelize);
 
 module.exports = db;

@@ -12,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.User.hasMany(models.Gif);
+      models.User.hasMany(models.Gif,
+        { onDelete: 'cascade' }
+        );
     }
   };
   User.init(
@@ -29,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
     password:{
       type: DataTypes.STRING,
       allowNull: false
+    }, 
+    photo:{
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: 'http://localhost:3000/images/user-profile.jpg'
     }, 
     isAdmin:{
       type: DataTypes.BOOLEAN,
