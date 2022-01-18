@@ -1,7 +1,8 @@
 const fs = require('fs');
 const express = require('express');
 const Gif = require('../models').Gif;
-
+const multer = require('../utils/multer_config');
+/* const app = require('./app'); */
 
 //Créer un gif
 exports.createGif = (req, res) => {
@@ -10,11 +11,10 @@ exports.createGif = (req, res) => {
   //Récupération de l'image pour la mettre dans le dossier images 
   const gif = new Gif({
     //...gifObject,
-  
-    gifs: `${req.protocol}://${req.get('host')}/images/gifs/${req.file.filename}`,
-    title: "", //req.body.title,
-    userId: req.headers.authorization,
-    likes: 0,
+    userId: req.userId,
+    title: req.body.title,
+    gifs: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+    likes: 0
   });
   gif.save()
     .then(() => res.status(201).json({ message: 'Gif enregistré !' }))
@@ -35,8 +35,8 @@ exports.getAllGifs = (req, res, next) => {
 exports.deleteGif = (req, res, next) => {
   Gif.findOne({ id: req.params.id })
   .then(gif => {
-    const filename = gif.gifs.split('/images/gifs/')[1];
-    fs.unlink(`images/gifs/${filename}`, () => {
+    const filename = gif.gifs.split('/images/')[1];
+    fs.unlink(`images/${filename}`, () => {
       Gif.deleteOne({ id: req.params.id })
         .then(() => res.status(200).json({ message: 'Gif supprimé !' }))
         .catch(error => res.status(404).json({ error }));

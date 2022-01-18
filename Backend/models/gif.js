@@ -11,25 +11,41 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Gif.belongsTo(models.User,{
+      models.Gif.belongsTo(models.User, {
         foreignKey: {
-          allowNull: false,
+          allowNull: true,
         }
       })
     }
   };
   Gif.init(
     {
-    id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    userId: DataTypes.INTEGER,
-    title: {type: DataTypes.STRING, allowNull: false},
-    gifs: {type: DataTypes.STRING, allowNull: false},
-    likes: DataTypes.INTEGER,
-    usersLiked: DataTypes.STRING,
-  }, 
-  {
-    sequelize,
-    modelName: 'Gif',
-  });
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        required: true
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        required: true
+      },
+      title: { 
+        type: DataTypes.STRING, 
+        allowNull: false ,
+        trim: true
+      },
+      gifs: { 
+        type: DataTypes.STRING, 
+        allowNull: false 
+      },
+      likes: {
+        type: DataTypes.INTEGER
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Gif',
+    });
   return Gif;
 };
