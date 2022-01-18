@@ -79,7 +79,8 @@ export default {
       imagePreview: null,
       userId: '',
       title: '',
-      gif: ''
+      gifs: '',
+      id:''
       
     };
   },
@@ -93,36 +94,38 @@ export default {
     },
     btnPublier() {
       /* const userId = parseInt(localStorage.getItem("Id"));*/
-      const formData = new FormData()
-      console.log(this.imagePost)
-      formData.append('gif', this.imagePost)
+      const formData = new FormData();
+      console.log(this.imagePost);
+      formData.append('image', this.imagePost);
+      formData.append('title', this.title);
+      /* formData.append('title', this.title)
+      formData.append('id', this.id)
+      formData.append('userId', this.userId) */
       //const dataMessage = JSON.stringify({title: this.title, gif: this.imagePreview}); 
       async function gifForm (formData){
  
         try{
-          const response =  await fetch("http://localhost:3000/api/forum",  {
+          const response =  await fetch('http://localhost:3000/api/forum',  {
             method: 'POST',
             headers: {
-              //'Content-Type': 'multipart/form-data',
+              //'Content-Type': 'application/x-www-form-urlencoded',
               'Authorization': 'bearer ' + localStorage.getItem('token')
             },
             body: formData,
-          });
+          })
           if (response.ok){
             const responseId = await response.json();
-            window.location.href = " http://localhost:8080/signup#/forum";
+            /* window.location.href = 'http://localhost:3000/api/forum'; */
             console.log(responseId);
           }else{
             console.error('Retour du serveur: ', response.status);
           }
         }catch(e){
-          /* console.log(e); */
+          console.log(e);
         }
       }
       gifForm(formData);
-
     }
-
   },
 };
 </script>
