@@ -8,6 +8,8 @@ const User = require('../models').User;
 require('dotenv').config({ path: './.env' });
 const auth = require('../utils/jwt');
 const multer = require('../utils/multer_config');
+const { getMaxListeners } = require('process');
+
 
 //Création d'un nouvel utilisateur email et le mot de pass crypté
 exports.signup = (req, res, next) => {
@@ -40,8 +42,8 @@ exports.signup = (req, res, next) => {
 exports.login = (req, res) => {
   //Vérification si l'utilisateur existe 
   User.findOne(
-      { where: { email: req.body.email } }
-    )
+    { where: { email: req.body.email } }
+  )
     .then((user) => {
       if (!user) {
         return req.status(401).json({ error: 'Utilisateur introuvable !' });
@@ -85,37 +87,54 @@ exports.getUserProfile = (req, res, next) => {
     .catch(error => res.status(404).json({ error }));
 };
 
-/* exports.createUserProfil = (req, res, next) => {
-  console.log(req.file)
-  const user = new User ({
-
-    photo: `${req.protocol}://${req.get('host')}/images/profil/${req.file.filename}`,
-    username: req.body.username, 
-  });
-  user.save()
-    .then(() => res.status(201).json({ message: 'User profil enregistré !' }))
-    .catch(error => res.status(400).json({ error }));
-} */
 
 
 //Modifer son profil , modifier son username et sa photo profil
-exports.updateUserProfile = async (req, res, next) => {
+exports.updateUserProfile =  (req, res, next) => {
+  /* console.log(req.file) */
 
+  const userId = req.userId;
+  const userObject = req.file ?
 
-  const photoProfile = req.file ?
-  {
-    ...JSON.parse(req.body.photo),
-    photo: `${req.protocol}://${req.get('host')}/images/profil/${req.file.filename}`
-  } : { ...req.body };
+    {
+      ...req.body.user,
+      photo: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+    } : { ...req.body };
 
-  User.update(
-    { id: req.params.id },
-    
-    { ...photoProfile, where: { id: req.params.id }}
-  )
-    .then(user => res.status(200).json({ message: 'Profil modifié !' }))
-    .catch(error => res.status(400).json({ error }));
+  User.findOne({ where: { id: userId } })
+    .then((user) => {
+      const imageUpdated = user.photo;
+      if (user.id == userId) {
+        if (userObject.photo && userObject.photo != user.photo && imageUpdated != 'user-profile.jpg') {
+          fs.unlink(`images/${imageUpdated}`, () => {
+            user.update(userObject)
+              .then(updateDB => {
+                if (updateDB == 1) {
+                  res.status(200).json({ message: "Profil enregistré avec succés 1." });
+                } else {
+                  res.status(400).json({ message: `Impossible de mettre à jour le profil id=${userId}. Utilisateur non trouvé ou  req.body est vide 1!` });
+                }
+              })
+              .catch(function () {
+                res.status(500).send({ message: "Erreur de mise à jour du profil id=" + userId });
+              });
+          })
+        }
+        User.update(userObject, { where: { id: userId } })
+          .then(updateDB => {
+            if (updateDB == 1) {
+              res.status(200).json({ message: "Profil enregistré avec succés 2." });
+            } else {
+              res.status(400).json({ message: `Impossible de mettre à jour le profil id=${userId}. Utilisateur non trouvé ou req.body est vide 2!` });
+            }
+          })
+          .catch(function () {
+            res.status(500).send({ message: "Erreur de mise à jour du profil id=" + userId });
+          });
+      }
+    })
 };
+
 
 //Supprimer son compte
 exports.deleteUserProfile = (req, res) => {
@@ -123,11 +142,11 @@ exports.deleteUserProfile = (req, res) => {
   User.findOne({ id: req.params.id })
 
     .then(user => {
-      const filename = user.imageUrl.split('/images/profil/')[1];
-      fs.unlink(`images/profil/${filename}`, () => {
-        User.deleteOne({ id: req.params.id})
-        .then(() => res.status(200).json({ message: 'User supprimé !'}))
-        .catch(error => res.status(404).json({ error }));
+      const filename = user.imageUrl.split('/images/')[1];
+      fs.unlink(`images/${filename}`, () => {
+        User.deleteOne({ id: req.params.id })
+          .then(() => res.status(200).json({ message: 'User supprimé !' }))
+          .catch(error => res.status(404).json({ error }));
       });
     })
     .catch(error => res.status(500).json({ error }));
