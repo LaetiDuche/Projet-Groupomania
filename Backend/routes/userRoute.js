@@ -12,11 +12,9 @@ router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
 
 /*Profil user*/ 
-
+/* router.post('/', authJwt, multer, userCtrl.createUserProfil); */
 router.get('/:id', authJwt, userCtrl.getUserProfile);
 router.put('/:id',authJwt, multer, userCtrl.updateUserProfile);
 router.delete('/:id',authJwt,  userCtrl.deleteUserProfile);
-
-
 
 module.exports = router;

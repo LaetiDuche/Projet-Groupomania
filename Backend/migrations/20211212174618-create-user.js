@@ -10,7 +10,8 @@ module.exports = {
       },
       email: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       username: {
         allowNull: false,
@@ -29,7 +30,8 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       photo: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
