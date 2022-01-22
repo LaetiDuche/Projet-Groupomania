@@ -33,6 +33,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      /* gifsId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        refrences: {
+          model: 'Gifs',
+          key: 'id'
+        }
+      }, */
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

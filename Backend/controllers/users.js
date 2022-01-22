@@ -6,9 +6,9 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const User = require('../models').User;
 require('dotenv').config({ path: './.env' });
-const auth = require('../utils/jwt');
+/* const auth = require('../utils/jwt');
 const multer = require('../utils/multer_config');
-const { getMaxListeners } = require('process');
+const { getMaxListeners } = require('process'); */
 
 
 //Création d'un nouvel utilisateur email et le mot de pass crypté

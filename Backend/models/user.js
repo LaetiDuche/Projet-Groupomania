@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     photo:{
       type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: 'http://localhost:3000/images/user-profile.jpg'
+      /* defaultValue: 'http://localhost:3000/images/user-profile.jpg' */
     }, 
     isAdmin:{
       type: DataTypes.BOOLEAN,
