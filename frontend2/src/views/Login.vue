@@ -72,8 +72,8 @@ export default {
 
             /*Redirection sur le forum*/ 
             /* this.$router.push("forum"); */
-           /*  location.replace(location.origin + "#/forum"); */
-            window.location.href = "http://localhost:8080/login#/forum";
+            location.replace(location.origin + "#/forum");
+           /*  window.location.href = "http://localhost:8080/home/login/forum"; */
             
           }else{
             console.error('Retour du serveur: ', response.status);

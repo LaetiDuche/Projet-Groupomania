@@ -70,6 +70,9 @@ export default {
       localStorage.removeItem('Id');
       localStorage.removeItem('username');
       localStorage.removeItem('isAdmin');
+      localStorage.removeItem('email');
+      localStorage.removeItem('photo');
+      localStorage.removeItem('password');
 
       /*Retour à la page Home*/ 
       location.replace(location.origin + "/");

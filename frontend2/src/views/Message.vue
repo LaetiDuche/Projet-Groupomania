@@ -3,9 +3,9 @@
 
     <!--Formulaire création du message-->
     <div class="formulaire mx-auto col-10 mt-4 p-3 rounded-3 shadow">
-      <h3 class="text-center mb-3">Créer un nouveau message !</h3>
+      <h4 class="text-center mb-3">Créer un nouveau message !</h4>
 
-      <form class="row g-2" action="#" method="post">
+      <form class="row g-2" action="#" method="post" >
 
         <!--Titre du message-->
         <div class="form-group">
@@ -30,7 +30,7 @@
               class="input form-control d-none"
               id="gif"
               @change="gifSelected"
-              ref="gifUpload"
+              ref="file"
               type="file"
               name="gif"
               accept="image/*"
@@ -42,8 +42,8 @@
           <!--Visualisation du fichier -->
           <div  class="d-flex mx-auto text-center mt-2  p-1"  id="gif-preview">
             <img
-              v-if="imagePreview"
-              :src="imagePreview"
+              v-if="gifPreview"
+              :src="gifPreview"
               id="preview"
               alt="Responsive image"
               class="img-fluid mx-auto"
@@ -76,31 +76,34 @@ export default {
   name: "Message",
   data() {
     return {
-      imagePreview: null,
+      gifPreview: null,
+      gifs: [],
+      title:'',
       userId: '',
-      title: '',
-      gifs: '',
       id:''
-      
     };
   },
   methods: {
     btnUpload() {
+      console.log()
       this.$refs.gifUpload.click()
     },
     gifSelected(event) {
       this.imagePost = event.target.files[0];
-      this.imagePreview = URL.createObjectURL(this.imagePost);
+      this.gifPreview = URL.createObjectURL(this.imagePost);
     },
     btnPublier() {
       /* const userId = parseInt(localStorage.getItem("Id"));*/
       const formData = new FormData();
       console.log(this.imagePost);
+      /* formData.append('id', this.id);
+      formData.append('userId', this.userId); */
       formData.append('image', this.imagePost);
       formData.append('title', this.title);
-      /* formData.append('title', this.title)
+      /* 
       formData.append('id', this.id)
-      formData.append('userId', this.userId) */
+      formData.append('userId', this.userId)
+       */
       //const dataMessage = JSON.stringify({title: this.title, gif: this.imagePreview}); 
       async function gifForm (formData){
  
@@ -117,11 +120,13 @@ export default {
             const responseId = await response.json();
             /* window.location.href = 'http://localhost:3000/api/forum'; */
             console.log(responseId);
+            
           }else{
             console.error('Retour du serveur: ', response.status);
           }
         }catch(e){
-          console.log(e);
+          /* console.log(e); */
+          
         }
       }
       gifForm(formData);
