@@ -6,148 +6,243 @@ Possibilité de supprimer son compte
 
 <template>
   <div class="profil">
-    
-      <div class="profil-user mx-auto my-4 col-10 col-sm-8 col-md-6 p-3 rounded-3 shadow">
+    <div
+      class="
+        profil-user
+        mx-auto
+        my-4
+        col-10 col-sm-8 col-md-6
+        p-3
+        rounded-3
+        shadow
+      "
+    >
       <div class="mx-auto d-flex flex-column">
-
         <div>
           <h3 class="fs-5">Mon profil</h3>
         </div>
 
         <!--Image user-->
         <form>
-        <div class="d-flex">
+          <div class="d-flex">
+            <!--Si l'utilisateur click pour modifier-->
 
-          <!--Si l'utilisateur click pour modifier-->
-          <img class=" img-profil img-fluid mx-auto rounded-circle  mt-3 shadow" id="preview" alt="image profil" v-if="imagePreview" :src="imagePreview"/>
+            <!--Si l'utilisateur ne click pas pour modifier-->
+            <!-- <img class="img-fluid mx-auto rounded-circle w-50 mt-3 shadow" id="preview" alt="image profil" v-if="imagePreview" :src="imagePreview"/> -->
+            <img
+              v-if="imagePreview"
+              class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
+              alt="photo profil"
+              :src="imagePreview"
+              id="preview"
+            />
+            <!--:src="imagePreview"-->
 
-          <!--Si l'utilisateur ne click pas pour modifier-->
-          <img v-else class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow" alt="image profil" src="images/user-profile.jpg"/>
+            <img
+              v-else
+              class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
+              id="preview"
+              alt="image profil"
+              src="../assets/user-profile.jpg"
+            />
+            <!-- <span v-if="imagePreview" class="img-profil img-fluid mx-auto rounded-circle  mt-3 shadow" type="image" id="photo" :src="imagePreview">{{ photo }}</span> -->
 
-          <!--Bouton icon modifier-->
-          <div @click="btnUpload" width="16" height="16" class="mt-auto">
-            <label classe="label form-label mb-0 " for="photo">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square mt-auto" viewBox="0 0 16 16">
-                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-              </svg>
-            </label>
-            <input class="input form-control d-none" id="photo" @change="photoSelected" ref="photoUpload" type="file" name="photo" accept="image/*"/>
+            <!--Bouton icon modifier-->
+            <div @click="btnUpload" width="16" height="16" class="mt-auto">
+              <label classe="label form-label mb-0 " for="photo">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-pencil-square mt-auto"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                  />
+                </svg>
+              </label>
+              <input
+                class="input form-control d-none"
+                id="preview"
+                @change="photoSelected"
+                ref="photoUpload"
+                type="file"
+                name="photo"
+                accept="image/*"
+              />
+            </div>
+
+            <!--           <img v-if="imagePreview" class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow" alt="image profil" :src="imagePreview"/>
+ -->
           </div>
-
-        </div>
         </form>
 
         <!--Username-->
-        <div class="d-flex mx-auto  mt-3 text-center">
-           
+        <div class="d-flex mx-auto mt-3 text-center">
           <div class="d-flex mx-auto">
-            
             <label class="d-flex" for="username"></label>
-            <input v-model="username" id="username" name="username" type="text" class=" text-center border-0 w-100" placeholder="Username"/>
+            <input
+              v-model="username"
+              id="username"
+              name="username"
+              type="text"
+              class="text-center border-0 w-100"
+              placeholder="Username"
+            />
 
             <!--Bouton icon modifier-->
-            <div  width="16" height="16" class="mt-auto ms-auto" type="submit">
+            <div width="16" height="16" class="mt-auto ms-auto" type="submit">
               <label classe="label form-label" for="username">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-pencil-square"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                  />
                 </svg>
               </label>
-              <input class="input form-control d-none" id="username" ref="usernameUpload" type="text" name="username"/>
+              <input
+                class="input form-control d-none"
+                id="username"
+                ref="usernameUpload"
+                type="text"
+                name="username"
+              />
             </div>
-
           </div>
         </div>
 
         <div class="d-flex justify-content-around mt-3 text-center flex-wrap">
-
           <!--Bouton valider mon profil-->
-          <button class="btn btn-danger btn-sm shadow-sm mt-3" @click.prevent="btnValid" type="submit">
+          <button
+            class="btn btn-danger btn-sm shadow-sm mt-3"
+            @click.prevent="btnValid"
+            type="submit"
+          >
             Valider mon profil
             <router-link to="/"></router-link>
           </button>
 
           <!--Bouton supprimer mon compte-->
-          <button class="btn btn-danger btn-sm shadow-sm mt-3" @click="btnDelete" type="submit">
+          <button
+            class="btn btn-danger btn-sm shadow-sm mt-3"
+            @click="btnDelete"
+            type="submit"
+          >
             Supprimer mon compte
-            <router-link to="/" ></router-link>
+            <router-link to="/"></router-link>
           </button>
-
         </div>
-
       </div>
-   </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Profil",
   
+  name: "Profil",
+
   /*Modification du username*/
   data() {
     return {
       user: "",
-      username: localStorage.getItem('username'),
+      username: localStorage.getItem("username"),
       imagePreview: null,
-      photo: ""
+      /* photo: '', */ //localStorage.getItem('photo')
+    };
+  },
+ /*  mounted() {
+    if (localStorage.photo) {
+      this.photo = localStorage.photo;
     }
   },
+    watch: {
+    photo(newPhoto) {
+      localStorage.photo = newPhoto;
+    }
+  }, */
   
   methods: {
-    getProfil(){
-      const id = localStorage.getItem('Id');
-      fetch('http://localhost:3000/api/users/' + id,{
+    //Affiche le profil de l'utilisateur connecté
+    getProfil() {
+      const id = localStorage.getItem("Id");
+
+      fetch("http://localhost:3000/api/users/" + id, {
         headers: {
-          authorization: 'Bearer' + localStorage.getItem('token')
-        }
+          authorization: "Bearer" + localStorage.getItem("token"),
+        },
       })
-      .then(response => {
-        this.user = response.data;
-      })
-      .catch(err => {
-        this.error("Erreur get" + err.response.status + "" + err.response.statusText);
-         window.location.reload();
-      })
+        .then((response) => {
+          this.user = response.data;
+        })
+        .catch((err) => {
+          this.error(
+            "Erreur get" + err.response.status + "" + err.response.statusText
+          );
+          window.location.reload();
+        });
     },
     /*Pour modifier l'image profil*/
     btnUpload() {
-      this.$refs.photoUpload.click()
+      this.$refs.photoUpload.click();
     },
     photoSelected(event) {
       this.imagePost = event.target.files[0];
       this.imagePreview = URL.createObjectURL(this.imagePost);
-      
     },
     /*Pour valider les modifications*/
     btnValid() {
-      const formData = new FormData()
-      console.log(this.imagePost)
-      formData.append('image', this.imagePost)
-      formData.append('username', this.username )
+
+      /* localStorage.photo = this.photo; */
+      const formData = new FormData();
+      console.log(this.imagePost);
+      formData.append("image", this.imagePost);
+      formData.append("username", this.username);
       /* const userId = parseInt(localStorage.getItem("Id"));
       const dataProfil = JSON.stringify({
         id: userId,
         username: this.username,
         photo: this.photo
       }); */
-      
+
       async function postProfil(formData) {
-         
         try {
-          const response = await fetch("http://localhost:3000/api/users/:id", {
-            method: "PUT",
-            headers: {
-              /* 'Content-Type': 'multipart/form-data', */
-              /* 'Content-Type': 'application/x-www-form-urlencoded', */
-              'Authorization': 'bearer ' + localStorage.getItem('token')
-            },
-            body: formData,
-           
-          });
+          const response = await fetch(
+            "http://localhost:3000/api/users/:id",
+            
+            {
+              method: "PUT",
+              headers: {
+                /* 'Content-Type': 'multipart/form-data', */
+                /* 'Content-Type': 'application/x-www-form-urlencoded', */
+                Authorization: "bearer " + localStorage.getItem("token"),
+              },
+              body: formData,
+            }
+          );
+
           if (response.ok) {
             const responseId = await response.json();
+           
+           
+            /* this.imagePreview = '../../../backend/images/${this.photo}' */
+            /* localStorage.setItem('photo', responseId.photo); */
             console.log(responseId);
           } else {
             console.error("Retour du serveur : ", response.status);
@@ -180,7 +275,7 @@ export default {
             localStorage.removeItem("token");
             localStorage.removeItem("isAdmin");
 
-            this.$router.push('http://localhost:8080/');
+            this.$router.push("http://localhost:8080/");
             /* window.location.href = "http://localhost:8080/signup#/home"; */
           } else {
             console.error("Retour du serveur : ", response.status);
@@ -202,7 +297,7 @@ export default {
 .profil {
   background-color: #eeeeee;
 }
-.img-profil{
+.img-profil {
   object-fit: cover;
   height: 240px;
   width: 240px;
