@@ -50,8 +50,7 @@ app.use((req, res, next) => {
 
 app.use(helmet());
 
-app.use('/gifs', express.static(path.join(__dirname, 'gifs')));
-app.use('/profil', express.static(path.join(__dirname, 'profil')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use(express.urlencoded({extended: true,limit: '70mb', parameterLimit: 700000 }));
 app.use(express.json({ limit: '70mb' }));
