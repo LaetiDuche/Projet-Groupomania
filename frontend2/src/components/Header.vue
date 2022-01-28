@@ -4,8 +4,8 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
 -->
 
 <template>
-  <header>
-    <nav class="navbar d-flex p-2">
+  <header class="sticky-top">
+    <nav class="navbar d-flex p-2 ">
       <div class="mx-auto">
         <router-link to="/">
           <img  src="../assets/icon-left-font.png" alt="logo" height="48" width="190"/>
@@ -24,9 +24,9 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
       </div>
 
       <!--Si l'utilisateur est connecté-->
-      <div class="dropdown  dropstart m-auto" v-else>  
+      <div class="dropdown  dropstart m-auto " v-else>  
         <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-          <img id="preview" v-if="imagePreview" :src="photo" class="rounded-circle" height="40" alt="Avatar" loading="lazy"/><!--  :src="imagePreview"--> 
+          <img id="preview" v-if="imagePreview" :src="photo" class="rounded-circle shadow" height="40" alt="" loading="lazy"/><!--  :src="imagePreview"--> 
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li>
