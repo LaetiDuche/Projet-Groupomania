@@ -26,7 +26,7 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
       <!--Si l'utilisateur est connecté-->
       <div class="dropdown  dropstart m-auto" v-else>  
         <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-          <img id="preview" v-if="imagePreview" src="../assets/user-profile.jpg" class="rounded-circle" height="40" alt="Avatar" loading="lazy"/><!--  :src="imagePreview"--> 
+          <img id="preview" v-if="imagePreview" :src="photo" class="rounded-circle" height="40" alt="Avatar" loading="lazy"/><!--  :src="imagePreview"--> 
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li>
@@ -54,6 +54,7 @@ export default {
   data() {
     return {
       id: "",
+       photo: localStorage.getItem("photo"),
       imagePreview: true,
     };
   },
