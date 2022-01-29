@@ -13,16 +13,16 @@ module.exports = (req, res, next) =>{
     
       //Si l'id est incorrecte
     if (req.body.userId && req.body.userId !== userId){
-      console.log("toto1")
+     /*  console.log("toto1") */
       throw 'User id non valable !';
 
       //Si l'id est bon, l'uilisateur est connecté
     }else{
-      console.log("toto2")
+      /* console.log("toto2") */
       next();
     }
   }catch(error){
-    console.log("toto3")
+    /* console.log("toto3") */
     res.status(401).json({error: error | 'Requete non authantifiée !'});
   }
 };

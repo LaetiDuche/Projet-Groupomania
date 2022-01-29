@@ -20,7 +20,7 @@ exports.signup = (req, res, next) => {
         username: req.body.username,
         email: req.body.email,
         password: hash,
-        isAdmin: false,
+        isAdmin: 0,
         photo: false
       });
       user
@@ -97,15 +97,15 @@ exports.updateUserProfile =  (req, res, next) => {
   const userObject = req.file ?
 
     {
-      ...req.body.user,
+      ...req.body.User,
       photo: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
     } : { ...req.body };
 
   User.findOne({ where: { id: userId } })
     .then((user) => {
-      const imageUpdated = user.photo;
+      const imageUpdated = User.photo;
       if (user.id == userId) {
-        if (userObject.photo && userObject.photo != user.photo && imageUpdated != 'user-profile.jpg') {
+        if (userObject.photo && userObject.photo != User.photo && imageUpdated != 'user-profile.jpg') {
           fs.unlink(`images/${imageUpdated}`, () => {
             user.update(userObject)
               .then(updateDB => {
