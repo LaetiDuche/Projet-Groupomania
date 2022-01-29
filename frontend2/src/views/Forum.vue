@@ -1,13 +1,23 @@
 <template>
   <div class="forum">
+
     <!--En-tête pour créer un message-->
     <div class="formulaire mx-auto col-10 col-md-8 col-lg-6 mt-4 p-3 rounded-3 shadow">
       <div class="d-flex mx-auto">
 
         <!--Utilisateur-->
         <img
+          v-if="photo"
           :src="photo" 
-          class="rounded-circle me-3"
+          class="rounded-circle me-3 shadow"
+          height="40"
+          alt="Avatar"
+          loading="lazy"
+        />
+        <img
+          v-else
+          src="../assets/user-profile.jpg" 
+          class="rounded-circle me-3 shadow"
           height="40"
           alt="Avatar"
           loading="lazy"
@@ -50,18 +60,18 @@
         <div class="my-auto">
         <img
           :src="gifs.User.photo" 
-          class="rounded-circle  text-center"
+          class="rounded-circle  text-center shadow"
           height="40"
           alt="avatar"
           loading="lazy"
         />
         </div>
 
-        <!--Username  et date de publication-->
+        <!--Username et date de publication-->
         <div class="d-flex flex-column ">
-        <span  class="d-flex flex-column ps-3 justify-content-start" id="username">
-
+        <span class="d-flex flex-column ps-3 justify-content-start fw-bold" id="username">
           {{ gifs.User.username }}
+
           <span class="date fw-light "> 
             Le {{ dateFormat(gifs.createdAt) }}
           </span>
@@ -69,8 +79,8 @@
         </span>
         </div>
 
-        <!--Bouton supprimer le message-->
-        <div class="p-1 ms-auto" style="cursor: pointer" role="button" @click="btnDelete(gifs.id)"> 
+        <!-- Bouton supprimer le message pour l'admin et l'utilisateur-->
+        <div class="p-1 ms-auto" style="cursor: pointer" role="button" v-if="userId == gifs.userId || isAdmin === 'true'" @click="btnDelete(gifs.id)"> 
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -92,7 +102,7 @@
       </div>
 
 
-      <!--Le message-->
+      <!--Titre et gif du message-->
       <div >
         <p class="p-1 my-2 ">{{ gifs.title }}</p>
         <img class="w-100 d-flex justify-content-center mt-2 " :src="gifs.gifs" />
@@ -149,19 +159,15 @@
 
 import moment from 'moment'
 import 'moment/locale/fr'
-/* import axios from "axios" */
 
 export default {
   name: "Forum",
   
   data() {
     return {
-      isAdmin: false,
-      /* username: localStorage.getItem("username"), */
-      photo: localStorage.getItem("photo"),
-     /* 
-      photo: localStorage.getItem("photo"), */
-    
+      isAdmin: '',
+      photo: localStorage.getItem("photo"), 
+      userId: localStorage.getItem('Id'),   
       gifs:[],
       Users: [],
       gif: '',
@@ -185,55 +191,19 @@ export default {
       .then((data) => (this.User= data));
       
   },
+  mounted() {
+    this.isAdmin = localStorage.getItem('isAdmin');
+    console.log(this.isAdmin)
+  },
  
   methods: {
-    /* getGifs() {
-      const id = localStorage.getItem("gifs");
-
-      fetch("http://localhost:3000/api/forum/" + id, {
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': "Bearer" + localStorage.getItem("token"),
-        },
-      })
-        .then((response) => {
-          this.gif = response.data.gif;
-          this.user = response.data.user;
-        })
-        .catch((err) => {
-          this.error(
-            "Erreur get" + err.response.status + "" + err.response.statusText
-          );
-          window.location.reload();
-        });
-    }, */
 
     //Supprimer une publication
-    btnDelete(id){
-      
-      fetch('http://localhost:3000/api/forum/' + id, {
-        method: 'DELETE',
-        headers: {
-          /* 'Content-Type': 'application/json', */
-          'Authorization': 'Bearer' + localStorage.getItem('token'),
-        }
-      })
-      .then(() => {
-        /* this.deleteGif(); */
-      })
-      .catch()
-       console.error('Retour du serveur: ');
-        confirm("Voulez-vous vraiment supprimer ce message ?");
-          window.location.reload();
-      
-    },
-
-
-    /* btnDelete(id) {
-      const gifId =  this.gifId;
+    btnDelete(id) {
+       let gifId = JSON.stringify({id: this.gifId});
       async function gifForm(dataForm) {
         try {
-          const response = await fetch("http://localhost:3000/api/forum/" + id , {
+          const response = await fetch("http://localhost:3000/api/forum/" +id, {
             method: "DELETE",
             headers: {
               "content-type": "application/json",
@@ -242,19 +212,19 @@ export default {
             body: dataForm,
           });
           if (response.ok) {
-            let responseId = await response.json();
-            console.log(responseId);
             confirm("Voulez-vous vraiment supprimer ce message ?");
+            let responseId = await response.json();
+            console.log(responseId);            
             location.reload();
           } else {
             console.error("Retour du serveur : ", response.status);
           }
         } catch (e) {
-          console.log(e); 
+          /* console.log(e);  */
         }
       }
       gifForm(gifId);
-    },  */
+    }, 
 
 
     // Formatte la date de publication
