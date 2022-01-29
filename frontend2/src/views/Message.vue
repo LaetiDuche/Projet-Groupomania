@@ -5,6 +5,7 @@
       <h4 class="text-center mb-3">Créer un nouveau message !</h4>
 
       <form class="row g-2"  action="#" method="post">
+
         <!--Titre du message-->
         <div class="form-group">
           <label classe="form-label mb-0 " for="title">Titre du message</label>
@@ -20,6 +21,7 @@
 
         <!--Téléchargement du fichier-->
         <div class="form-group mx-auto">
+
           <!--Bouton télécharger un fichier-->
           <div class="btn btn-sm mt-2 btn-danger shadow-sm" ><!--@click="btnUpload"  -->
             <label classe="label form-label mb-0 " for="gif"
@@ -78,6 +80,7 @@ export default {
       gifs: [],
       title: '',
       userId:'',
+      Users: [],
       id: '',
       
     };
@@ -89,60 +92,6 @@ export default {
       this.gifPreview = URL.createObjectURL(this.file);
      
     },
-      /* this.imagePost = event.target.files[0]; */
-     /*  this.gifPreview = URL.createObjectURL(this.file);
-    
-    btnPublier() {
-
-     if(this.title || this.file){ */
-
-     /*  let gifData = {
-        title: this.title
-      } */
-
-      /* const formData = new FormData()
-
-      formData.append("image", this.file)
-      formData.append("gif", this.gifData)
-      formData.append("title", this.title)
-      axios
-        .post("http://localhost:3000/api/forum", formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': "bearer " + localStorage.getItem("token"),
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          this.userId = "";
-          this.gifPreview = null;
-          this.title = null;
-
-          router.push({ path: "/forum" });
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    }else{
-      let gifData = {
-        title: this.title,
-      }
-      axios.post('http://localhost:3000/api/forum', gifData, {
-        headers: {
-          "Authorization": "Bearer " + localStorage.getItem("token"),
-          "content-Type": "Application/json"
-        }
-      })
-      .then((response) => {
-        console.log(response);
-        router.push({path : '/forum'});
-      })
-      .catch(error=>{
-        console.log(error);
-      })
-    }
-
-    }, */
 
     btnPublier() {
 
@@ -165,7 +114,8 @@ export default {
           })
           if (response.ok){
             const responseId = await response.json();
-            /* window.location.href = 'http://localhost:3000/api/forum'; */
+            alert('Votre message a été publié !')
+            window.location.href = "http://localhost:8080/#/forum";
             console.log(responseId);
             
           }else{
