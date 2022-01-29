@@ -25,30 +25,27 @@ Possibilité de supprimer son compte
         <!--Image user-->
         <form>
           <div class="d-flex">
-            <!--Si l'utilisateur click pour modifier-->
+
+            <!--Visualiser la photo sélectionnée-->
+            <img
+              v-if="photo"
+              :src="photo"
+              id="preview"
+              alt="image profil"
+              class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"             
+            />
 
             <!--Si l'utilisateur ne click pas pour modifier-->
-            <!-- <img class="img-fluid mx-auto rounded-circle w-50 mt-3 shadow" id="preview" alt="image profil" v-if="imagePreview" :src="imagePreview"/> -->
-            <img
-              v-if="imagePreview"
-              class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
-              alt="photo profil"
-              :src="imagePreview"
-              id="preview"
-            />
-            <!--:src="imagePreview"-->
-
             <img
               v-else
               class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
-              id="preview"
-              alt="image profil"
+              alt="photo profil"
               src="../assets/user-profile.jpg"
+              id="preview"
             />
-            <!-- <span v-if="imagePreview" class="img-profil img-fluid mx-auto rounded-circle  mt-3 shadow" type="image" id="photo" :src="imagePreview">{{ photo }}</span> -->
 
-            <!--Bouton icon modifier-->
-            <div @click="btnUpload" width="16" height="16" class="mt-auto">
+            <!--Bouton modifier la photo -->
+            <div  @click="btnUpload" width="16" height="16" class="mt-auto">
               <label classe="label form-label mb-0 " for="photo">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -69,17 +66,15 @@ Possibilité de supprimer son compte
               </label>
               <input
                 class="input form-control d-none"
-                id="preview"
+                id="photo"
                 @change="photoSelected"
-                ref="photoUpload"
-                type="file"
+                ref="image"
                 name="photo"
+                type="file"
                 accept="image/*"
               />
             </div>
 
-            <!--           <img v-if="imagePreview" class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow" alt="image profil" :src="imagePreview"/>
- -->
           </div>
         </form>
 
@@ -96,7 +91,7 @@ Possibilité de supprimer son compte
               placeholder="Username"
             />
 
-            <!--Bouton icon modifier-->
+            <!--Bouton modifier le username-->
             <div width="16" height="16" class="mt-auto ms-auto" type="submit">
               <label classe="label form-label" for="username">
                 <svg
@@ -127,7 +122,9 @@ Possibilité de supprimer son compte
           </div>
         </div>
 
+        <!-- Boutons -->
         <div class="d-flex justify-content-around mt-3 text-center flex-wrap">
+
           <!--Bouton valider mon profil-->
           <button
             class="btn btn-danger btn-sm shadow-sm mt-3"
@@ -161,24 +158,16 @@ export default {
   /*Modification du username*/
   data() {
     return {
-      user: "",
+      photo: localStorage.getItem("photo"),
       username: localStorage.getItem("username"),
       imagePreview: null,
-      /* photo: '', */ //localStorage.getItem('photo')
+      User: '',
+      user: ""
     };
   },
- /*  mounted() {
-    if (localStorage.photo) {
-      this.photo = localStorage.photo;
-    }
-  },
-    watch: {
-    photo(newPhoto) {
-      localStorage.photo = newPhoto;
-    }
-  }, */
   
   methods: {
+
     //Affiche le profil de l'utilisateur connecté
     getProfil() {
       const id = localStorage.getItem("Id");
@@ -190,6 +179,7 @@ export default {
       })
         .then((response) => {
           this.user = response.data;
+          
         })
         .catch((err) => {
           this.error(
@@ -198,51 +188,48 @@ export default {
           window.location.reload();
         });
     },
+
     /*Pour modifier l'image profil*/
     btnUpload() {
-      this.$refs.photoUpload.click();
+      this.$refs.image.click();
     },
     photoSelected(event) {
-      this.imagePost = event.target.files[0];
-      this.imagePreview = URL.createObjectURL(this.imagePost);
+      this.file = event.target.files[0];
+      this.imagePreview = URL.createObjectURL(this.file);
     },
+
     /*Pour valider les modifications*/
     btnValid() {
-
-      /* localStorage.photo = this.photo; */
       const formData = new FormData();
-      console.log(this.imagePost);
-      formData.append("image", this.imagePost);
+      console.log(this.file);
+      formData.append("image", this.file);
       formData.append("username", this.username);
-      /* const userId = parseInt(localStorage.getItem("Id"));
-      const dataProfil = JSON.stringify({
-        id: userId,
-        username: this.username,
-        photo: this.photo
-      }); */
 
       async function postProfil(formData) {
+
+         const id = localStorage.getItem("Id");
         try {
           const response = await fetch(
-            "http://localhost:3000/api/users/:id",
+            "http://localhost:3000/api/users/" +id,
             
             {
-              method: "PUT",
+              method: 'PUT',
               headers: {
                 /* 'Content-Type': 'multipart/form-data', */
                 /* 'Content-Type': 'application/x-www-form-urlencoded', */
-                Authorization: "bearer " + localStorage.getItem("token"),
+                'Authorization': "bearer " + localStorage.getItem('token')
               },
               body: formData,
-            }
-          );
+            })
 
           if (response.ok) {
             const responseId = await response.json();
+            /* localStorage.removeItem('photo', responseId.photo); */
+            /* localStorage.setItem('photo'); */
            
-           
-            /* this.imagePreview = '../../../backend/images/${this.photo}' */
-            /* localStorage.setItem('photo', responseId.photo); */
+           /*  this.imagePreview = '../../../backend/images/${this.photo}'
+            localStorage.push('photo', responseId.photo); */
+
             console.log(responseId);
           } else {
             console.error("Retour du serveur : ", response.status);
