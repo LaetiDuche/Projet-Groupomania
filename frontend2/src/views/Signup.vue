@@ -82,7 +82,8 @@ export default {
       signUp(postFormulaire);
 
       /*Renvoie l'utilisateur sur la page de connection*/ 
-      window.location.href = "http://localhost:8080/signup#/login";
+     /*  window.location.href = "http://localhost:8080/signup#/login"; */
+      window.location.href = "http://localhost:8080/#/login";
     }
   }
 }
