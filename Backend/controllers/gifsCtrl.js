@@ -61,18 +61,22 @@ exports.getAllGifs = (req, res, next) => {
     .catch(error => { console.log(error); res.status(400).json({ error }) });
 };
 
-//Supprimer un message
+//Supprimer un message (admin)
 exports.deleteGif = (req, res, next) => {
-  Gif.findOne({ id: req.params.id })
+  Gif.findOne({ where: { id: req.params.id } })
   .then(gif => {
     const filename = gif.gifs.split('/images/')[1];
     fs.unlink(`images/${filename}`, () => {
-      Gif.deleteOne({ id: req.params.id })
+      const paramId = parseInt(req.params.id);
+	    console.log(req.user);
+	    console.log(paramId);
+      Gif.destroy({ where: { id: req.params.id } })
         .then(() => res.status(200).json({ message: 'Gif supprimé !' }))
         .catch(error => res.status(404).json({ error }));
     });
   })
   .catch(error => res.status(500).json({ error }));
 };
+
 
 const app = express();
