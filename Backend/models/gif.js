@@ -15,7 +15,9 @@ module.exports = (sequelize, DataTypes) => {
        /*  foreignKey: {
           allowNull: tr,
         } */
-      })
+      }),
+      models.Gif.hasMany(models.Comment);
+      models.Gif.hasMany(models.Like);
     }
   };
   Gif.init(
