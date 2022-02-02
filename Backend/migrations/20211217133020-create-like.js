@@ -2,14 +2,14 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Likes', {
+
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-
-      gifId: {
+      gifsId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         refrences: {
@@ -17,7 +17,6 @@ module.exports = {
           key: 'id'
         }
       },
-
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -26,17 +25,24 @@ module.exports = {
           key: 'id'
         }
       },
-
-      isLike : {
-        allowNull: false,
-        type: Sequelize.INTEGER
+      likes: {
+        type: DataTypes.INTEGER
       },
-
+      dislikes: {
+        type: DataTypes.INTEGER
+      },
+      usersLiked: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      usersDisliked: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
