@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config({path: './.env'});
+const User = require('../models').User;
 
 module.exports = (req, res, next) =>{
   
@@ -18,8 +19,16 @@ module.exports = (req, res, next) =>{
 
       //Si l'id est bon, l'uilisateur est connecté
     }else{
+      User.findOne(
+        { where: { id: userId } }
+      )
+        .then(user => {
+          req.user = user;
+          next()
+        })
+        .catch(error => res.status(404).json({ error }));
       /* console.log("toto2") */
-      next();
+      //next();
     }
   }catch(error){
     /* console.log("toto3") */
