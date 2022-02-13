@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      /*
       models.User.belongsToMany(models.Gif,{
         through: models.Comment,
         foreignKey: 'userId',
@@ -21,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'gifsId',
         otherKey: 'userId'
       });
+      */
       models.Comment.belongsTo(models.User, {
          foreignKey: 'userId',
        }),
@@ -32,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
   Comment.init({
     userId: DataTypes.INTEGER,
     gifsId: DataTypes.INTEGER,
-    username: DataTypes.STRING,
+    /* username: DataTypes.STRING, */
     comment: DataTypes.STRING
   }, {
     sequelize,

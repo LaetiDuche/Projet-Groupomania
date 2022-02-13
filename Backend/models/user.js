@@ -15,8 +15,12 @@ module.exports = (sequelize, DataTypes) => {
       models.User.hasMany(models.Gif, 
         { onDelete: 'cascade' }
         );
-      models.User.hasMany(models.Comment);
-      models.User.hasMany(models.Like);
+      models.User.hasMany(models.Comment,
+        { onDelete: 'cascade' }
+        );
+      models.User.hasMany(models.Like, 
+        { onDelete: 'cascade' }
+      );
     }
   };
   User.init(
@@ -38,6 +42,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     }, 
+    likes: {
+      type: DataTypes.INTEGER
+    },
+    gifsId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Gif',
+        key: 'id'
+      }
+    },
     isAdmin:{
       type: DataTypes.BOOLEAN,
       allowNull: false,

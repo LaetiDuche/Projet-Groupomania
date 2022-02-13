@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.Gif.belongsTo(models.User, {
-       /*  foreignKey: {
-          allowNull: tr,
-        } */
+        foreignKey: {
+          allowNull: false,
+        }
       }),
       models.Gif.hasMany(models.Comment);
       models.Gif.hasMany(models.Like);
@@ -30,7 +30,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       userId: {
         type: DataTypes.INTEGER,
-        required: true
+        required: true,
+        allowNull: false 
       },
       title: { 
         type: DataTypes.STRING, 

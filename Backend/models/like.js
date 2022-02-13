@@ -11,31 +11,33 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      /*
       models.User.belongsToMany(models.Gif,{
         through: models.Like,
         foreignKey: 'userId',
         otherKey: 'gifsId'
       });
-
-      models.Gif.belongsToMany(models.User,{
+*/
+      /*models.Gif.belongsToMany(models.User,{
         through: models.Like,
         foreignKey: 'gifsId',
         otherKey: 'userId'
-      });
+      });*/
 
       models.Like.belongsTo(models.User,{
-        foreignKey: 'userId',
-        as: 'user'
+        foreignKey: 'userId'/* ,
+        as: 'user' */
       });
 
       models.Like.belongsTo(models.Gif,{
-        foreignKey: 'gifsId',
-        as: 'gif'
+        foreignKey: 'gifsId'/* ,
+        as: 'gif' */
       });
     }
   };
   Like.init({
-    gifsId: {type:DataTypes.INTEGER,
+    gifsId: {
+      type:DataTypes.INTEGER,
       references: {
         model: 'Gif',
         key: 'id'
@@ -47,8 +49,10 @@ module.exports = (sequelize, DataTypes) => {
         model: 'User',
         key: 'id'
       }
-    }
-  }, {
+    },
+    /* liked: DataTypes.INTEGER */
+  },
+   {
     sequelize,
     modelName: 'Like',
   });
