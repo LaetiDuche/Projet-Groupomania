@@ -33,14 +33,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      /* gifsId: {
+      likes: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        refrences: {
-          model: 'Gifs',
-          key: 'id'
-        }
-      }, */
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
