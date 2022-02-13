@@ -2,10 +2,12 @@
 
 const express = require('express');
 const Like = require('../models').Like;
+const User = require('../models').User;
+const Gif = require('../models').Gif;
 
 exports.getLikes = (req, res, next) => {
-  Like.findAll({where: {
-    gifsId: req.params.id}})
+  Like.findAll({include: User, where: {
+    gifsId: req.body.gifsId}})
     .then(likes => {
         console.log(likes);
         res.status(200).json({data: likes});
@@ -17,7 +19,7 @@ exports.postLike = (req, res, next) => {
   const likeObject = req.body;
     Like.findAll({where: {
       gifsId: req.body.gifsId,
-      userId: req.body.userId
+      /* userId: req.body.userId */
       }})
       .then(likes => {
         if(likes.length === 0) {
@@ -37,7 +39,7 @@ exports.postLike = (req, res, next) => {
         } else {
           Like.destroy({ where: {
             gifsId: req.body.gifsId,
-            userId: req.body.userId }})
+            /* userId: req.body.userId */ }})
             .then(() => {
               Like.findAll({
                 where: {gifsId: req.body.gifsId}

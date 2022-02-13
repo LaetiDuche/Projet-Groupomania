@@ -11,13 +11,13 @@ exports.createGif = (req, res) => {
   //Récupération de l'image pour la mettre dans le dossier images 
   const gif = new Gif({
     //...gifObject,
-    userId: req.userId,
+    userId: req.body.userId,
     title: req.body.title,
     gifs: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-    likes: 0,
-    dislikes: 0,
+    likes: req.body.likes,
+    /* dislikes: 0,
     usersLiked: [],
-    usersDisliked: []
+    usersDisliked: [] */
   });
   gif.save()
     .then(() => res.status(201).json({ message: 'Gif enregistré !' }))

@@ -8,13 +8,21 @@ exports.createComment = (req, res, next) => {
   const commentObject = req.body;
   // Création d'un nouvel objet commentaire
   const comment = new Comment({
-    ...commentObject
+    ...commentObject,
+    userId: req.body.id,
+    gifsId: req.body.id,
+    comment: req.body.comment,
   });
   // Enregistrement de l'objet commentaire dans la base de données
+
+  /* comment.save()
+    .then(() => res.status(201).json({ message: 'Commentaire enregistré !' }))
+    .catch(error => res.status(400).json({ error }));  */
+
   comment.save()
     .then(() => {
       Comment.findAll({
-        where: { gifsId: req.body.gifsId }
+        where: { gifsId: req.body.id }
       })
         .then((comment) => {
           res.status(200).json(comment);
@@ -30,7 +38,7 @@ exports.getAllComments = (req, res, next) => {
   Comment.findAll(
     { include: User, order: [['createdAt', 'DESC']] }
   )
-    .then(comment => res.status(200).json(comment))
+    .then(comments => res.status(200).json(comments))
     .catch(error => { console.log(error); res.status(400).json({ error }) });
 };
 

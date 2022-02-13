@@ -27,7 +27,7 @@ exports.signup = (req, res, next) => {
         .save()
         .then((user) => {
           if (user) {
-            res.status(201).json({ message: 'Utilisateur crée !' });
+            return res.status(201).json({ message: 'Utilisateur crée !' });
           }
         })
         .catch(error => res.status(400).json({ error }));
@@ -46,6 +46,7 @@ exports.login = (req, res) => {
   )
     .then((user) => {
       if (!user) {
+        /* return res.status(201).json({ message: 'Utilisateur connecté !' }); */
         return req.status(401).json({ error: 'Utilisateur introuvable !' });
       }
       //Vérification du bon mot de passe de l'utilisateur
