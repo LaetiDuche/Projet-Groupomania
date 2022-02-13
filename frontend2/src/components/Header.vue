@@ -14,19 +14,19 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
 
       <!--Si l'utilisateur n'est pas connecté-->
       <div class="m-auto d-flex my-auto" v-if="id === null">
-        <nav class="mx-3 " href="#">
+        <nav class="mx-3">
           <router-link to="/signup">S'inscrire</router-link>
         </nav>
 
-        <nav class="mx-2 " href="#">
+        <nav class="mx-2">
           <router-link to="/login">Se connecter </router-link>
         </nav>
       </div>
 
       <!--Si l'utilisateur est connecté-->
       <div class="dropdown  dropstart m-auto " v-else>  
-        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-          <img id="preview" v-if="photo" :src="photo" class="rounded-circle shadow" height="40" alt="" loading="lazy"/><!--  :src="imagePreview"--> 
+        <a class="btn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+          <img id="preview" v-if="userId === 'true' || photo" :src="photo" class="rounded-circle shadow" height="40" alt="" loading="lazy"/><!--  :src="imagePreview"--> 
           <img
               v-else
               class="rounded-circle shadow"
@@ -65,7 +65,8 @@ export default {
       id: "",
       photo: localStorage.getItem("photo"),
       /* photo:'', */
-      imagePreview: true,
+      imagePreview: null,
+      userId:'',
     };
   },
   mounted() {

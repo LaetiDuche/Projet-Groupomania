@@ -1,10 +1,11 @@
 <template>
   <div class="message">
+
     <!--Formulaire création du message-->
     <div class="formulaire mx-auto col-10 mt-4 p-3 rounded-3 shadow">
       <h4 class="text-center mb-3">Créer un nouveau message !</h4>
 
-      <form class="row g-2"  action="#" method="post">
+      <form class="row g-2"  action="" method="post">
 
         <!--Titre du message-->
         <div class="form-group">
@@ -57,7 +58,7 @@
             class="btn btn-sm mt-2 btn-danger shadow-sm"
             type="submit"
             value="creer"
-            @click.prevent="btnPublier"
+            @click.prevent="btnPublier()"
           >
             Publier
           </button>
@@ -78,9 +79,11 @@ export default {
       gifPreview: null,
       imagePreview:'',
       gifs: [],
+      Gif:'',
       title: '',
       userId:'',
-      Users: [],
+      user: [],
+      User:'',
       id: '',
       
     };
@@ -104,10 +107,10 @@ export default {
       async function gifForm (formData){
  
         try{
-          const response =  await fetch('http://localhost:3000/api/forum',  {
+          const response =  await fetch("http://localhost:3000/api/forum/",  {
             method: 'POST',
             headers: {
-              //'Content-Type': 'application/x-www-form-urlencoded',
+              /* 'content-type': 'application/json', */
               'Authorization': 'bearer ' + localStorage.getItem('token')
             },
             body: formData,

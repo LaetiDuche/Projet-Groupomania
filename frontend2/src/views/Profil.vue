@@ -26,16 +26,16 @@ Possibilité de supprimer son compte
         <form>
           <div class="d-flex">
 
-            <!--Visualiser la photo sélectionnée-->
+            <!--Visualiser la photo enregistrée-->
             <img
-              v-if="photo"
+              v-if="photo "
               :src="photo"
               id="preview"
               alt="image profil"
               class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"             
             />
 
-            <!--Si l'utilisateur ne click pas pour modifier-->
+            <!--Si l'utilisateur n'a jamais modifier sa photo-->
             <img
               v-else
               class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
@@ -131,9 +131,9 @@ export default {
     return {
       photo: localStorage.getItem("photo"),
       username: localStorage.getItem("username"),
-      
+      userId:'',
      
-      imagePreview: '',
+      imagePreview: null,
       
       user: [],
       id: "",
@@ -148,7 +148,7 @@ export default {
 
       fetch("http://localhost:3000/api/users/" + id, {
         headers: {
-          authorization: "Bearer" + localStorage.getItem("token"),
+          'Authorization': "Bearer" + localStorage.getItem("token"),
         },
       })
         .then((response) => {
@@ -180,8 +180,11 @@ export default {
       formData.append("image", this.file);
       formData.append("username", this.username);
 
+      /* const photo = JSON.parse({photo: this.photo}); */
+      const photo = localStorage.getItem('photo');
       async function postProfil(formData) {
 
+        
          const id = localStorage.getItem("Id");
         try {
           const response = await fetch(
@@ -200,7 +203,8 @@ export default {
           if (response.ok) {
             const responseId = await response.json();
             
-           
+           localStorage.setItem('photo', JSON.stringify(photo));
+
            /*  localStorage.setItem('photo', responseId.photo);
             
             localStorage.setItem('username', responseId.username); */
