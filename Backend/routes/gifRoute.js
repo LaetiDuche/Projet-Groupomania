@@ -12,4 +12,6 @@ router.post('/', auth , multer,  gifCtrl.createGif);
 router.delete('/:id', auth, gifCtrl.deleteGif);
 /* router.post('/:id/like', auth, likeCtrl.likeGif); */
 
+
+
 module.exports = router;

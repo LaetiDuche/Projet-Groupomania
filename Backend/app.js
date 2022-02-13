@@ -12,7 +12,8 @@ const helmet = require('helmet');
 //Importations des routes
 const userRoute = require('./routes/userRoute');
 const gifRoute = require('./routes/gifRoute');
-/* const likeRoute = require('./routes/likeRoute'); */
+const likeRoute = require('./routes/likeRoute');
+const commentRoute = require('./routes/commentRoute');
 
 const app = express();
 
@@ -56,8 +57,9 @@ app.use(express.urlencoded({extended: true,limit: '70mb', parameterLimit: 700000
 app.use(express.json({ limit: '70mb' }));
 
 app.use('/api/forum', gifRoute);
-/* app.use('/api/likes', likeRoute); */
 app.use('/api/users', userRoute);
+app.use('/api/forum', likeRoute);
+app.use('/api/comment', commentRoute);
 
 module.exports = sequelize;
 module.exports = app;
