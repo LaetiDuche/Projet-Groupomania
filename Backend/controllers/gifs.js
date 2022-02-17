@@ -2,6 +2,7 @@ const fs = require('fs');
 const express = require('express');
 const Gif = require('../models').Gif;
 const User = require('../models').User;
+const Comment = require('../models').Comment;
 /* const Like = require('../models').Like;
 const multer = require('../utils/multer_config'); */
 
@@ -29,7 +30,7 @@ exports.getAllGifs = (req, res, next) => {
   console.log("Current user id admin => " + req.user.isAdmin)
   console.log("toto")
   Gif.findAll(
-    { include: User, order: [['createdAt', 'DESC']] }
+    { include: User, Comment, order: [['createdAt', 'DESC']] }
   )
     .then(gifs => res.status(200).json(gifs))
     .catch(error => { console.log(error); res.status(400).json({ error }) });

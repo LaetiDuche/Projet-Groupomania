@@ -24,19 +24,38 @@ module.exports = (sequelize, DataTypes) => {
       });
       */
       models.Comment.belongsTo(models.User, {
-         foreignKey: 'userId',
+         foreignKey: {
+          allowNull: false,
+        }
        }),
        models.Comment.belongsTo(models.Gif, {
-         foreignKey: 'gifsId'
+         foreignKey: {
+          allowNull: false,
+        }
        })
     }
   };
   Comment.init({
-    userId: DataTypes.INTEGER,
-    gifsId: DataTypes.INTEGER,
-    /* username: DataTypes.STRING, */
-    comment: DataTypes.STRING
-  }, {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      required: true
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    gifsId: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    comment: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  }, 
+  {
     sequelize,
     modelName: 'Comment',
   });

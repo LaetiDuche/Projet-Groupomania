@@ -52,6 +52,13 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
+    commentsId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Comment',
+        key: 'id'
+      }
+    },
     isAdmin:{
       type: DataTypes.BOOLEAN,
       allowNull: false,

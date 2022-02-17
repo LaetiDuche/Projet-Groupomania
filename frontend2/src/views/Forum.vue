@@ -45,6 +45,7 @@
       </div>
     </div>
 
+
     <!--Affichage des messages du forum-->
     <div
       class="
@@ -61,6 +62,7 @@
       :key="gifs.id"
     >
       <div class="d-flex px-3 py-3">
+
         <!--Utilisateur-->
         <div class="my-auto">
           <img
@@ -163,9 +165,9 @@
         />
 
         <form
-         @submit.prevent="submitComment()"
+         @submit.prevent="submitComment(gifs.id)"
           class="d-flex flex-fill"
-          
+          method="post"
         >
           <label class="form-label" for="comment"></label>
           <input
@@ -176,33 +178,32 @@
             type="text"
             placeholder="Ecrire un commentaire ..."
             
-          /> <!--  v-on:keyup.enter.prevent="submitComment()"  v-on:keyup.enter="submitComment(gifs.id)"-->
-          <button @click="submitComment()"><i class="bi bi-send ms-2"></i></button>
+          /> <!--  v-on:keyup.enter="submitComment(gifs.id)" -->
+          <button @click="submitComment(gifs.id)"><i class="bi bi-send ms-2"></i></button>
           
         </form>
       </div>
-
+     
       <!--Commentaires des autres utilisateurs-->
-      <div class="border comment-border mx-3 pt-2">
+      <div class="border comment-border mx-3 pt-2" >
         <div
           class="d-flex flex-column flex-fill"
-          v-for="comments in Comment"
-          :key="comments.id"
+          v-for="comment in Comment"
+          :key="comment.id"
         >
-          <!-- === 'true'-->
 
           <div>
-            <div class="d-flex px-3 py-1">
+            <div class="d-flex px-3 py-1" v-if="comment" ><!-- v-if="userId == comments.userId"   v-else-->
               <img
-                v-if="comments.User.photo"
-                :src="comments.User.photo"
+                v-if="comment.User.photo"
+                :src="comment.User.photo"
                 class="rounded-circle text-center shadow"
                 height="30"
                 alt="avatar"
                 loading="lazy"
               />
               <img
-                v-else
+               v-else
                 class="rounded-circle shadow"
                 height="30"
                 alt="photo profil"
@@ -212,12 +213,12 @@
               />
               <div class="d-flex flex-column flex-fill ms-3">
                 <span class="d-flex flex-column fw-bold" id="username">
-                  {{ comments.User.username }}
+                  {{ comment.User.username }}
                 </span>
-                <p class="fs-6 fw-light mb-0">{{ comments.comment }}</p>
+                <p class="fs-6 fw-light mb-0">{{ comment.comment }}</p>
 
                 <span class="date fw-light ms-auto">
-                  Le {{ dateFormat(comments.createdAt) }}
+                  Le {{ dateFormat(comment.createdAt) }}
                 </span>
                 <hr class="dashed col-12 mx-auto" />
               </div>
@@ -228,7 +229,7 @@
                 style="cursor: pointer"
                 role="button"
                 v-if="isAdmin === 'true'"
-                @click="btnDeleteComment(comments.id)"
+                @click="btnDeleteComment(comment.id)"
               >
                 <i class="bi bi-trash"></i>
               </div>
@@ -249,23 +250,20 @@ export default {
 
   data() {
     return {
-      /* isAdmin: localStorage.getItem("isAdmin"), */
       isAdmin: "",
       userId:'',
+      gifsId: '',
+      commentsId:'',
       photo: localStorage.getItem("photo"),
-      /* userId: localStorage.getItem("Id"), */
-      /* gifs: [], */
       gifs:'',
       Gif: "",
-      user: [],
+      users: '',
       User: "",
       like: [],
       likes: "",
       Comment: "",
-      comment: "",
-      comments: [],
-      id: "",
-      gifsId: '',
+      comment: '',
+      id: "",     
       btnClick1: 0,
       btnClick2: 0,
       click1: false,
@@ -284,11 +282,31 @@ export default {
       },
     })
       .then((response) => response.json())
-      .then((gifs) => (this.Gif = gifs))
+      .then((gifs) => (this.Gif = gifs))      
       .then((users) => (this.User = users))
+      .then((comment) => (this.Comment = comment))
       .then((likes) => (this.Like = likes))
-      .then((comments) => (this.Comment = comments));
+      
   },
+ 
+  /* getComments (id){
+      fetch('http://localhost:3000/api/comment/' + id, {
+         headers: {
+        "Content-Type": "application/json",
+        'Authorization': "Bearer " + localStorage.getItem("token"),
+      },
+      })
+      .then(response => {
+                this.Comment = response.data;
+                
+            }
+            
+            )
+            
+      .then((response) => response.json())
+      .then((comment) => (this.Comment = comment))
+    }, */
+
 
   mounted() {
     this.isAdmin = localStorage.getItem("isAdmin");
@@ -296,6 +314,25 @@ export default {
   },
 
   methods: {
+
+    /* getComments (id){
+      fetch('http://localhost:3000/api/comment/' + id, {
+         headers: {
+        "Content-Type": "application/json",
+        'Authorization': "Bearer " + localStorage.getItem("token"),
+      },
+      })
+      .then(response => {
+                this.Comment = response.data;
+                
+            }
+            
+            )
+            
+      .then((response) => response.json())
+      .then((comment) => (this.Comment = comment))
+    }, */
+
     //Supprimer une publication
     btnDelete(id) {
       let gifsId = JSON.stringify({ id: this.gifsId });
@@ -331,21 +368,17 @@ export default {
       this.comment = event.target.value
     }, */    
     
-    submitComment() {
-      const formData = new FormData();
-      console.log(this.comment);
-      formData.append("comment", this.comment);
-
-      async function commentForm(formData) {
+    submitComment(id) {
+      async function commentForm(comment, id) {
         try {
-          const response = await fetch("http://localhost:3000/api/comment/" , {
+          const response = await fetch('http://localhost:3000/api/comment/' + id, {
             method: "POST",
             
             headers: {
-              //'Content-Type': 'application/json',
+              'Content-Type': 'application/json',
               'Authorization': "bearer " + localStorage.getItem("token"),
             },
-            body: formData,
+            body: JSON.stringify({ comment: comment }),
           });
           if (response.ok) {
             const responseId = await response.json();
@@ -357,10 +390,10 @@ export default {
             console.error("Retour du serveur: ", response.status);
           }
         } catch (e) {
-          /* console.log(e); */
+           /* console.log(e); */ 
         }
       }
-      commentForm(formData);
+      commentForm(this.comment, id);
     },
 
     //Supprimer un commentaire (admin)

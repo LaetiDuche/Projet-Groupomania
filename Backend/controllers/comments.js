@@ -4,13 +4,12 @@ const Comment = require('../models').Comment;
 
 //Créer un commentaire
 exports.createComment = (req, res, next) => {
-
-  const commentObject = req.body;
+  console.log(req.body)
+ /*  const commentObject = req.body; */
   // Création d'un nouvel objet commentaire
   const comment = new Comment({
-    ...commentObject,
-    userId: req.body.id,
-    gifsId: req.body.id,
+    userId: req.user.id,
+    gifsId: req.params.id,
     comment: req.body.comment,
   });
   // Enregistrement de l'objet commentaire dans la base de données
@@ -22,13 +21,13 @@ exports.createComment = (req, res, next) => {
   comment.save()
     .then(() => {
       Comment.findAll({
-        where: { gifsId: req.body.id }
+        where: { gifsId: req.params.id }
       })
         .then((comment) => {
           res.status(200).json(comment);
         })
     })
-    .catch(error => res.status(400).json({ error }));
+    .catch((error) => res.status(400).json({ error }));
 }
 
 //Voir tous les commentaires dans le forum
@@ -36,9 +35,15 @@ exports.getAllComments = (req, res, next) => {
   console.log("Current user id admin => " + req.user.isAdmin)
   console.log("toto")
   Comment.findAll(
-    { include: User, order: [['createdAt', 'DESC']] }
+    { /* where: { gifsId: req.params.id,}, */
+    include: User/* [{ model: ,
+      attributes: ['username', 'photo'] 
+    }] */,
+      order: [['createdAt', 'DESC']],
+        
+    }
   )
-    .then(comments => res.status(200).json(comments))
+    .then(comment => res.status(200).json(comment))
     .catch(error => { console.log(error); res.status(400).json({ error }) });
 };
 
