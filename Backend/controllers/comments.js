@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models').User;
 const Comment = require('../models').Comment;
+const Gif = require('../models').Gif;
 
 //Créer un commentaire
 exports.createComment = (req, res, next) => {
@@ -9,41 +10,39 @@ exports.createComment = (req, res, next) => {
   // Création d'un nouvel objet commentaire
   const comment = new Comment({
     userId: req.user.id,
-    gifsId: req.params.id,
-    comment: req.body.comment,
+    gifId: req.params.id,
+    comments: req.params.comments,
   });
   // Enregistrement de l'objet commentaire dans la base de données
 
-  /* comment.save()
-    .then(() => res.status(201).json({ message: 'Commentaire enregistré !' }))
-    .catch(error => res.status(400).json({ error }));  */
-
   comment.save()
+    .then(() => res.status(201).json({ message: 'Commentaire enregistré !' }))
+    .catch(error => res.status(400).json({ error })); 
+
+  /* comment.save()
     .then(() => {
       Comment.findAll({
-        where: { gifsId: req.params.id }
+        where: { gifId: req.params.id }
       })
         .then((comment) => {
           res.status(200).json(comment);
         })
     })
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(400).json({ error })); */
 }
 
 //Voir tous les commentaires dans le forum
 exports.getAllComments = (req, res, next) => {
-  console.log("Current user id admin => " + req.user.isAdmin)
-  console.log("toto")
+  /* console.log("Current user id admin => " + req.user.isAdmin) */
+  console.log("toto comment")
   Comment.findAll(
-    { /* where: { gifsId: req.params.id,}, */
-    include: User/* [{ model: ,
-      attributes: ['username', 'photo'] 
-    }] */,
+    { where: { gifId: req.params.id,},
+    include: User, include: Gif, 
       order: [['createdAt', 'DESC']],
         
     }
   )
-    .then(comment => res.status(200).json(comment))
+    .then(comments => res.status(200).json(comments))
     .catch(error => { console.log(error); res.status(400).json({ error }) });
 };
 

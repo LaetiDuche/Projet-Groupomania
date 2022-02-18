@@ -7,7 +7,7 @@ const Gif = require('../models').Gif;
 
 exports.getLikes = (req, res, next) => {
   Like.findAll({include: User, where: {
-    gifsId: req.body.gifsId}})
+    gifId: req.body.gifId}})
     .then(likes => {
         console.log(likes);
         res.status(200).json({data: likes});
@@ -18,7 +18,7 @@ exports.getLikes = (req, res, next) => {
 exports.postLike = (req, res, next) => {
   const likeObject = req.body;
     Like.findAll({where: {
-      gifsId: req.body.gifsId,
+      gifId: req.body.gifId,
       /* userId: req.body.userId */
       }})
       .then(likes => {
@@ -30,7 +30,7 @@ exports.postLike = (req, res, next) => {
           like.save()
           .then(() => {
             Like.findAll({
-              where: {gifsId: req.body.gifsId}
+              where: {gifId: req.body.gifId}
             }).then(likes => {
               res.status(200).json({ like: likes.length});
             })
@@ -38,11 +38,11 @@ exports.postLike = (req, res, next) => {
           .catch(error => res.status(400).json({ error }));
         } else {
           Like.destroy({ where: {
-            gifsId: req.body.gifsId,
+            gifId: req.body.gifId,
             /* userId: req.body.userId */ }})
             .then(() => {
               Like.findAll({
-                where: {gifsId: req.body.gifsId}
+                where: {gifId: req.body.gifId}
               }).then(likes => {
                 res.status(200).json({ like: likes.length});
               })

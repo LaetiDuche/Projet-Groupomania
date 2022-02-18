@@ -14,9 +14,18 @@ module.exports = (sequelize, DataTypes) => {
       models.Gif.belongsTo(models.User, {
         foreignKey: {
           allowNull: false,
+          onDelete: 'cascade',
+          hooks: true
         }
       }),
-      models.Gif.hasMany(models.Comment);
+      models.Gif.hasMany(models.Comment,
+        { foreignKey: {
+          allowNull: false,
+          onDelete: 'cascade',
+          hooks: true
+        }
+       }
+        );
       models.Gif.hasMany(models.Like);
     }
   };
@@ -30,8 +39,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       userId: {
         type: DataTypes.INTEGER,
-        required: true,
-        allowNull: false 
+        references: {
+          model: 'User',
+          key: 'id'
+        } 
       },
       title: { 
         type: DataTypes.STRING, 
@@ -43,6 +54,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       likes: {
         type: DataTypes.INTEGER
+      },
+      comments: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Comment',
+          key: 'id'
+        }
       },
     },
     {

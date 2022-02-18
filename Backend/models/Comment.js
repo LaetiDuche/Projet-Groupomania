@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Comment extends Model {
     /**
@@ -11,28 +9,40 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      /*
-      models.User.belongsToMany(models.Gif,{
+      
+      models.Comment.belongsTo(models.User, {
+        foreignKey: {
+        allowNull: false,
+        onDelete: 'cascade',
+        hooks: true
+       }
+      });
+      models.Comment.belongsTo(models.Gif, {
+        foreignKey: {
+        allowNull: false,
+        onDelete: 'cascade',
+        hooks: true
+       }
+      });
+      /* models.Comment.hasMany(models.Gif); */
+     
+      /* models.User.belongsToMany(models.Gif,{
         through: models.Comment,
         foreignKey: 'userId',
-        otherKey: 'gifsId'
+        otherKey: 'gifId'
       });
       models.Gif.belongsToMany(models.User,{
         through: models.Comment,
-        foreignKey: 'gifsId',
+        foreignKey: 'gifId',
         otherKey: 'userId'
-      });
-      */
-      models.Comment.belongsTo(models.User, {
+      }); */
+      
+     
+      /*  models.Comment.belongsTo(models.Gif, {
          foreignKey: {
           allowNull: false,
         }
-       }),
-       models.Comment.belongsTo(models.Gif, {
-         foreignKey: {
-          allowNull: false,
-        }
-       })
+       }) */
     }
   };
   Comment.init({
@@ -44,13 +54,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      references: {
+        model: 'User',
+        key: 'id'
+      }
     },
-    gifsId: {
+    gifId: {
       type: DataTypes.STRING,
-      allowNull: true
+      references: {
+        model: 'Gif',
+        key: 'id'
+      }
     },
-    comment: {
+    comments: {
       type: DataTypes.STRING,
       allowNull: false
     }

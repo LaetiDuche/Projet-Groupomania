@@ -151,8 +151,7 @@ export default {
           'Authorization': "Bearer" + localStorage.getItem("token"),
         },
       })
-        .then((response) => {
-          this.user = response.data;
+        .then((response) => { this.user = response.data;
           
         })
         .catch((err) => {

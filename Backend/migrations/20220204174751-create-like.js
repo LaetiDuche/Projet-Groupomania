@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      gifsId: {
+      gifId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         refrences: {
-          model: 'Gifs',
+          model: 'Gif',
           key: 'id'
         }
       },
@@ -20,7 +20,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         refrences:{
-          model: 'Users',
+          model: 'User',
           key: 'id'
         }
       },

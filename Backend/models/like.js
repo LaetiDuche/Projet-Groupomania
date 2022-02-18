@@ -15,12 +15,12 @@ module.exports = (sequelize, DataTypes) => {
       models.User.belongsToMany(models.Gif,{
         through: models.Like,
         foreignKey: 'userId',
-        otherKey: 'gifsId'
+        otherKey: 'gifId'
       });
 */
       /*models.Gif.belongsToMany(models.User,{
         through: models.Like,
-        foreignKey: 'gifsId',
+        foreignKey: 'gifId',
         otherKey: 'userId'
       });*/
 
@@ -30,13 +30,13 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       models.Like.belongsTo(models.Gif,{
-        foreignKey: 'gifsId'/* ,
+        foreignKey: 'gifId'/* ,
         as: 'gif' */
       });
     }
   };
   Like.init({
-    gifsId: {
+    gifId: {
       type:DataTypes.INTEGER,
       references: {
         model: 'Gif',

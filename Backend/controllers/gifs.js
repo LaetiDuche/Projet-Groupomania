@@ -28,9 +28,13 @@ exports.createGif = (req, res) => {
 //Voir tous les messages dans le forum
 exports.getAllGifs = (req, res, next) => {
   console.log("Current user id admin => " + req.user.isAdmin)
-  console.log("toto")
+  console.log("toto gif")
   Gif.findAll(
-    { include: User, Comment, order: [['createdAt', 'DESC']] }
+    { include: [{
+      model: User, 
+      attributes: ['username', 'photo', 'id', ]
+    }], 
+    order: [['createdAt', 'DESC']] }
   )
     .then(gifs => res.status(200).json(gifs))
     .catch(error => { console.log(error); res.status(400).json({ error }) });

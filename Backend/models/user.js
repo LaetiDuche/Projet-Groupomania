@@ -13,7 +13,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.User.hasMany(models.Gif, 
-        { onDelete: 'cascade' }
+        { onDelete: 'cascade',
+          hooks: true
+       }
         );
       models.User.hasMany(models.Comment,
         { onDelete: 'cascade' }
@@ -45,14 +47,15 @@ module.exports = (sequelize, DataTypes) => {
     likes: {
       type: DataTypes.INTEGER
     },
-    gifsId: {
+    gifId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: 'Gif',
         key: 'id'
       }
     },
-    commentsId: {
+    comments: {
       type: DataTypes.INTEGER,
       references: {
         model: 'Comment',

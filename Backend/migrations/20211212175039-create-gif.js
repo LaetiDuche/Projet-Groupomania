@@ -12,10 +12,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references:{
-          model: 'Users',
+          model: 'User',
           key:'id'
         }
       },
+      comments: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references:{
+          model: 'Comment',
+          key:'id'
+        }
+      },
+      
       title: {
         allowNull: false,
         type: Sequelize.STRING

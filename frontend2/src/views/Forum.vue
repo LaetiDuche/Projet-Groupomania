@@ -188,15 +188,15 @@
       <div class="border comment-border mx-3 pt-2" >
         <div
           class="d-flex flex-column flex-fill"
-          v-for="comment in Comment"
-          :key="comment.id"
+          v-for="comments in Comment"
+          :key="comments.id"
         >
 
           <div>
-            <div class="d-flex px-3 py-1" v-if="comment" ><!-- v-if="userId == comments.userId"   v-else-->
+            <div class="d-flex px-3 py-1" v-if="comments" ><!-- v-if="userId == comments.userId"   v-else-->
               <img
-                v-if="comment.User.photo"
-                :src="comment.User.photo"
+                v-if="comments.User.photo"
+                :src="comments.User.photo"
                 class="rounded-circle text-center shadow"
                 height="30"
                 alt="avatar"
@@ -213,12 +213,12 @@
               />
               <div class="d-flex flex-column flex-fill ms-3">
                 <span class="d-flex flex-column fw-bold" id="username">
-                  {{ comment.User.username }}
+                  {{ comments.User.username }}
                 </span>
-                <p class="fs-6 fw-light mb-0">{{ comment.comment }}</p>
+                <p class="fs-6 fw-light mb-0">{{ comments }}</p>
 
                 <span class="date fw-light ms-auto">
-                  Le {{ dateFormat(comment.createdAt) }}
+                  Le {{ dateFormat(comments.createdAt) }}
                 </span>
                 <hr class="dashed col-12 mx-auto" />
               </div>
@@ -229,7 +229,7 @@
                 style="cursor: pointer"
                 role="button"
                 v-if="isAdmin === 'true'"
-                @click="btnDeleteComment(comment.id)"
+                @click="btnDeleteComment(comments.id)"
               >
                 <i class="bi bi-trash"></i>
               </div>
@@ -252,16 +252,18 @@ export default {
     return {
       isAdmin: "",
       userId:'',
-      gifsId: '',
-      commentsId:'',
+      gifId: '',
+      
       photo: localStorage.getItem("photo"),
-      gifs:'',
-      Gif: "",
-      users: '',
-      User: "",
+      gifs: "",
+      Gif: [],
+      
+      users: "",
+      user: [],
       like: [],
       likes: "",
-      Comment: "",
+      Comment: [],
+      comments: "",
       comment: '',
       id: "",     
       btnClick1: 0,
@@ -281,10 +283,17 @@ export default {
         'Authorization': "Bearer " + localStorage.getItem("token"),
       },
     })
+     /*  .then((response) => { 
+        this.User = response.data,
+        this.Gif = response.data,
+        this.Comment = response.data,
+        this.Like = response.data
+         }) */
+
       .then((response) => response.json())
       .then((gifs) => (this.Gif = gifs))      
       .then((users) => (this.User = users))
-      .then((comment) => (this.Comment = comment))
+      .then((comments) => (this.Comment = comments))
       .then((likes) => (this.Like = likes))
       
   },
@@ -335,7 +344,7 @@ export default {
 
     //Supprimer une publication
     btnDelete(id) {
-      let gifsId = JSON.stringify({ id: this.gifsId });
+      let gifId = JSON.stringify({ id: this.gifId });
       async function gifForm(dataForm) {
         confirm("Voulez-vous vraiment supprimer ce message ?");
         try {
@@ -361,7 +370,7 @@ export default {
           /* console.log(e);  */
         }
       }
-      gifForm(gifsId);
+      gifForm(gifId);
     },
 
     /* commentPost(event){
@@ -369,7 +378,7 @@ export default {
     }, */    
     
     submitComment(id) {
-      async function commentForm(comment, id) {
+      async function commentForm(comments, id) {
         try {
           const response = await fetch('http://localhost:3000/api/comment/' + id, {
             method: "POST",
@@ -378,7 +387,7 @@ export default {
               'Content-Type': 'application/json',
               'Authorization': "bearer " + localStorage.getItem("token"),
             },
-            body: JSON.stringify({ comment: comment }),
+            body: JSON.stringify({ comment: comments }),
           });
           if (response.ok) {
             const responseId = await response.json();
@@ -393,12 +402,12 @@ export default {
            /* console.log(e); */ 
         }
       }
-      commentForm(this.comment, id);
+      commentForm(this.comments, id);
     },
 
     //Supprimer un commentaire (admin)
     btnDeleteComment(id) {
-      let commentId = JSON.stringify({ id: this.commentId });
+      let commentId = JSON.stringify({ id: this.comments });
       async function commentForm(dataForm) {
         confirm("Voulez-vous vraiment supprimer ce commentaire ?");
         try {
