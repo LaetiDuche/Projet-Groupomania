@@ -53,7 +53,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false 
       },
       likes: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Like',
+          key: 'id'
+        }
       },
       comments: {
         type: DataTypes.INTEGER,
