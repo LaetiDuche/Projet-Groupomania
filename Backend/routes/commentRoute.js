@@ -5,7 +5,8 @@ const router = express.Router();
 const commentCtrl = require('../controllers/comments');
 const auth = require('../utils/jwt');
 
-router.get('/:id', auth,  commentCtrl.getAllComments);
+router.get('/', auth,  commentCtrl.getAllComments);
+router.get('/:id', auth,  commentCtrl.getOneComment);
 router.post('/:id', auth,  commentCtrl.createComment);
 router.delete('/:id', auth, commentCtrl.deleteComment);
 

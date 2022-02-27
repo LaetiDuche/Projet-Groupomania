@@ -1,7 +1,7 @@
 const express = require('express');
 const User = require('../models').User;
 const Comment = require('../models').Comment;
-/* const Gif = require('../models').Gif; */
+const Gif = require('../models').Gif;
 
 //Créer un commentaire
 exports.createComment = (req, res, next) => {
@@ -37,18 +37,21 @@ exports.getAllComments = (req, res, next) => {
   console.log("toto comment")
   Comment.findAll(
     {
-      where: {
-        gifId: req.params.id,
-      },
       include: [{
         model: User,
-        attributes: ['id', 'username', 'photo']
+        attributes: ['id', 'username', 'photo'],
+
+        include: [{
+          model: Gif,
+          attributes: ['id']
+        }],
+        order: [['createdAt', 'DESC']],
       }],
       /* include: [{
         model: Gif,
         attributes: ['id']
       }], */
-      order: [['createdAt', 'DESC']],
+      /* order: [['createdAt', 'DESC']], */
     }
   )
     .then((comments) => res.status(200).json(comments))
@@ -61,7 +64,7 @@ exports.getOneComment = (req, res, next) => {
   Comment.findOne(
     {
       where: {
-        gifId: req.params.id
+        id: req.params.id
       },
       include: [{
         model: User,

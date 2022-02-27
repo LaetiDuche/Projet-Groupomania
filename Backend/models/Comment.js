@@ -9,23 +9,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      
+
       models.Comment.belongsTo(models.User, {
         foreignKey: {
-        allowNull: false,
-        onDelete: 'cascade',
-        hooks: true
-       }
+          allowNull: false,
+          onDelete: 'cascade',
+          hooks: true
+        }
       });
       models.Comment.belongsTo(models.Gif, {
         foreignKey: {
-        allowNull: false,
-        onDelete: 'cascade',
-        hooks: true
-       }
+          allowNull: false,
+          onDelete: 'cascade',
+          hooks: true
+        }
       });
       /* models.Comment.hasMany(models.Gif); */
-     
+
       /* models.User.belongsToMany(models.Gif,{
         through: models.Comment,
         foreignKey: 'userId',
@@ -36,8 +36,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'gifId',
         otherKey: 'userId'
       }); */
-      
-     
+
+
       /*  models.Comment.belongsTo(models.Gif, {
          foreignKey: {
           allowNull: false,
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       required: true
     },
-    userId: {
+    /* userId: {
       type: DataTypes.INTEGER,
       references: {
         model: 'User',
@@ -65,15 +65,15 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Gif',
         key: 'id'
       }
-    },
+    }, */
     comments: {
       type: DataTypes.STRING,
       allowNull: false
     }
-  }, 
-  {
-    sequelize,
-    modelName: 'Comment',
-  });
+  },
+    {
+      sequelize,
+      modelName: 'Comment',
+    });
   return Comment;
 };

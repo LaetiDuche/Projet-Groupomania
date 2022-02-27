@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      gifId: {
+      /* gifId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         refrences: {
@@ -23,7 +23,7 @@ module.exports = {
           model: 'User',
           key:'id'
         }
-      },
+      }, */
       comments: {
         allowNull: false,
         type: Sequelize.STRING
