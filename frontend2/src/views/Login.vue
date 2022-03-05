@@ -11,7 +11,7 @@ Création de la session utilisateur sécurisée et redirection sur le forum
       <h3 class="text-center mb-3">Se connecter</h3>
 
       <!--Formulaire de connexion-->
-      <form class="row g-2">
+      <form class="row g-2" @submit.prevent="btnLogin">
 
         <!--Email-->
         <div class="form-group">
@@ -29,7 +29,7 @@ Création de la session utilisateur sécurisée et redirection sur le forum
 
         <!--Bouton connexion-->
         <div class="text-center">
-          <button class="btn btn-sm mt-2 btn-danger shadow-sm" v-on:click="btnLogin" type="submit" value="connexion">Me connecter</button>
+          <button class="btn btn-sm mt-2 btn-danger shadow-sm"  type="submit"  value="connexion">Me connecter</button><!--@click="btnLogin()"-->
         </div>
       </form>
     </div>
@@ -50,20 +50,20 @@ export default {
    methods: {
     btnLogin(){
       /*Vérification des données utilisateur */
-      const postFormulaire = JSON.stringify({email: this.email, password: this.password});
+      const dataUserConnexion = JSON.stringify({email: this.email, password: this.password});
       async function logIn(dataUserConnexion){
         try{
-          const response = await fetch('http://localhost:3000/api/users/login', {
+          const response = await fetch("http://localhost:3000/api/users/login", {
             method: 'POST',
             headers: {
-              'Content-type': 'application/json'
+              'content-type': 'application/json'
             },
             body: dataUserConnexion,
           });
           /*Ouverture de la session utilisateur sécurisée*/ 
           if (response.ok){
             const responseId = await response.json();
-            localStorage.setItem('Id', responseId.userId);
+            localStorage.setItem('id', responseId.userId);
             localStorage.setItem('token', responseId.token);
             localStorage.setItem('isAdmin', responseId.isAdmin);
             localStorage.setItem('email', responseId.email);
@@ -71,19 +71,18 @@ export default {
             localStorage.setItem('photo', responseId.photo);
 
             /*Redirection sur le forum*/ 
-            /* this.$router.push("forum"); */
             /* location.replace(location.origin + "#/forum"); */
-             window.location.href = "http://localhost:8080/#/forum";
-           /*  window.location.href = "http://localhost:8080/home/login/forum"; */
+            window.location.href = "http://localhost:8080/#/forum";
+            location.reload();
             
           }else{
             console.error('Retour du serveur: ', response.status);
           }
         }catch(e){
-          /* console.log(e); */
+          console.log(e);
         }
       }
-      logIn(postFormulaire);
+      logIn(dataUserConnexion);
     }
   }
 }

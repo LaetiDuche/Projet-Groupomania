@@ -5,10 +5,15 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
 
 <template>
   <header class="sticky-top">
-    <nav class="navbar d-flex p-2 ">
+    <nav class="navbar d-flex p-2">
       <div class="mx-auto">
         <router-link to="/">
-          <img  src="../assets/icon-left-font.png" alt="logo" height="48" width="190"/>
+          <img
+            src="../assets/icon-left-font.png"
+            alt="logo"
+            height="48"
+            width="190"
+          />
         </router-link>
       </div>
 
@@ -24,72 +29,88 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
       </div>
 
       <!--Si l'utilisateur est connecté-->
-      <div class="dropdown  dropstart m-auto " v-else>  
-        <a class="btn dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-          <img id="preview" v-if="userId === 'true' || photo" :src="photo" class="rounded-circle shadow" height="40" alt="" loading="lazy"/><!--  :src="imagePreview"--> 
+      <div class="dropdown dropstart m-auto" v-else>
+        <a
+          class="btn dropdown-toggle"
+          role="button"
+          id="dropdownMenuLink"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
           <img
-              v-else
-              class="rounded-circle shadow"
-              height="40"
-              alt="photo profil"
-              loading="lazy"
-              src="../assets/user-profile.jpg"
-              id="preview"
-            />
+            id="preview"
+            v-if="photo"
+            :src="photo"
+            class="rounded-circle shadow"
+            height="40"
+            alt=""
+            loading="lazy"
+          />
+          <img
+            v-else
+            class="rounded-circle shadow"
+            height="40"
+            alt="photo profil"
+            loading="lazy"
+            src="../assets/user-profile.jpg"
+            id="preview"
+          />
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li>
-            <router-link to="/profil" class="dropdown-item">Mon profil</router-link>            
+            <router-link to="/profil" class="dropdown-item"
+              >Mon profil</router-link
+            >
           </li>
           <li>
             <router-link to="/forum" class="dropdown-item">Forum</router-link>
           </li>
           <li>
-            <a href="" role="button" class="dropdown-item" v-on:click="logout">Se déconnecter</a>
+            <a role="button" class="dropdown-item" @click="logout">
+              Se déconnecter
+            </a>
           </li>
         </ul>
       </div>
-
     </nav>
   </header>
 </template>
 
 <script>
-
 export default {
   name: "Header",
 
-  /*Changement de header si utilisateur connecté*/ 
+  /*Changement de header si utilisateur connecté*/
   data() {
     return {
-      id: "",
+      id: '',
       photo: localStorage.getItem("photo"),
-      /* photo:'', */
       imagePreview: null,
-      userId:'',
+      userId: '',
     };
   },
   mounted() {
-    let idUser = localStorage.getItem("Id");
-    console.log(idUser);
-    this.id = idUser;
+    let userId = localStorage.getItem("id");
+    console.log(userId);
+    this.id = userId;
+    
   },
 
-  /*Se déconnecter*/ 
+  /*Se déconnecter*/
   methods: {
-    logout(){
-      localStorage.removeItem('token');
-      localStorage.removeItem('Id');
-      localStorage.removeItem('username');
-      localStorage.removeItem('isAdmin');
-      localStorage.removeItem('email');
-      localStorage.removeItem('photo');
-      localStorage.removeItem('password');
+    logout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("id");
+      localStorage.removeItem("username");
+      localStorage.removeItem("isAdmin");
+      localStorage.removeItem("email");
+      localStorage.removeItem("photo");
+      localStorage.removeItem("password");
 
-      /*Retour à la page Home*/ 
+      /*Retour à la page Home*/
       location.replace(location.origin + "/");
-    }
-  }
+    },
+  },
 };
 </script>
 

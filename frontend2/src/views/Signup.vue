@@ -11,7 +11,7 @@ Redirection sur la page de connection
     <div class="formulaire shadow col-sm-8 col-md-6  mx-3 d-block  mx-sm-auto  mx-md-auto  mt-4  p-3 rounded">
       <h3 class="text-center mb-3">S'inscrire sur le forum</h3>
 
-      <form class="row g-2" @submit="SignUp">
+      <form class="row g-2" @submit.prevent="SignUp">
         <!--Username-->
         <div class="form-group">
           <label classe='form-label mb-0' for="username">Nom utilisateur</label>
