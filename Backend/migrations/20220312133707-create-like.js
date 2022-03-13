@@ -8,25 +8,37 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      gifId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        refrences: {
-          model: 'Gif',
-          key: 'id'
-        }
-      },
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        refrences:{
+        references:{
           model: 'User',
-          key: 'id'
+          key:'id'
         }
       },
-      likes : {
+      gifId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references:{
+          model: 'Gif',
+          key:'id'
+        }
+      },
+      likes: {
         allowNull: false,
         type: Sequelize.INTEGER
+      },
+      dislikes: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      usersLiked: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      usersDisliked: {
+        allowNull: false,
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

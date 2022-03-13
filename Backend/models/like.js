@@ -11,38 +11,39 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      /*
-      models.User.belongsToMany(models.Gif,{
+
+      /* models.User.belongsToMany(models.Gif,{
         through: models.Like,
         foreignKey: 'userId',
         otherKey: 'gifId'
       });
-*/
-      /*models.Gif.belongsToMany(models.User,{
+
+      models.Gif.belongsToMany(models.User,{
         through: models.Like,
         foreignKey: 'gifId',
         otherKey: 'userId'
-      });*/
+      }); */
 
       models.Like.belongsTo(models.User,{
-        foreignKey: 'userId'/* ,
-        as: 'user' */
+        foreignKey: 'userId' ,
+        as: 'user' 
       });
 
       models.Like.belongsTo(models.Gif,{
-        foreignKey: 'gifId'/* ,
-        as: 'gif' */
+        foreignKey: 'gifId' ,
+        as: 'gif' 
       });
+    
     }
   };
   Like.init({
-    gifId: {
-      type:DataTypes.INTEGER,
-      references: {
-        model: 'Gif',
-        key: 'id'
-      }
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      required: true
     },
+
     userId: {
       type: DataTypes.INTEGER,
       references: {
@@ -50,9 +51,18 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    /* liked: DataTypes.INTEGER */
-  },
-   {
+    gifId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Gif',
+        key: 'id'
+      }
+    },
+    likes: DataTypes.INTEGER,
+    dislikes: DataTypes.INTEGER,
+    usersLiked: DataTypes.STRING,
+    usersDisliked: DataTypes.STRING
+  }, {
     sequelize,
     modelName: 'Like',
   });
