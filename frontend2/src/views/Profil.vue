@@ -19,20 +19,19 @@ Possibilité de supprimer son compte
     >
       <div class="mx-auto d-flex flex-column">
         <div>
-          <h3 class="fs-5">Mon profil</h3>  
+          <h3 class="fs-5">Mon profil</h3>
         </div>
 
         <!--Image user-->
         <form>
           <div class="d-flex">
-
             <!--Visualiser la photo enregistrée-->
             <img
-              v-if="photo "
+              v-if="photo"
               :src="photo"
               id="preview"
               alt="image profil"
-              class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"             
+              class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
             />
 
             <!--Si l'utilisateur n'a jamais modifier sa photo-->
@@ -45,9 +44,12 @@ Possibilité de supprimer son compte
             />
 
             <!--Bouton modifier la photo -->
-            <div  @click="btnUpload" width="16" height="16" class="mt-auto">
+            <div @click="btnUpload" width="16" height="16" class="mt-auto">
               <label classe="label form-label mb-0 " for="photo">
-                <i class="bi bi-box-arrow-in-down mt-auto" title="Modifier ma photo"></i>
+                <i
+                  class="bi bi-box-arrow-in-down mt-auto"
+                  title="Modifier ma photo"
+                ></i>
               </label>
               <input
                 class="input form-control d-none"
@@ -59,7 +61,6 @@ Possibilité de supprimer son compte
                 accept="image/*"
               />
             </div>
-
           </div>
         </form>
 
@@ -80,7 +81,6 @@ Possibilité de supprimer son compte
             <div width="16" height="16" class="mt-auto ms-auto" type="submit">
               <label classe="label form-label" for="username">
                 <i class="bi bi-pen" title="Modifier mon nom"></i>
-                
               </label>
               <input
                 class="input form-control d-none"
@@ -95,7 +95,6 @@ Possibilité de supprimer son compte
 
         <!-- Boutons -->
         <div class="d-flex justify-content-around mt-3 text-center flex-wrap">
-
           <!--Bouton valider mon profil-->
           <button
             class="btn btn-danger btn-sm shadow-sm mt-3"
@@ -123,7 +122,6 @@ Possibilité de supprimer son compte
 
 <script>
 export default {
-  
   name: "Profil",
 
   /*Modification du username*/
@@ -131,28 +129,25 @@ export default {
     return {
       photo: localStorage.getItem("photo"),
       username: localStorage.getItem("username"),
-      userId:'',
-     
+      userId: "",
       imagePreview: null,
-      
       user: [],
       id: "",
     };
   },
-  
-  methods: {
 
+  methods: {
     //Affiche le profil de l'utilisateur connecté
     getProfil() {
-      const id = localStorage.getItem("Id");
+      const id = localStorage.getItem("id");
 
       fetch("http://localhost:3000/api/users/" + id, {
         headers: {
-          'Authorization': "Bearer" + localStorage.getItem("token"),
+          Authorization: "Bearer" + localStorage.getItem("token"),
         },
       })
-        .then((response) => { this.user = response.data;
-          
+        .then((response) => {
+          this.user = response.data;
         })
         .catch((err) => {
           this.error(
@@ -173,44 +168,47 @@ export default {
 
     /*Pour valider les modifications*/
     btnValid() {
-       /* const postFormulaire = JSON.stringify({photo: this.photo, username: this.username}); */
+      /* const postFormulaire = JSON.stringify({photo: this.photo, username: this.username}); */
       const formData = new FormData();
       console.log(this.file);
       formData.append("image", this.file);
       formData.append("username", this.username);
 
       /* const photo = JSON.parse({photo: this.photo}); */
-      const photo = localStorage.getItem('photo');
+      /* const photo = localStorage.getItem('photo'); */
       async function postProfil(formData) {
-
-        
-         const id = localStorage.getItem("Id");
+        const id = localStorage.getItem("id");
         try {
           const response = await fetch(
-            "http://localhost:3000/api/users/" +id,
-            
+            "http://localhost:3000/api/users/" + id,
+
             {
-              method: 'PUT',
+              method: "PUT",
               headers: {
                 /* 'Content-Type': 'multipart/form-data', */
                 /* 'Content-Type': 'application/x-www-form-urlencoded', */
-                'Authorization': "bearer " + localStorage.getItem('token')
+                Authorization: "bearer " + localStorage.getItem("token"),
               },
               body: formData,
-            })
+            }
+          );
 
           if (response.ok) {
             const responseId = await response.json();
-            
-           localStorage.setItem('photo', JSON.stringify(photo));
 
-           /*  localStorage.setItem('photo', responseId.photo);
+            /* localStorage.remove('photo', responseId.photo);  */
+            /* const photoProfil = localStorage.getItem('photo'); */
+
+            /* localStorage.removeItem('photo');
+            localStorage.setItem('photo'); */
+
+            /*  localStorage.setItem('photo', responseId.photo);
             
             localStorage.setItem('username', responseId.username); */
             /* localStorage.removeItem('photo', responseId.photo); */
             /* localStorage.setItem('photo'); */
-           
-           /*  this.imagePreview = '../../../backend/images/${this.photo}'
+
+            /*  this.imagePreview = '../../../backend/images/${this.photo}'
             localStorage.push('photo', responseId.photo); */
 
             console.log(responseId);
