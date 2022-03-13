@@ -15,22 +15,19 @@ Redirection sur la page de connection
         <!--Username-->
         <div class="form-group">
           <label classe='form-label mb-0' for="username">Nom utilisateur</label>
-          <input class="form-control" id="username" v-model="username" type="text" required>
-          <span class="d-block"></span>
+          <input class="form-control" id="username" v-model="username" type="text" minlength="3" maxlength="20" required>
         </div>
 
         <!--Email-->
         <div class="form-group">
           <label classe='form-label mb-0' for="email">Email</label>
-          <input class="form-control" id="email" v-model="email" type="email" required>
-          <span class="d-block"></span>
+          <input class="form-control" id="email" v-model="email" type="email" minlength="10" maxlength="40" required>
         </div>
 
         <!--Password-->
         <div class="form-group">
           <label classe='form-label mb-0' for="password">Mot de passe</label>
-          <input class="form-control" autocomplete="on" id="password" v-model="password" type="password" required>
-          <span class="d-block"></span>
+          <input class="form-control" autocomplete="on" id="password" v-model="password" type="password" minlength="5" maxlength="13" required>
         </div>
 
         <!--Bouton validation-->
