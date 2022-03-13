@@ -16,14 +16,6 @@ module.exports = {
           key:'id'
         }
       },
-      comments: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references:{
-          model: 'Comment',
-          key:'id'
-        }
-      },
       
       title: {
         allowNull: false,
@@ -35,7 +27,19 @@ module.exports = {
       },
       likes: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references:{
+          model: 'Like',
+          key:'id'
+        }
+      },
+      dislikes: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references:{
+          model: 'Like',
+          key:'id'
+        }
       },
       createdAt: {
         allowNull: false,

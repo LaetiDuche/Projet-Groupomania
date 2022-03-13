@@ -1,9 +1,9 @@
 const fs = require('fs');
 const express = require('express');
-const Like = require('../models/Like').Like;
+/* const Like = require('../models/Like').Like; */
 const Gif = require('../models').Gif;
 const User = require('../models').User;
-const Comment = require('../models').Comment;
+/* const Comment = require('../models').Comment; */
 /* const Like = require('../models').Like;
 const multer = require('../utils/multer_config'); */
 
@@ -13,13 +13,11 @@ exports.createGif = (req, res) => {
   //Récupération de l'image pour la mettre dans le dossier images 
   const gif = new Gif({
     //...gifObject,
-    userId: req.body.userId,
+    userId: req.userId,
     title: req.body.title,
     gifs: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-    likes: req.body.likes,
-    /* dislikes: 0,
-    usersLiked: [],
-    usersDisliked: [] */
+    
+    
   });
   gif.save()
     .then(() => res.status(201).json({ message: 'Gif enregistré !' }))
@@ -30,22 +28,14 @@ exports.createGif = (req, res) => {
 exports.getAllGifs = (req, res, next) => {
   console.log("Current user id admin => " + req.user.isAdmin)
   console.log("toto allgif")
+
   Gif.findAll(
     {
       include: [{
-        model: Comment,
-        attributes: ['id', 'userId', 'comments', 'createdAt'],
-
-        include: [{
-          model: Like,
-          attributes: ['likes']
-        }],
-
-        include: [{
-          model: User,
-          attributes:  ['id', 'username', 'photo']
-        }]
-      }],
+        model: User,
+       /*  attributes: ['id', 'username', 'photo'], */
+      },
+    ],
       order: [['createdAt', 'DESC']]
     }
   )
@@ -60,13 +50,11 @@ exports.getOneGif = (req, res, next) => {
   Gif.findOne(
     {
       where: { id: req.params.id },
+
       include: [{
-        model: Comment,
-        attributes: ['id', 'userId', 'comments', 'createdAt'],
-        include: [{
-          model: User,
-          attributes: ['id', 'username', 'photo']
-        }]
+        model: User,
+        attributes: ['id', 'username', 'photo'],
+
       }]
     })
     .then((gifs) => res.status(200).json(gifs))

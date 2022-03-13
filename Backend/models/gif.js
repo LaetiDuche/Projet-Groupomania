@@ -12,20 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.Gif.belongsTo(models.User, {
-        foreignKey: {
+        /* foreignKey: {
           allowNull: false,
-          onDelete: 'cascade',
-          hooks: true
-        }
+        } */
       }),
-      models.Gif.hasMany(models.Comment,
-        { foreignKey: {
-          allowNull: false,
-          onDelete: 'cascade',
-          hooks: true
-        }
-       }
-        );
+     
       models.Gif.hasMany(models.Like);
     }
   };
@@ -39,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       userId: {
         type: DataTypes.INTEGER,
+        allowNull: false ,
         references: {
           model: 'User',
           key: 'id'
@@ -59,13 +51,13 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id'
         }
       },
-      comments: {
+      dislikes: {
         type: DataTypes.INTEGER,
-        references: {
-          model: 'Comment',
-          key: 'id'
+        references:{
+          model: 'Like',
+          key:'id'
         }
-      },
+      }, 
     },
     {
       sequelize,
