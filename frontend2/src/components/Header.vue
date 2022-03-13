@@ -19,17 +19,17 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
 
       <!--Si l'utilisateur n'est pas connecté-->
       <div class="m-auto d-flex my-auto" v-if="id === null">
-        <nav class="mx-3">
+        <nav class="mx-3" aria-label="s'inscrire">
           <router-link to="/signup">S'inscrire</router-link>
         </nav>
 
-        <nav class="mx-2">
+        <nav class="mx-2" aria-label="se connecter">
           <router-link to="/login">Se connecter </router-link>
         </nav>
       </div>
 
       <!--Si l'utilisateur est connecté-->
-      <div class="dropdown dropstart m-auto" v-else>
+      <div class="dropdown dropstart m-auto" v-else aria-label="menu">
         <a
           class="btn dropdown-toggle"
           role="button"
@@ -59,14 +59,15 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li>
             <router-link to="/profil" class="dropdown-item"
+            aria-label="mon profil"
               >Mon profil</router-link
             >
           </li>
           <li>
-            <router-link to="/forum" class="dropdown-item">Forum</router-link>
+            <router-link to="/forum" class="dropdown-item" aria-label="forum">Forum</router-link>
           </li>
           <li>
-            <a role="button" class="dropdown-item" @click="logout">
+            <a role="button" class="dropdown-item" @click="logout" aria-label="se deconnecter">
               Se déconnecter
             </a>
           </li>
