@@ -58,7 +58,7 @@
             class="btn btn-sm mt-2 btn-danger shadow-sm"
             type="submit"
             value="creer"
-            @click.prevent="btnPublier()"
+            @click.prevent="btnPublier"
           >
             Publier
           </button>
@@ -83,6 +83,7 @@ export default {
       title: '',
       userId:'',
       user: [],
+      Users: [],
       User:'',
       id: '',
       
@@ -107,7 +108,7 @@ export default {
       async function gifForm (formData){
  
         try{
-          const response =  await fetch("http://localhost:3000/api/forum/",  {
+          const response =  await fetch("http://localhost:3000/api/forum",  {
             method: 'POST',
             headers: {
               /* 'content-type': 'application/json', */
