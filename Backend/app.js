@@ -3,7 +3,7 @@ const express = require('express');
 const mysql = require("mysql2"); */
 
 const path = require('path');
-const { Sequelize } = require('sequelize');
+const Sequelize  = require('sequelize');
 const cors = require('cors');
 
 require('dotenv').config({path: './.env'});
@@ -13,7 +13,7 @@ const helmet = require('helmet');
 const userRoute = require('./routes/userRoute');
 const gifRoute = require('./routes/gifRoute');
 const likeRoute = require('./routes/likeRoute');
-const commentRoute = require('./routes/commentRoute');
+/* const commentRoute = require('./routes/commentRoute'); */
 
 const app = express();
 
@@ -34,12 +34,6 @@ const sequelize = new Sequelize(process.env.NAME_DB, process.env.USERNAME_DB, pr
 
 //Sécurisation des requetes multi origine 
 
-//TEST SERVER
-/* app.get('/', function(req, res){
-  res.setHeader('Content-type', 'text/html');
-  res.status(200).send('<h1>Bonjour sur mon server </h1>');
-}); */
-
 app.use(cors());
 //Sécurisation des requetes multi origine
 app.use((req, res, next) => {
@@ -59,7 +53,7 @@ app.use(express.json({ limit: '70mb' }));
 app.use('/api/forum', gifRoute);
 app.use('/api/users', userRoute);
 app.use('/api/forum', likeRoute);
-app.use('/api/comment', commentRoute);
+/* app.use('/api/forum', commentRoute); */
 
 module.exports = sequelize;
 module.exports = app;
