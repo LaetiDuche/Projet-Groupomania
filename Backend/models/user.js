@@ -12,17 +12,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.User.hasMany(models.Gif, 
-        { onDelete: 'cascade',
-          hooks: true
-       }
-        );
-      models.User.hasMany(models.Comment,
-        { onDelete: 'cascade' }
-        );
-      models.User.hasMany(models.Like, 
-        { onDelete: 'cascade' }
-      );
+      models.User.hasMany(models.Gif);
+    
+      models.User.hasMany(models.Like);
     }
   };
   User.init(
@@ -45,7 +37,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     }, 
     likes: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Gif',
+        key: 'id'
+      }
     },
     gifId: {
       type: DataTypes.INTEGER,
@@ -55,13 +51,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    comments: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'Comment',
-        key: 'id'
-      }
-    },
+    
     isAdmin:{
       type: DataTypes.BOOLEAN,
       allowNull: false,

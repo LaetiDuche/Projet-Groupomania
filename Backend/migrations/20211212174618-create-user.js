@@ -24,19 +24,11 @@ module.exports = {
       gifId: {
         allowNull: false,
 				type: Sequelize.STRING,
-        refrences: {
+        references: {
           model: 'Gif',
           key: 'id'
         }
 			},
-      comments: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references:{
-          model: 'Comment',
-          key:'id'
-        }
-      },
       isAdmin: {
         allowNull: false,
         type: Sequelize.BOOLEAN
