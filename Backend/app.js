@@ -13,7 +13,7 @@ const helmet = require('helmet');
 const userRoute = require('./routes/userRoute');
 const gifRoute = require('./routes/gifRoute');
 const likeRoute = require('./routes/likeRoute');
-/* const commentRoute = require('./routes/commentRoute'); */
+const commentRoute = require('./routes/commentRoute');
 
 const app = express();
 
@@ -53,7 +53,7 @@ app.use(express.json({ limit: '70mb' }));
 app.use('/api/forum', gifRoute);
 app.use('/api/users', userRoute);
 app.use('/api/forum', likeRoute);
-/* app.use('/api/forum', commentRoute); */
+app.use('/api/forum', commentRoute);
 
 module.exports = sequelize;
 module.exports = app;

@@ -41,11 +41,6 @@ const routes = [
     component: Message
   },
   {
-    path: '/forum',
-    name: 'Comment',
-    component: Forum
-  },
-  {
     path: '/about',
     name: 'About',
     // route level code-splitting
