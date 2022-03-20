@@ -8,25 +8,22 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      /* gifId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        refrences: {
-          model: 'Gif',
-          key: 'id'
-        }
-      },
       userId: {
-        allowNull: false,
         type: Sequelize.INTEGER,
-        references:{
-          model: 'User',
-          key:'id'
-        }
-      }, */
+        allowNull: false,
+        foreignKey: 'userId',
+        onDelete: 'cascade'
+        
+      },
+      gifId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        foreignKey: 'gifId',
+        onDelete: 'cascade'
+      },
       comments: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

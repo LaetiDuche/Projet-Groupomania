@@ -1,5 +1,7 @@
 'use strict';
-const { Model } = require('sequelize');
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Comment extends Model {
     /**
@@ -9,71 +11,36 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-
-      models.Comment.belongsTo(models.User, {
-        foreignKey: {
-          allowNull: false,
-          onDelete: 'cascade',
-          hooks: true
-        }
-      });
-      models.Comment.belongsTo(models.Gif, {
-        foreignKey: {
-          allowNull: false,
-          onDelete: 'cascade',
-          hooks: true
-        }
-      });
-      /* models.Comment.hasMany(models.Gif); */
-
-      /* models.User.belongsToMany(models.Gif,{
-        through: models.Comment,
-        foreignKey: 'userId',
-        otherKey: 'gifId'
-      });
-      models.Gif.belongsToMany(models.User,{
-        through: models.Comment,
+      models.Comment.belongsTo(models.Gif,{
         foreignKey: 'gifId',
-        otherKey: 'userId'
-      }); */
-
-
-      /*  models.Comment.belongsTo(models.Gif, {
-         foreignKey: {
-          allowNull: false,
-        }
-       }) */
+        onDelete: 'cascade'
+      }),
+      models.Comment.belongsTo(models.User,{
+        foreignKey: 'userId',
+        onDelete: 'cascade'
+      })
     }
   };
   Comment.init({
-    id: {
+    userId: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-      required: true
-    },
-    /* userId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'User',
-        key: 'id'
-      }
+      allowNull: false
     },
     gifId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         model: 'Gif',
         key: 'id'
-      }
-    }, */
+    }
+    },
     comments: {
       type: DataTypes.STRING,
       allowNull: false
     }
-  },
-    {
-      sequelize,
-      modelName: 'Comment',
-    });
+  }, {
+    sequelize,
+    modelName: 'Comment',
+  });
   return Comment;
 };

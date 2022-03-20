@@ -58,8 +58,8 @@
         pb-1
       "
       v-for="gifs in Gif"
-      :key="gifs.id"
-    >
+      :key="gifs.gifId"
+      >
       <div class="d-flex px-3 py-3">
         <!--Utilisateur-->
         <div class="my-auto">
@@ -117,33 +117,134 @@
       <!--Boutons Like/dislike-->
 
       <div class="m-1 d-flex justify-content-end">
-
         <!--Like-->
         <button
           class="btn-like bg-transparent border-0 py-auto d-flex text-align"
           type="submit"
-          @click="btnLike(gifs.id), (likeChange = !likeChange)"
+          @click="count++"
         >
           <i class="bi bi-hand-thumbs-up-fill" v-if="likeChange === true"></i>
           <i class="bi bi-hand-thumbs-up" v-else></i>
 
-          <span class="number-like px-1">{{ likes }}</span>
+          <span class="number-like px-1">{{ count }}</span>
         </button>
 
         <!--Dislike-->
         <button
           class="btn-like bg-transparent border-0 py-auto d-flex text-align"
           type="submit"
-          @click="btnDislike(gifs.id) , (dislikeChange = !dislikeChange)"
-          
+          @click="btnDislike(gifs.id), (dislikeChange = !dislikeChange)"
         >
-          <i class="bi bi-hand-thumbs-down-fill" v-if="dislikeChange === true"></i>
+          <i
+            class="bi bi-hand-thumbs-down-fill"
+            v-if="dislikeChange === true"
+          ></i>
           <i class="bi bi-hand-thumbs-down" v-else></i>
 
-          <span class="number-like px-1" >{{ dislikes }}</span>
+          <span class="number-like px-1">{{ dislikes }}</span>
         </button>
       </div>
+
+      <!--Commentaires-->
+
+      <!--Ecrire un commentaire-->
+      <div class="d-flex mb-3 border-bottom pb-3 px-2">
+        <img
+          v-if="photo"
+          :src="photo"
+          class="rounded-circle me-3 shadow"
+          height="35"
+          alt="Avatar"
+          loading="lazy"
+        />
+        <img
+          v-else
+          src="../assets/user-profile.jpg"
+          class="rounded-circle me-3 shadow"
+          height="35"
+          alt="avatar"
+          loading="lazy"
+        />
+
+        <form
+          @submit.prevent="submitComment(gifs.id)"
+          class="d-flex flex-fill"
+          method="post"
+        >
+          <label class="form-label" for="comment"></label>
+          <input
+            v-model="comment"
+            id="comment"
+            name="comment"
+            class="form-control p-1 border rounded-pill text-center flex-fill"
+            type="text"
+            placeholder="Ecrire un commentaire ..."
+          />
+          <!--  v-on:keyup.enter="submitComment(gifs.id)" -->
+          <button @click="submitComment(gifs.id)" class="btn" type="submit">
+            <i class="bi bi-send ms-2"></i>
+          </button>
+        </form>
+      </div>
+
+      <!--Commentaires des autres utilisateurs-->
+      <div class="border comment-border mx-3 pt-2 mb-3">
+        <div
+          id="comments"
+          class="d-flex flex-column flex-fill "
+          v-for="comment in comments"
+          :key="comment.id"
+         
+        >
+          <div>
+            <div class="d-flex px-3 py-1">
+              <!-- v-if="userId == comments.userId"   v-else-->
+              <img
+                v-if="comment.user.photo"
+                :src="comment.user.photo"
+                class="rounded-circle text-center shadow"
+                height="30"
+                alt="avatar"
+                loading="lazy"
+              />
+              <img
+                v-else
+                class="rounded-circle shadow"
+                height="30"
+                alt="photo profil"
+                loading="lazy"
+                src="../assets/user-profile.jpg"
+                id="preview"
+              />
+              <div class="d-flex flex-column flex-fill ms-3">
+                <span class="d-flex flex-column fw-bold" id="username">
+                  {{ comment.user.username }}
+                </span>
+                <p class="fs-6 fw-light mb-0">{{ comment.comments }}</p>
+
+                <span class="date fw-light ms-auto">
+                  Le {{ dateFormat(comment.createdAt) }}
+                </span>
+                <hr class="dashed col-12 mx-auto" />
+              </div>
+
+              <!-- Bouton supprimer les commentaires par l'admin -->
+              <div
+                class="p-1 ms-auto"
+                role="button"
+                v-if="isAdmin === 'true'"
+                @click="btnDeleteComment(comment.id)"
+              >
+                <i class="bi bi-trash"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+
+    
   </div>
 </template>
 
@@ -162,12 +263,14 @@ export default {
       photo: localStorage.getItem("photo"),
       gifs: "",
       Gif: [],
-      users: "",
-      User: [],
+       User: [],
+      /* users: "",
+      */
       /* like: [],
       likes: "", */
-      /*  Comments: [],
-      comments: "", */
+      Comment: [],
+      comments: '',
+      comment: "",
       id: "",
       /* btnClick1: 0,
       btnClick2: 0, */
@@ -181,19 +284,20 @@ export default {
       dislikes: "",
       images: "",
       likesChange: 0,
-      dislikesChange:0,
+      dislikesChange: 0,
+      count: 0,
     };
   },
   created: function () {
     fetch("http://localhost:3000/api/forum", {
       headers: {
         "Content-Type": "application/json",
-        'authorization': "Bearer " + localStorage.getItem("token"),
+        authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
       .then((response) => response.json())
       .then((gifs) => (this.Gif = gifs))
-      /*  .then((comments) => (this.Comment = comments)) */
+      .then((comment) => (this.Comment = comment))
       .then((users) => (this.User = users))
       .then((likes) => (this.Like = likes))
       .then((dislikes) => (this.Like = dislikes));
@@ -209,10 +313,9 @@ export default {
       this.Like = response.dislikes;
     }) */
 
-     /* .then((response) => response.json())
+    /* .then((response) => response.json())
       .then((likes) => (this.Like = likes))
       .then((dislikes) => (this.Like = dislikes)); */
-      
   },
 
   mounted() {
@@ -260,119 +363,123 @@ export default {
     },
 
     // Bouton like/dislike
-    btnLike(id){
-      const postLike = JSON.stringify({like: this.like});
-      async function like(postLike){
-        try{
-          const response =  await fetch("http://localhost:3000/api/forum/like/" + id , {
-            method: 'POST',
-            headers: {
-              'content-type': 'application/json',
-              'Authorization': "Bearer " + localStorage.getItem("token"),
-            },
-            body: postLike, 
-          });
-          if (response.ok){
+    btnLike(id) {
+      const postLike = JSON.stringify({ like: this.like });
+      async function like(postLike) {
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/forum/like/" + id,
+            {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+              body: postLike,
+            }
+          );
+          if (response.ok) {
             const responseId = await response.json();
             console.log(responseId);
             console.log("like ok");
-          }else{
-            console.error('Retour du serveur: ', response.status);
+          } else {
+            console.error("Retour du serveur: ", response.status);
           }
-        }catch(e){
+        } catch (e) {
           /* console.log(e); */
         }
       }
       like(postLike);
     },
 
-
-     btnDislike(id){
-      const postDislike = JSON.stringify({dislike: this.dislike});
-      async function like(postDislike){
-        try{
-          const response =  await fetch("http://localhost:3000/api/forum/like/" + id , {
-            method: 'POST',
-            headers: {
-              'content-type': 'application/json',
-              'Authorization': "Bearer " + localStorage.getItem("token"),
-            },
-            body: postDislike, 
-          });
-          if (response.ok){
+    btnDislike(id) {
+      const postDislike = JSON.stringify({ dislike: this.dislike });
+      async function like(postDislike) {
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/forum/like/" + id,
+            {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+              body: postDislike,
+            }
+          );
+          if (response.ok) {
             const responseId = await response.json();
             console.log(responseId);
             console.log("dislike ok");
-          }else{
-            console.error('Retour du serveur: ', response.status);
+          } else {
+            console.error("Retour du serveur: ", response.status);
           }
-        }catch(e){
+        } catch (e) {
           /* console.log(e); */
         }
       }
       like(postDislike);
-    }
+    },
 
+    // Comments
 
+   /*  submitComment(id) {
 
+      const formData = new FormData();
+      console.log(this.comment);
 
-    /*  getComments (){
-      console.log("Front comment")
-      fetch('http://localhost:3000/api/comment' , {
-         headers: {
-        "Content-Type": "application/json",
-        'Authorization': "Bearer " + localStorage.getItem("token"),
-      },
-      })
-      .then(response => {
-                this.Comment = response.data;
-                
-            }
+      formData.append('comment', this.comment);
+      
+      async function commentForm (formData){
+ 
+        try{
+          const response =  await fetch("http://localhost:3000/api/forum/" + id , {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'bearer ' + localStorage.getItem('token')
+            },
+            body: formData,
+          })
+          if (response.ok){
+            const responseId = await response.json();
+            alert('Votre commentaire a été publié !')
+            window.location.href = "http://localhost:8080/#/forum";
+            console.log(responseId);
             
-            )
-            
-      .then((response) => response.json())
-      .then((comments) => (this.Comment = comments))
-    }, */
-    /*  getComments (id){
-      fetch('http://localhost:3000/api/forum/' + id, {
-         headers: {
-        "Content-Type": "application/json",
-        'authorization': "Bearer " + localStorage.getItem("token"),
-      },
-      })
-      .then(response => {
-                this.Comment = response.data;
-                
-            }
-            
-            )
-            
-      .then((response) => response.json())
-      .then((comments) => (this.Comment = comments))
+          }else{
+            console.error('Retour du serveur: ', response.status);
+          }
+        }catch(e){
+          console.log(e);
+              }
+      }
+      commentForm(formData);
     }, */
 
-    /* commentPost(event){
-      this.comment = event.target.value
-    }, */
 
-    /* submitComment() {
-      async function commentForm(comments) {
+
+
+
+
+    submitComment(id) {
+      
+      async function commentForm(comment, id) {
         try {
-          const response = await fetch("http://localhost:3000/api/comment/", {
+          const response = await fetch("http://localhost:3000/api/forum/" + id , {
             method: "POST",
 
             headers: {
-              "Content-Type": "application/json",
-              Authorization: "bearer " + localStorage.getItem("token"),
+              'Content-Type': 'application/json',
+              'Authorization': 'bearer ' + localStorage.getItem('token'),
             },
-            body: JSON.stringify({ comment: comments }),
+            body: JSON.stringify({ comments: comment }),
           });
           if (response.ok) {
             const responseId = await response.json();
             alert("Votre commentaire a été publié !");
             console.log(responseId);
-            window.location.href = "http://localhost:8080/#/forum";
+            /* window.location.href = "http://localhost:8080/#/forum"; */
           } else {
             console.error("Retour du serveur: ", response.status);
           }
@@ -380,11 +487,11 @@ export default {
           console.log(e);
         }
       }
-      commentForm(this.comments);
-    }, */
+      commentForm(this.comment, id);
+    },
 
     //Supprimer un commentaire (admin)
-    /*  btnDeleteComment(id) {
+    btnDeleteComment(id) {
       let commentId = JSON.stringify({ id: this.comments });
       async function commentForm(dataForm) {
         confirm("Voulez-vous vraiment supprimer ce commentaire ?");
@@ -408,11 +515,11 @@ export default {
             console.error("Retour du serveur : ", response.status);
           }
         } catch (e) {
-          console.log(e); 
+          /* console.log(e); */
         }
       }
       commentForm(commentId);
-    }, */
+    },
   },
 };
 </script>
