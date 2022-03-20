@@ -2,6 +2,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Comments', {
+      
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,17 +10,20 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.INTEGER,
         allowNull: false,
-        foreignKey: 'userId',
-        onDelete: 'cascade'
-        
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
       gifId: {
-        type: Sequelize.INTEGER,
         allowNull: false,
-        foreignKey: 'gifId',
-        onDelete: 'cascade'
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Gifs',
+          key: 'id'
+        } 
       },
       comments: {
         allowNull: false,
