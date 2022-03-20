@@ -37,10 +37,18 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      likes: {
+      /* likes: {
         allowNull: false,
         type: Sequelize.INTEGER
-      },
+      }, */
+      /* comments: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        references:{
+          model: 'Comment',
+          key:'id'
+        }
+      }, */
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

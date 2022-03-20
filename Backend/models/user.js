@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.User.hasMany(models.Gif);
-    
+      /* models.User.hasMany(models.Comment); */
       models.User.hasMany(models.Like);
     }
   };
@@ -36,20 +36,28 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     }, 
-    likes: {
+    /* likes: {
       type: DataTypes.INTEGER,
       references: {
         model: 'Gif',
         key: 'id'
       }
-    },
+    }, */
     gifId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
+      /* references: {
         model: 'Gif',
         key: 'id'
-      }
+      } */
+    },
+    commentId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      /* references:{
+        model: 'Comment',
+        key:'id'
+      } */
     },
     
     isAdmin:{

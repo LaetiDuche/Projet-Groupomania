@@ -84,7 +84,7 @@ exports.getUserProfile = (req, res, next) => {
   User.findOne(
     { where: { id: req.params.id } }
   )
-    .then(user => res.status(200).json({ username: user.username, photo: user.photo }))
+    .then(user => res.status(200).json({ id: user.id, username: user.username, photo: user.photo }))
     .catch(error => res.status(404).json({ error }));
 };
 
