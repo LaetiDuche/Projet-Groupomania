@@ -1,11 +1,9 @@
 const fs = require('fs');
 const express = require('express');
-/* const Like = require('../models/Like').Like; */
 const Gif = require('../models').Gif;
 const User = require('../models').User;
-/* const Comment = require('../models').Comment; */
-/* const Like = require('../models').Like;
-const multer = require('../utils/multer_config'); */
+const Comment = require('../models').Comment;
+/* const Like = require('../models').Like;*/
 
 exports.createGif = (req, res) => {
   console.log(req.file)
@@ -16,8 +14,6 @@ exports.createGif = (req, res) => {
     userId: req.userId,
     title: req.body.title,
     gifs: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-    
-    
   });
   gif.save()
     .then(() => res.status(201).json({ message: 'Gif enregistré !' }))
@@ -32,15 +28,17 @@ exports.getAllGifs = (req, res, next) => {
   Gif.findAll(
     {
       include: [{
-        model: User,
-       /*  attributes: ['id', 'username', 'photo'], */
+        model: Comment,
+          include: [ {model: User} ]       
       },
+      {
+        model: User
+      }
     ],
       order: [['createdAt', 'DESC']]
     }
   )
     .then((gifs) => res.status(200).json(gifs))
-    /* .then((comments) => res.status(200).json(comments)) */
     .catch(error => { console.log(error); res.status(400).json({ error }) });
 };
 
@@ -50,12 +48,11 @@ exports.getOneGif = (req, res, next) => {
   Gif.findOne(
     {
       where: { id: req.params.id },
-
       include: [{
         model: User,
         attributes: ['id', 'username', 'photo'],
 
-      }]
+      }, {model: Comment}]
     })
     .then((gifs) => res.status(200).json(gifs))
     .catch((error) => res.status(404).json({ error }));

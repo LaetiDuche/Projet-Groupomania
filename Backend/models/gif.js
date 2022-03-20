@@ -18,7 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       }),
      
       models.Gif.hasMany(models.Like);
+      models.Gif.hasMany(models.Comment);
     }
+
   };
   Gif.init(
     {
@@ -31,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false ,
+        required: true,
         references: {
           model: 'User',
           key: 'id'
@@ -57,7 +60,15 @@ module.exports = (sequelize, DataTypes) => {
           model: 'Like',
           key:'id'
         }
-      }, 
+      },
+      commentId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+       /*  references:{
+          model: 'Comment',
+          key:'id'
+        } */
+      },
     },
     {
       sequelize,
@@ -65,3 +76,4 @@ module.exports = (sequelize, DataTypes) => {
     });
   return Gif;
 };
+

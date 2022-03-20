@@ -15,8 +15,7 @@ module.exports = {
           model: 'User',
           key:'id'
         }
-      },
-      
+      },     
       title: {
         allowNull: false,
         type: Sequelize.STRING
@@ -38,6 +37,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         references:{
           model: 'Like',
+          key:'id'
+        }
+      },
+      commentsId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references:{
+          model: 'Comment',
           key:'id'
         }
       },
