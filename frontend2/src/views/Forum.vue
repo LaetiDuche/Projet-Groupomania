@@ -181,7 +181,7 @@
             placeholder="Ecrire un commentaire ..."
           />
           <!--  v-on:keyup.enter="submitComment(gifs.id)" -->
-          <button @click="submitComment(gifs.id)" class="btn" type="submit">
+          <button class="btn" type="submit">
             <i class="bi bi-send ms-2"></i>
           </button>
         </form>
@@ -192,16 +192,16 @@
         <div
           id="comments"
           class="d-flex flex-column flex-fill "
-          v-for="comment in comments"
-          :key="comment.id"
-         
+          v-for="comments in Comment"
+          :key="comments.id"
+          
         >
           <div>
             <div class="d-flex px-3 py-1">
               <!-- v-if="userId == comments.userId"   v-else-->
               <img
-                v-if="comment.user.photo"
-                :src="comment.user.photo"
+                v-if="comments.User.photo"
+                :src="comments.User.photo"
                 class="rounded-circle text-center shadow"
                 height="30"
                 alt="avatar"
@@ -218,12 +218,12 @@
               />
               <div class="d-flex flex-column flex-fill ms-3">
                 <span class="d-flex flex-column fw-bold" id="username">
-                  {{ comment.user.username }}
+                  {{ comments.User.username }}
                 </span>
-                <p class="fs-6 fw-light mb-0">{{ comment.comments }}</p>
+                <p class="fs-6 fw-light mb-0">{{ comments }}</p>
 
                 <span class="date fw-light ms-auto">
-                  Le {{ dateFormat(comment.createdAt) }}
+                  Le {{ dateFormat(comments.createdAt) }}
                 </span>
                 <hr class="dashed col-12 mx-auto" />
               </div>
@@ -233,7 +233,7 @@
                 class="p-1 ms-auto"
                 role="button"
                 v-if="isAdmin === 'true'"
-                @click="btnDeleteComment(comment.id)"
+                @click="btnDeleteComment(comments.id)"
               >
                 <i class="bi bi-trash"></i>
               </div>
@@ -264,13 +264,14 @@ export default {
       gifs: "",
       Gif: [],
        User: [],
-      /* users: "",
-      */
+       users: "",
+      
       /* like: [],
       likes: "", */
       Comment: [],
-      comments: '',
-      comment: "",
+      /* comments: {}, */
+      comments: "",
+      comment: '',
       id: "",
       /* btnClick1: 0,
       btnClick2: 0, */
@@ -288,7 +289,7 @@ export default {
       count: 0,
     };
   },
-  created: function () {
+  created: function (id) {
     fetch("http://localhost:3000/api/forum", {
       headers: {
         "Content-Type": "application/json",
@@ -297,11 +298,22 @@ export default {
     })
       .then((response) => response.json())
       .then((gifs) => (this.Gif = gifs))
-      .then((comment) => (this.Comment = comment))
+      /* .then((comments) => (this.Comment = comments))
       .then((users) => (this.User = users))
       .then((likes) => (this.Like = likes))
-      .then((dislikes) => (this.Like = dislikes));
+      .then((dislikes) => (this.Like = dislikes)); */
 
+
+
+    fetch("http://localhost:3000/api/forum/" + id , {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: "Bearer " + localStorage.getItem("token") ,
+      },
+    })
+    .then((response) => response.json())
+    .then(comments => (this.Comment = comments))
+ 
     /* console.log("Front like");
     fetch("http://localhost:3000/api/forum/${id}/like" + id, {
       headers: {
@@ -324,7 +336,11 @@ export default {
   },
 
   methods: {
-    //Supprimer une publication
+
+  // ---------------------------------------- GIFS --------------------------------------
+
+  // SUPPRIMER UN GIF
+
     btnDelete(id) {
       let gifId = JSON.stringify({ id: this.gifId });
       async function gifForm(dataForm) {
@@ -355,14 +371,18 @@ export default {
       gifForm(gifId);
     },
 
-    // Formatte la date de publication
+  // FORMATTE LA DATE DE PUBLICATION DES GIFS
+
     dateFormat(dateValue) {
       if (dateValue) {
         return moment(String(dateValue)).format("Do MMMM YYYY à HH:mm");
       }
     },
 
-    // Bouton like/dislike
+  // ---------------------------------- LIKE / DISLIKE -----------------------------------
+
+  // BOUTON LIKER UN GIF
+
     btnLike(id) {
       const postLike = JSON.stringify({ like: this.like });
       async function like(postLike) {
@@ -391,6 +411,8 @@ export default {
       }
       like(postLike);
     },
+
+  // BOUTON DISLIKER UN GIF
 
     btnDislike(id) {
       const postDislike = JSON.stringify({ dislike: this.dislike });
@@ -421,49 +443,11 @@ export default {
       like(postDislike);
     },
 
-    // Comments
+  //--------------------------------- COMMENTAIRES ---------------------------------
 
-   /*  submitComment(id) {
-
-      const formData = new FormData();
-      console.log(this.comment);
-
-      formData.append('comment', this.comment);
-      
-      async function commentForm (formData){
- 
-        try{
-          const response =  await fetch("http://localhost:3000/api/forum/" + id , {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'bearer ' + localStorage.getItem('token')
-            },
-            body: formData,
-          })
-          if (response.ok){
-            const responseId = await response.json();
-            alert('Votre commentaire a été publié !')
-            window.location.href = "http://localhost:8080/#/forum";
-            console.log(responseId);
-            
-          }else{
-            console.error('Retour du serveur: ', response.status);
-          }
-        }catch(e){
-          console.log(e);
-              }
-      }
-      commentForm(formData);
-    }, */
-
-
-
-
-
+  // POSTER UN COMMENTAIRE
 
     submitComment(id) {
-      
       async function commentForm(comment, id) {
         try {
           const response = await fetch("http://localhost:3000/api/forum/" + id , {
@@ -477,9 +461,10 @@ export default {
           });
           if (response.ok) {
             const responseId = await response.json();
-            alert("Votre commentaire a été publié !");
-            console.log(responseId);
-            /* window.location.href = "http://localhost:8080/#/forum"; */
+            alert("Votre commentaire a été publié !")
+            window.location.href = "http://localhost:8080/#/forum";
+            console.log(responseId); 
+            
           } else {
             console.error("Retour du serveur: ", response.status);
           }
@@ -490,7 +475,8 @@ export default {
       commentForm(this.comment, id);
     },
 
-    //Supprimer un commentaire (admin)
+  // SUPPRIMER UN COMMENTAIRE (ADMIN) 
+
     btnDeleteComment(id) {
       let commentId = JSON.stringify({ id: this.comments });
       async function commentForm(dataForm) {
@@ -522,6 +508,7 @@ export default {
     },
   },
 };
+
 </script>
 
 <style lang='scss'>
