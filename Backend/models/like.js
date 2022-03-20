@@ -26,42 +26,42 @@ module.exports = (sequelize, DataTypes) => {
 
       models.Like.belongsTo(models.User,{
         foreignKey: 'userId' ,
-        as: 'user' 
+        /* as: 'user' */ 
       });
 
       models.Like.belongsTo(models.Gif,{
         foreignKey: 'gifId' ,
-        as: 'gif' 
+       /*  as: 'gif'  */
       });
     
     }
   };
   Like.init({
-    id: {
+    /* id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
       required: true
-    },
+    }, */
 
     userId: {
       type: DataTypes.INTEGER,
-      references: {
+      /* references: {
         model: 'User',
         key: 'id'
-      }
+      } */
     },
     gifId: {
       type: DataTypes.INTEGER,
-      references: {
+      /* references: {
         model: 'Gif',
         key: 'id'
-      }
+      } */
     },
-    likes: DataTypes.INTEGER,
-    dislikes: DataTypes.INTEGER,
+    /* likes: DataTypes.INTEGER, */
+    /* dislikes: DataTypes.INTEGER,
     usersLiked: DataTypes.STRING,
-    usersDisliked: DataTypes.STRING
+    usersDisliked: DataTypes.STRING */
   }, {
     sequelize,
     modelName: 'Like',

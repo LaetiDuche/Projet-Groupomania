@@ -6,43 +6,60 @@ const express = require('express');
 const User = require('../models').User; */
 const Gif = require('../models').Gif;
 
+exports.likeGif = (req, res) => {
+  try {
+    const gif = Gif.findById(req.params.id);
+    if (!gif.likes.includes(req.body.userId)) {
+       gif.updateOne({ $push: { likes: req.body.userId } });
+      res.status(200).json("The post has been liked");
+    } else {
+       gif.updateOne({ $pull: { likes: req.body.userId } });
+      res.status(200).json("The post has been disliked");
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+
+
 //Gestion des likes
-exports.likeGif = (req, res, next) => {
+/* exports.likeGif = (req, res, next) => {
   console.log("toto like")
   const idUser = req.body.userId;
-  const like = req.body.like;
+  const like = req.body.like; */
 
   //Sélection d'une gif
-  Gif.findOne({ where: { id: req.params.id }})
+  /* Gif.findOne({ where: { id: req.params.id }})
     .then(gif => {
 
-      switch (like) {
+      switch (like) { */
         //Si like
-        case 1:
+       /*  case 1: */
           //Ajout d'un like à la gif, mis en relation entre l'id de l'user et le like,  mise à jour
-          Gif.updateOne({ where: { id: req.params.id }}, { $inc: { likes: +1 }, $push: { usersLiked: idUser } })
+          /* Gif.updateOne({ where: { id: req.params.id }}, { $inc: { likes: +1 }, $push: { usersLiked: idUser } })
             .then(() => res.status(200).json({ message: 'Like ajouté !' }))
             .catch(error => res.status(400).json({ error }));
-          break;
+          break; */
 
         //Si dislike
-        case -1:
+        /* case -1: */
           //Ajout d'un dislike à la gif et mis en relation entre l'id de l'user et le dislike, mise à jour
-          Gif.updateOne({ where: { id: req.params.id }}, { $inc: { dislikes: +1 }, $push: { usersDisliked: idUser } })
+          /* Gif.updateOne({ where: { id: req.params.id }}, { $inc: { dislikes: +1 }, $push: { usersDisliked: idUser } })
             .then(() => res.status(200).json({ message: 'Dislike ajouté !' }))
             .catch(error => res.status(400).json({ error }));
-          break;
+          break; */
 
           //Suppression du dislike
-        case 0:
+        /* case 0:
           if (gif.usersDisliked.includes(idUser)) {
             Gif.updateOne({ where: { id: req.params.id }}, { $inc: { dislikes: -1 }, $pull: { usersDisliked: idUser } })
               .then(() => res.status(200).json({ message: 'Dislike supprimé' }))
               .catch(error => res.status(400).json({ error }));
-          } else {
+          } else { */
 
             //Suppression du like
-            Gif.updateOne({ where: { id: req.params.id }}, { $inc: { likes: -1 }, $pull: { usersLiked: idUser } })
+            /* Gif.updateOne({ where: { id: req.params.id }}, { $inc: { likes: -1 }, $pull: { usersLiked: idUser } })
               .then(() => res.status(200).json({ message: 'Like supprimé' }))
               .catch(error => res.status(400).json({ error }));
           }
@@ -50,7 +67,7 @@ exports.likeGif = (req, res, next) => {
       }
     })
     .catch(error => res.status(404).json({ error }));
-}
+} */
 
 
 
