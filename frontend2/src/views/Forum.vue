@@ -59,7 +59,7 @@
       "
       v-for="gifs in Gif"
       :key="gifs.gifId"
-      >
+    >
       <div class="d-flex px-3 py-3">
         <!--Utilisateur-->
         <div class="my-auto">
@@ -117,6 +117,7 @@
       <!--Boutons Like/dislike-->
 
       <div class="m-1 d-flex justify-content-end">
+
         <!--Like-->
         <button
           class="btn-like bg-transparent border-0 py-auto d-flex text-align"
@@ -180,10 +181,11 @@
             type="text"
             placeholder="Ecrire un commentaire ..."
           />
-          <!--  v-on:keyup.enter="submitComment(gifs.id)" -->
+          
           <button class="btn" type="submit">
             <i class="bi bi-send ms-2"></i>
           </button>
+
         </form>
       </div>
 
@@ -191,17 +193,17 @@
       <div class="border comment-border mx-3 pt-2 mb-3">
         <div
           id="comments"
-          class="d-flex flex-column flex-fill "
-          v-for="comments in Comment"
-          :key="comments.id"
-          
+          class="d-flex flex-column flex-fill"
+          v-for="comment in gifs.Comments"
+          :key="comment.id"
         >
           <div>
             <div class="d-flex px-3 py-1">
-              <!-- v-if="userId == comments.userId"   v-else-->
+             
+             <!-- Photo user -->
               <img
-                v-if="comments.User.photo"
-                :src="comments.User.photo"
+                v-if="comment.User.photo"
+                :src="comment.User.photo"
                 class="rounded-circle text-center shadow"
                 height="30"
                 alt="avatar"
@@ -217,15 +219,21 @@
                 id="preview"
               />
               <div class="d-flex flex-column flex-fill ms-3">
-                <span class="d-flex flex-column fw-bold" id="username">
-                  {{ comments.User.username }}
-                </span>
-                <p class="fs-6 fw-light mb-0">{{ comments }}</p>
 
+                 <!-- username -->
+                <span class="d-flex flex-column fw-bold" id="username">
+                  {{ comment.User.username }}
+                </span>
+
+                 <!-- commentaire -->
+                <p class="fs-6 fw-light mb-0">{{ comment.comments }}</p>
+
+                 <!-- date du commentaire -->
                 <span class="date fw-light ms-auto">
-                  Le {{ dateFormat(comments.createdAt) }}
+                  Le {{ dateFormat(comment.createdAt) }}
                 </span>
                 <hr class="dashed col-12 mx-auto" />
+
               </div>
 
               <!-- Bouton supprimer les commentaires par l'admin -->
@@ -233,18 +241,16 @@
                 class="p-1 ms-auto"
                 role="button"
                 v-if="isAdmin === 'true'"
-                @click="btnDeleteComment(comments.id)"
+                @click="btnDeleteComment(comment.id)"
               >
                 <i class="bi bi-trash"></i>
               </div>
+
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
-    
   </div>
 </template>
 
@@ -263,15 +269,14 @@ export default {
       photo: localStorage.getItem("photo"),
       gifs: "",
       Gif: [],
-       User: [],
-       users: "",
-      
+      User: [],
+      users: "",
+
       /* like: [],
       likes: "", */
       Comment: [],
-      /* comments: {}, */
       comments: "",
-      comment: '',
+      comment: "",
       id: "",
       /* btnClick1: 0,
       btnClick2: 0, */
@@ -289,7 +294,9 @@ export default {
       count: 0,
     };
   },
-  created: function (id) {
+  created: function () {
+
+    // Récupération des données des gifs avec user et comments
     fetch("http://localhost:3000/api/forum", {
       headers: {
         "Content-Type": "application/json",
@@ -297,37 +304,10 @@ export default {
       },
     })
       .then((response) => response.json())
-      .then((gifs) => (this.Gif = gifs))
-      /* .then((comments) => (this.Comment = comments))
-      .then((users) => (this.User = users))
-      .then((likes) => (this.Like = likes))
-      .then((dislikes) => (this.Like = dislikes)); */
-
-
-
-    fetch("http://localhost:3000/api/forum/" + id , {
-      headers: {
-        "Content-Type": "application/json",
-        authorization: "Bearer " + localStorage.getItem("token") ,
-      },
-    })
-    .then((response) => response.json())
-    .then(comments => (this.Comment = comments))
- 
-    /* console.log("Front like");
-    fetch("http://localhost:3000/api/forum/${id}/like" + id, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    }).then((response) => {
-      this.Like = response.likes
-      this.Like = response.dislikes;
-    }) */
-
-    /* .then((response) => response.json())
-      .then((likes) => (this.Like = likes))
-      .then((dislikes) => (this.Like = dislikes)); */
+      .then((gifs) => {
+        /* console.log(gifs); */
+        this.Gif = gifs;
+      });
   },
 
   mounted() {
@@ -336,10 +316,9 @@ export default {
   },
 
   methods: {
+    // ---------------------------------------- GIFS --------------------------------------
 
-  // ---------------------------------------- GIFS --------------------------------------
-
-  // SUPPRIMER UN GIF
+    // SUPPRIMER UN GIF (ADMIN ET USER)
 
     btnDelete(id) {
       let gifId = JSON.stringify({ id: this.gifId });
@@ -371,7 +350,7 @@ export default {
       gifForm(gifId);
     },
 
-  // FORMATTE LA DATE DE PUBLICATION DES GIFS
+    // FORMATTE LA DATE DE PUBLICATION DES GIFS
 
     dateFormat(dateValue) {
       if (dateValue) {
@@ -379,9 +358,9 @@ export default {
       }
     },
 
-  // ---------------------------------- LIKE / DISLIKE -----------------------------------
+    // ---------------------------------- LIKE / DISLIKE -----------------------------------
 
-  // BOUTON LIKER UN GIF
+    // BOUTON LIKER UN GIF
 
     btnLike(id) {
       const postLike = JSON.stringify({ like: this.like });
@@ -412,7 +391,7 @@ export default {
       like(postLike);
     },
 
-  // BOUTON DISLIKER UN GIF
+    // BOUTON DISLIKER UN GIF
 
     btnDislike(id) {
       const postDislike = JSON.stringify({ dislike: this.dislike });
@@ -443,28 +422,30 @@ export default {
       like(postDislike);
     },
 
-  //--------------------------------- COMMENTAIRES ---------------------------------
+    //--------------------------------- COMMENTAIRES ---------------------------------
 
-  // POSTER UN COMMENTAIRE
+    // POSTER UN COMMENTAIRE
 
     submitComment(id) {
       async function commentForm(comment, id) {
         try {
-          const response = await fetch("http://localhost:3000/api/forum/" + id , {
-            method: "POST",
+          const response = await fetch(
+            "http://localhost:3000/api/forum/" + id,
+            {
+              method: "POST",
 
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'bearer ' + localStorage.getItem('token'),
-            },
-            body: JSON.stringify({ comments: comment }),
-          });
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "bearer " + localStorage.getItem("token"),
+              },
+              body: JSON.stringify({ comments: comment }),
+            }
+          );
           if (response.ok) {
             const responseId = await response.json();
-            alert("Votre commentaire a été publié !")
+            alert("Votre commentaire a été publié !");
             window.location.href = "http://localhost:8080/#/forum";
-            console.log(responseId); 
-            
+            console.log(responseId);
           } else {
             console.error("Retour du serveur: ", response.status);
           }
@@ -475,7 +456,7 @@ export default {
       commentForm(this.comment, id);
     },
 
-  // SUPPRIMER UN COMMENTAIRE (ADMIN) 
+    // SUPPRIMER UN COMMENTAIRE (ADMIN)
 
     btnDeleteComment(id) {
       let commentId = JSON.stringify({ id: this.comments });
@@ -508,7 +489,6 @@ export default {
     },
   },
 };
-
 </script>
 
 <style lang='scss'>
