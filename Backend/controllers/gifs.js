@@ -29,12 +29,15 @@ exports.getAllGifs = (req, res, next) => {
     {
       include: [{
         model: Comment,
-          include: [ {model: User} ]       
+        include: [{
+          model: User
+        }]
       },
       {
-        model: User
+        model: User,
+        attributes: ['username', 'photo']
       }
-    ],
+      ],
       order: [['createdAt', 'DESC']]
     }
   )
@@ -52,7 +55,7 @@ exports.getOneGif = (req, res, next) => {
         model: User,
         attributes: ['id', 'username', 'photo'],
 
-      }, {model: Comment}]
+      }, { model: Comment }]
     })
     .then((gifs) => res.status(200).json(gifs))
     .catch((error) => res.status(404).json({ error }));
@@ -74,6 +77,5 @@ exports.deleteGif = (req, res, next) => {
     })
     .catch(error => res.status(500).json({ error }));
 };
-
 
 const app = express();

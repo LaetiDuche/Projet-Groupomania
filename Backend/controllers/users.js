@@ -6,10 +6,6 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const User = require('../models').User;
 require('dotenv').config({ path: './.env' });
-/* const auth = require('../utils/jwt');
-const multer = require('../utils/multer_config');
-const { getMaxListeners } = require('process'); */
-
 
 //Création d'un nouvel utilisateur email et le mot de pass crypté
 exports.signup = (req, res, next) => {
@@ -40,13 +36,13 @@ exports.signup = (req, res, next) => {
 
 //Se connecter à son compte
 exports.login = (req, res) => {
+
   //Vérification si l'utilisateur existe 
   User.findOne(
     { where: { email: req.body.email } }
   )
     .then((user) => {
       if (!user) {
-        /* return res.status(201).json({ message: 'Utilisateur connecté !' }); */
         return req.status(401).json({ error: 'Utilisateur introuvable !' });
       }
       //Vérification du bon mot de passe de l'utilisateur
@@ -88,15 +84,11 @@ exports.getUserProfile = (req, res, next) => {
     .catch(error => res.status(404).json({ error }));
 };
 
-
-
 //Modifer son profil , modifier son username et sa photo profil
-exports.updateUserProfile =  (req, res, next) => {
+exports.updateUserProfile = (req, res, next) => {
   /* console.log(req.file) */
-
   const userId = req.userId;
   const userObject = req.file ?
-
     {
       ...req.body.User,
       photo: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
@@ -136,7 +128,6 @@ exports.updateUserProfile =  (req, res, next) => {
     })
 };
 
-
 //Supprimer son compte
 exports.deleteUserProfile = (req, res) => {
 
@@ -151,14 +142,4 @@ exports.deleteUserProfile = (req, res) => {
       });
     })
     .catch(error => res.status(500).json({ error }));
-
-
-  /* const id = req.params.id;
-  console.log(req.user);
-  User.destroy(
-    { where: { id: id } }
-  )
-    .then(() => res.status(200).json({ message: 'Utilisateur supprimé' }))
-    .catch(error => res.status(400).json({ error }))
-    .catch(error => res.status(500).json({ error })); */
 };

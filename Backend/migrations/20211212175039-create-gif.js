@@ -40,7 +40,7 @@ module.exports = {
           key:'id'
         }
       },
-      commentsId: {
+      comments: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references:{

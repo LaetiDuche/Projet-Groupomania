@@ -12,25 +12,12 @@ module.exports = (sequelize, DataTypes) => {
      static associate(models) {
       // define association here
 
-      /* models.User.belongsToMany(models.Gif, {
-        through: models.Comment,
-        foreignKey: 'gifId ',
-        otherKey: 'userId'
-      }),
-
-      models.Gif.belongsToMany(models.User, {
-        through: models.Comment,
-        foreignKey: 'userId',
-        otherKey: 'gifId'
-      }) */
-
       models.Comment.belongsTo(models.Gif,{
         foreignKey: 'gifId',
          as: 'gif'
       }),
       models.Comment.belongsTo(models.User,{
         foreignKey: 'userId',
-         /* as: 'user' */
       })
     }
   };

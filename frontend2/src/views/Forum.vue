@@ -37,7 +37,7 @@
           role="button"
         >
           <div>
-            <router-link to="/message" class="p-2"
+            <router-link to="/message"
               >Publier un message ...</router-link
             >
           </div>
@@ -117,7 +117,6 @@
       <!--Boutons Like/dislike-->
 
       <div class="m-1 d-flex justify-content-end">
-
         <!--Like-->
         <button
           class="btn-like bg-transparent border-0 py-auto d-flex text-align"
@@ -149,11 +148,11 @@
       <!--Commentaires-->
 
       <!--Ecrire un commentaire-->
-      <div class="d-flex mb-3 border-bottom pb-3 px-2">
+      <div class="d-flex mb-3 px-4">
         <img
           v-if="photo"
           :src="photo"
-          class="rounded-circle me-3 shadow"
+          class="rounded-circle me-2 shadow"
           height="35"
           alt="Avatar"
           loading="lazy"
@@ -161,7 +160,7 @@
         <img
           v-else
           src="../assets/user-profile.jpg"
-          class="rounded-circle me-3 shadow"
+          class="rounded-circle me-2 shadow"
           height="35"
           alt="avatar"
           loading="lazy"
@@ -181,59 +180,67 @@
             type="text"
             placeholder="Ecrire un commentaire ..."
           />
-          
-          <button class="btn" type="submit">
-            <i class="bi bi-send ms-2"></i>
-          </button>
 
+          <button class="btn" type="submit">
+            <i class="bi bi-send "></i>
+          </button>
         </form>
       </div>
 
       <!--Commentaires des autres utilisateurs-->
-      <div class="border comment-border mx-3 pt-2 mb-3">
-        <div
-          id="comments"
-          class="d-flex flex-column flex-fill"
-          v-for="comment in gifs.Comments"
-          :key="comment.id"
-        >
+      <div
+        class="border comment-border mx-4 pt-2 mb-3"
+        v-for="comment in gifs.Comments"
+        :key="comment.id"
+        id="comments"
+      >
+        <div class="d-flex flex-column flex-fill">
           <div>
-            <div class="d-flex px-3 py-1">
-             
-             <!-- Photo user -->
-              <img
-                v-if="comment.User.photo"
-                :src="comment.User.photo"
-                class="rounded-circle text-center shadow"
-                height="30"
-                alt="avatar"
-                loading="lazy"
-              />
-              <img
-                v-else
-                class="rounded-circle shadow"
-                height="30"
-                alt="photo profil"
-                loading="lazy"
-                src="../assets/user-profile.jpg"
-                id="preview"
-              />
-              <div class="d-flex flex-column flex-fill ms-3">
+            <div class=" px-3 py-1">
+              <div class="d-flex">
 
-                 <!-- username -->
-                <span class="d-flex flex-column fw-bold" id="username">
-                  {{ comment.User.username }}
-                </span>
+                <!-- Photo user -->
+                <div class="my-auto">
+                  <img
+                    v-if="comment.User.photo"
+                    :src="comment.User.photo"
+                    class="rounded-circle text-center shadow"
+                    height="30"
+                    alt="avatar"
+                    loading="lazy"
+                  />
+                  <img
+                    v-else
+                    class="rounded-circle shadow"
+                    height="30"
+                    alt="photo profil"
+                    loading="lazy"
+                    src="../assets/user-profile.jpg"
+                    id="preview"
+                  />
+                </div>
 
-                 <!-- commentaire -->
+                <!-- username et date commentaire -->
+                <div class="d-flex flex-column px-2">
+
+                  <!-- username -->
+                  <span
+                    class="d-flex flex-column justify-content-start user-comment fw-bold "
+                    id="username"
+                  >
+                    {{ comment.User.username }}
+                  </span>
+
+                  <!-- date du commentaire -->
+                  <span class="date fw-light">
+                    Le {{ dateFormat(comment.createdAt) }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- commentaire -->
+              <div class="ms-5 py-2">  
                 <p class="fs-6 fw-light mb-0">{{ comment.comments }}</p>
-
-                 <!-- date du commentaire -->
-                <span class="date fw-light ms-auto">
-                  Le {{ dateFormat(comment.createdAt) }}
-                </span>
-                <hr class="dashed col-12 mx-auto" />
-
               </div>
 
               <!-- Bouton supprimer les commentaires par l'admin -->
@@ -245,7 +252,6 @@
               >
                 <i class="bi bi-trash"></i>
               </div>
-
             </div>
           </div>
         </div>
@@ -295,7 +301,6 @@ export default {
     };
   },
   created: function () {
-
     // Récupération des données des gifs avec user et comments
     fetch("http://localhost:3000/api/forum", {
       headers: {
@@ -444,7 +449,7 @@ export default {
           if (response.ok) {
             const responseId = await response.json();
             alert("Votre commentaire a été publié !");
-            window.location.href = "http://localhost:8080/#/forum";
+            document.location.reload();
             console.log(responseId);
           } else {
             console.error("Retour du serveur: ", response.status);
@@ -504,5 +509,11 @@ export default {
 }
 .comment-border {
   border-radius: 1rem;
+}
+.user-comment{
+  font-size: 0.7rem;
+}
+::placeholder{
+  font-size: 0.8rem;
 }
 </style>

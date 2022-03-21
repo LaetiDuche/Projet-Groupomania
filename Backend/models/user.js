@@ -11,9 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+
       // define association here
       models.User.hasMany(models.Gif);
-      /* models.User.hasMany(models.Comment); */
+      models.User.hasMany(models.Comment);
       models.User.hasMany(models.Like);
     }
   };
@@ -46,20 +47,15 @@ module.exports = (sequelize, DataTypes) => {
     gifId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      /* references: {
-        model: 'Gif',
-        key: 'id'
-      } */
     },
-    commentId: {
+    comments: {
       allowNull: false,
-      type: DataTypes.INTEGER,
-      /* references:{
+      type: DataTypes.STRING,
+      references:{
         model: 'Comment',
         key:'id'
-      } */
+      }
     },
-    
     isAdmin:{
       type: DataTypes.BOOLEAN,
       allowNull: false,

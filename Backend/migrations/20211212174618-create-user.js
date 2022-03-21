@@ -21,14 +21,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      gifId: {
-        allowNull: false,
-				type: Sequelize.STRING,
-        references: {
-          model: 'Gif',
-          key: 'id'
-        }
-			},
       isAdmin: {
         allowNull: false,
         type: Sequelize.BOOLEAN
@@ -37,18 +29,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      /* likes: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      }, */
-      /* comments: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        references:{
-          model: 'Comment',
-          key:'id'
-        }
-      }, */
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
