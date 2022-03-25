@@ -43,14 +43,14 @@ exports.login = (req, res) => {
   )
     .then((user) => {
       if (!user) {
-        return req.status(401).json({ error: 'Utilisateur introuvable !' });
+        return res.status(401).json({ error: 'Utilisateur introuvable !' });
       }
       //Vérification du bon mot de passe de l'utilisateur
       bcrypt
         .compare(req.body.password, user.password)
         .then((valid) => {
           if (!valid) {
-            return req.status(401).json({ error: 'Mot de pass incorrect !' });
+            return res.status(401).json({ error: 'Mot de pass incorrect !' });
           }
           //On lui attribue un jeton token pour 24H , session connectée pour 24h
           res.status(200).json({
@@ -131,12 +131,15 @@ exports.updateUserProfile = (req, res, next) => {
 //Supprimer son compte
 exports.deleteUserProfile = (req, res) => {
 
-  User.findOne({ id: req.params.id })
+  User.findOne({ where: { id: req.params.id }})
 
     .then(user => {
-      const filename = user.imageUrl.split('/images/')[1];
+      const filename = user.photo.split('/images/')[1];
       fs.unlink(`images/${filename}`, () => {
-        User.deleteOne({ id: req.params.id })
+        const paramId = parseInt(req.params.id);
+        console.log(req.user);
+        console.log(paramId);
+        User.destroy({ where: { id: req.params.id }})
           .then(() => res.status(200).json({ message: 'User supprimé !' }))
           .catch(error => res.status(404).json({ error }));
       });

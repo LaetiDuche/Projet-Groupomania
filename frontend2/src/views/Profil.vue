@@ -115,7 +115,7 @@ Possibilité de supprimer son compte
           <!--Bouton supprimer mon compte-->
           <button
             class="btn btn-danger btn-sm shadow-sm mt-3"
-            @click="btnDelete"
+            @click="btnDelete()"
             type="submit"
           >
             Supprimer mon compte
@@ -138,13 +138,13 @@ export default {
       username: localStorage.getItem("username"),
       userId: "",
       imagePreview: null,
-      user: [],
+      /* user: [], */
       id: "",
+      user: "",
     };
   },
 
   methods: {
-
     /*Pour modifier l'image profil*/
     btnUpload() {
       this.$refs.image.click();
@@ -210,39 +210,29 @@ export default {
     },
 
     /*Pour supprimer le compte*/
-    btnDelete() {
-      const userId = parseInt(localStorage.getItem("Id"));
-      const dataProfil = JSON.stringify({ id: userId });
-      async function postProfil(dataProfil) {
-        try {
-          const response = await fetch("http://localhost:3000/api/users/:id", {
-            method: "DELETE",
-            headers: {
-              "content-type": "Application/json",
-              authorization: "bearer" + localStorage.getItem("token"),
-            },
-            body: dataProfil,
-          });
-          if (response.ok) {
-            const responseId = await response.json();
-            console.log(responseId);
-            localStorage.removeItem("Id");
-            localStorage.removeItem("token");
-            localStorage.removeItem("isAdmin");
 
-            this.$router.push("http://localhost:8080/");
-            /* window.location.href = "http://localhost:8080/signup#/home"; */
-          } else {
-            console.error("Retour du serveur : ", response.status);
-          }
-        } catch (e) {
-          /* console.log(e); */
-          confirm(
-            "Voulez-vous vraiment supprimer votre compte ? </br> Votre profil et toutes vos publications seront supprimés du forum !"
+    btnDelete() {
+      const id = localStorage.getItem("id");
+      fetch("http://localhost:3000/api/users/" + id, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+        .then(() => {
+          confirm("Votre profil a été supprimé");
+          localStorage.clear();
+        })
+        .catch((err) => {
+          console.error(
+            "Erreur Delete " +
+              err.response.status +
+              " " +
+              err.response.statusText
           );
-        }
-      }
-      postProfil(dataProfil);
+          location.replace(location.origin + "/");
+        });
     },
   },
 };
