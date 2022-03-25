@@ -25,9 +25,17 @@ Possibilité de supprimer son compte
         <!--Image user-->
         <form>
           <div class="d-flex">
-            <!--Visualiser la photo enregistrée-->
+            <!--Visualiser la photo enregistrée dans le localstorage-->
             <img
-              v-if="photo"
+              v-if="imagePreview"
+              :src="imagePreview"
+              id="preview"
+              alt="image profil"
+              class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
+            />
+
+            <img
+              v-else-if="photo"
               :src="photo"
               id="preview"
               alt="image profil"
@@ -102,7 +110,6 @@ Possibilité de supprimer son compte
             type="submit"
           >
             Valider mon profil
-            <!-- <router-link to="/"></router-link> -->
           </button>
 
           <!--Bouton supprimer mon compte-->
@@ -137,25 +144,6 @@ export default {
   },
 
   methods: {
-    //Affiche le profil de l'utilisateur connecté
-    getProfil() {
-      const id = localStorage.getItem("id");
-
-      fetch("http://localhost:3000/api/users/" + id, {
-        headers: {
-          Authorization: "Bearer" + localStorage.getItem("token"),
-        },
-      })
-        .then((response) => {
-          this.user = response.data;
-        })
-        .catch((err) => {
-          this.error(
-            "Erreur get" + err.response.status + "" + err.response.statusText
-          );
-          window.location.reload();
-        });
-    },
 
     /*Pour modifier l'image profil*/
     btnUpload() {
@@ -185,9 +173,8 @@ export default {
             {
               method: "PUT",
               headers: {
-                /* 'Content-Type': 'multipart/form-data', */
-                /* 'Content-Type': 'application/x-www-form-urlencoded', */
-                Authorization: "bearer " + localStorage.getItem("token"),
+                "content-type": "application/json",
+                authorization: "bearer " + localStorage.getItem("token"),
               },
               body: formData,
             }
