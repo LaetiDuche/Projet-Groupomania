@@ -37,9 +37,7 @@
           role="button"
         >
           <div>
-            <router-link to="/message"
-              >Publier un message ...</router-link
-            >
+            <router-link to="/message">Publier un message ...</router-link>
           </div>
         </div>
       </div>
@@ -162,7 +160,7 @@
           src="../assets/user-profile.jpg"
           class="rounded-circle me-2 shadow"
           height="35"
-          alt="avatar"
+          alt="Avatar"
           loading="lazy"
         />
 
@@ -182,23 +180,22 @@
           />
 
           <button class="btn" type="submit">
-            <i class="bi bi-send "></i>
+            <i class="bi bi-send"></i>
           </button>
         </form>
       </div>
 
       <!--Commentaires des autres utilisateurs-->
       <div
-        class="border comment-border mx-4 pt-2 mb-3"
+        class="border comment-border mx-4 pt-2 mb-2"
         v-for="comment in gifs.Comments"
         :key="comment.id"
-        id="comments"
+        id="comment"
       >
         <div class="d-flex flex-column flex-fill">
           <div>
-            <div class=" px-3 py-1">
+            <div class="px-3 py-1">
               <div class="d-flex">
-
                 <!-- Photo user -->
                 <div class="my-auto">
                   <img
@@ -222,10 +219,15 @@
 
                 <!-- username et date commentaire -->
                 <div class="d-flex flex-column px-2">
-
                   <!-- username -->
                   <span
-                    class="d-flex flex-column justify-content-start user-comment fw-bold "
+                    class="
+                      d-flex
+                      flex-column
+                      justify-content-start
+                      user-comment
+                      fw-bold
+                    "
                     id="username"
                   >
                     {{ comment.User.username }}
@@ -236,21 +238,21 @@
                     Le {{ dateFormat(comment.createdAt) }}
                   </span>
                 </div>
+
+                <!-- Bouton supprimer le commentaire par l'admin -->
+                <div
+                  class="p-1 ms-auto"
+                  role="button"
+                  v-if="isAdmin === 'true'"
+                  @click="btnDeleteComment(comment.id)"
+                >
+                  <i class="bi bi-trash"></i>
+                </div>
               </div>
 
               <!-- commentaire -->
-              <div class="ms-5 py-2">  
+              <div class="ms-4 py-2">
                 <p class="fs-6 fw-light mb-0">{{ comment.comments }}</p>
-              </div>
-
-              <!-- Bouton supprimer les commentaires par l'admin -->
-              <div
-                class="p-1 ms-auto"
-                role="button"
-                v-if="isAdmin === 'true'"
-                @click="btnDeleteComment(comment.id)"
-              >
-                <i class="bi bi-trash"></i>
               </div>
             </div>
           </div>
@@ -464,19 +466,18 @@ export default {
     // SUPPRIMER UN COMMENTAIRE (ADMIN)
 
     btnDeleteComment(id) {
-      let commentId = JSON.stringify({ id: this.comments });
-      async function commentForm(dataForm) {
-        confirm("Voulez-vous vraiment supprimer ce commentaire ?");
+     
+      async function commentForm( id) {
+        confirm("Voulez-vous vraiment supprimer ce message ?");
         try {
           const response = await fetch(
-            "http://localhost:3000/api/forum/" + id,
+            "http://localhost:3000/api/forum/" + id + "/comment",
             {
               method: "DELETE",
               headers: {
                 "content-type": "application/json",
                 authorization: "bearer " + localStorage.getItem("token"),
               },
-              body: dataForm,
             }
           );
           if (response.ok) {
@@ -487,10 +488,10 @@ export default {
             console.error("Retour du serveur : ", response.status);
           }
         } catch (e) {
-          /* console.log(e); */
+          console.log(e); 
         }
       }
-      commentForm(commentId);
+      commentForm(id);
     },
   },
 };
@@ -510,10 +511,10 @@ export default {
 .comment-border {
   border-radius: 1rem;
 }
-.user-comment{
+.user-comment {
   font-size: 0.7rem;
 }
-::placeholder{
+::placeholder {
   font-size: 0.8rem;
 }
 </style>

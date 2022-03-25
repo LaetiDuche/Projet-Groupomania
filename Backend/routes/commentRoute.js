@@ -8,6 +8,6 @@ const auth = require('../utils/jwt');
 router.get('/', auth,  commentCtrl.getAllComments);
 router.get('/:id', auth,  commentCtrl.getOneComment);
 router.post('/:id', auth,  commentCtrl.createComment);
-router.delete('/:id', auth, commentCtrl.deleteComment);
+router.delete('/:id/comment', auth, commentCtrl.deleteComment);
 
 module.exports = router;
