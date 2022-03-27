@@ -1,6 +1,7 @@
 <template>
   <div class="forum">
-    <!--En-tête pour créer un message-->
+
+    <!-- Publier un message -->
     <div
       class="
         formulaire
@@ -14,22 +15,25 @@
     >
       <div class="d-flex mx-auto">
         <!--Utilisateur-->
-        <img
-          v-if="userId === 'true' || photo"
-          :src="photo"
-          class="rounded-circle me-3 shadow"
-          height="40"
-          alt="Avatar"
-          loading="lazy"
-        />
-        <img
-          v-else
+
+         <img
+          v-if="photo == false"
           src="../assets/user-profile.jpg"
           class="rounded-circle me-3 shadow"
           height="40"
           alt="avatar"
           loading="lazy"
         />
+        <img
+          v-else
+          :src="photo"
+          
+          class="rounded-circle me-3 shadow"
+          height="40"
+          alt="Avatar"
+          loading="lazy"
+        />
+       
 
         <!--Créer un message-->
         <div
@@ -147,9 +151,10 @@
 
       <!--Ecrire un commentaire-->
       <div class="d-flex mb-3 px-4">
+
         <img
-          v-if="photo"
-          :src="photo"
+          v-if="photo == false"
+          src="../assets/user-profile.jpg"
           class="rounded-circle me-2 shadow"
           height="35"
           alt="Avatar"
@@ -157,13 +162,13 @@
         />
         <img
           v-else
-          src="../assets/user-profile.jpg"
+          :src="photo"
           class="rounded-circle me-2 shadow"
           height="35"
           alt="Avatar"
           loading="lazy"
         />
-
+        
         <form
           @submit.prevent="submitComment(gifs.id)"
           class="d-flex flex-fill"

@@ -37,17 +37,9 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
+
           <img
-            id="preview"
-            v-if="photo"
-            :src="photo"
-            class="rounded-circle shadow"
-            height="40"
-            alt=""
-            loading="lazy"
-          />
-          <img
-            v-else
+            v-if="photo == false"
             class="rounded-circle shadow"
             height="40"
             alt="photo profil"
@@ -55,6 +47,17 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
             src="../assets/user-profile.jpg"
             id="preview"
           />
+
+          <img
+            id="preview"
+            v-else
+            :src="photo"
+            class="rounded-circle shadow"
+            height="40"
+            alt=""
+            loading="lazy"
+          />
+          
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li>

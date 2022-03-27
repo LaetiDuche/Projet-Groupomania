@@ -34,8 +34,16 @@ Possibilité de supprimer son compte
               class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
             />
 
+             <img
+              v-else-if="photo == false"
+              class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
+              alt="photo profil"
+              src="../assets/user-profile.jpg"
+              id="preview"
+            />
+
             <img
-              v-else-if="photo"
+              v-else
               :src="photo"
               id="preview"
               alt="image profil"
@@ -43,13 +51,7 @@ Possibilité de supprimer son compte
             />
 
             <!--Si l'utilisateur n'a jamais modifier sa photo-->
-            <img
-              v-else
-              class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
-              alt="photo profil"
-              src="../assets/user-profile.jpg"
-              id="preview"
-            />
+           
 
             <!--Bouton modifier la photo -->
             <div @click="btnUpload" width="16" height="16" class="mt-auto">
@@ -138,9 +140,9 @@ export default {
       username: localStorage.getItem("username"),
       userId: "",
       imagePreview: null,
-      /* user: [], */
+      /* User: [], */
       id: "",
-      user: "",
+      User: "",
     };
   },
 
@@ -156,25 +158,31 @@ export default {
 
     /*Pour valider les modifications*/
     btnValid() {
-      /* const postFormulaire = JSON.stringify({photo: this.photo, username: this.username}); */
+      
       const formData = new FormData();
       console.log(this.file);
       formData.append("image", this.file);
       formData.append("username", this.username);
 
-      /* const photo = JSON.parse({photo: this.photo}); */
-      /* const photo = localStorage.getItem('photo'); */
+      /* JSON.parse({photo: this.photo}); */
+      /* const photo=localStorage.getItem('photo'); */
+     
+       /* let photo = JSON.stringify({ photo: this.photo }); */
+
       async function postProfil(formData) {
         const id = localStorage.getItem("id");
+
+        localStorage.getItem('photo');
+
         try {
           const response = await fetch(
-            "http://localhost:3000/api/users/" + id,
+            "http://localhost:3000/api/users/" + id + "/profil",
 
             {
               method: "PUT",
               headers: {
-                "content-type": "application/json",
-                authorization: "bearer " + localStorage.getItem("token"),
+                /* "content-type": "application/json", */
+                'Authorization': "bearer " + localStorage.getItem("token"),
               },
               body: formData,
             }
@@ -183,17 +191,9 @@ export default {
           if (response.ok) {
             const responseId = await response.json();
 
-            /* localStorage.remove('photo', responseId.photo);  */
-            /* const photoProfil = localStorage.getItem('photo'); */
+            localStorage.setItem(JSON.stringify('photo')); 
 
-            /* localStorage.removeItem('photo');
-            localStorage.setItem('photo'); */
-
-            /*  localStorage.setItem('photo', responseId.photo);
-            
-            localStorage.setItem('username', responseId.username); */
-            /* localStorage.removeItem('photo', responseId.photo); */
-            /* localStorage.setItem('photo'); */
+           /*  JSON.parse(localStorage.getItem({photo: this.photo})); */           
 
             /*  this.imagePreview = '../../../backend/images/${this.photo}'
             localStorage.push('photo', responseId.photo); */
