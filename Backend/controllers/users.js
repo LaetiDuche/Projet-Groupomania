@@ -85,9 +85,27 @@ exports.getUserProfile = (req, res, next) => {
 };
 
 //Modifer son profil , modifier son username et sa photo profil
+
+/* exports.updateUserProfile = (req, res, next) => {
+  const userObject = req.file ?
+    {
+     
+      ...req.body.user,
+      photo: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    } : { ...req.body };
+
+   
+  User.update({ where: { id: req.params.id }}, { ...userObject, id: req.params.id })
+    .then(() => res.status(200).json({ message: 'User modifiée !' }))
+    .catch(error => res.status(400).json({ error }));
+}; */
+
+
+
 exports.updateUserProfile = (req, res, next) => {
-  /* console.log(req.file) */
-  const userId = req.userId;
+  
+  console.log(req.body.username)
+  const userId = req.params.id;
   const userObject = req.file ?
     {
       ...req.body.User,
@@ -96,6 +114,31 @@ exports.updateUserProfile = (req, res, next) => {
 
   User.findOne({ where: { id: userId } })
     .then((user) => {
+      console.log("No Updated" + JSON.stringify(user))
+      var oldFile = null;
+      if (req.body.username) {
+        user.username = req.body.username
+      }
+      if (req.file) {
+        let oldFileName = user.photo.split('/images/')[1]
+        oldFile = `images/${oldFileName}`
+        user.photo = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      }
+      console.log("Updated" + JSON.stringify(user))
+      user.save()
+        .then(() => {
+          fs.unlink(oldFile, () => {
+            res.status(200).json({ message: "Profil enregistré avec succés 1." });
+          })
+        })
+        .catch((error) => {
+          res.status(400).json({ message: `Impossible de mettre à jour le profil id=${userId}. Utilisateur non trouvé ou  req.body est vide 1!` });
+        })
+    })
+    .catch( (error) => {
+      res.status(500).send({ message: "Erreur de mise à jour du profil id=" + userId });
+    })
+        /*
       const imageUpdated = User.photo;
       if (user.id == userId) {
         if (userObject.photo && userObject.photo != User.photo && imageUpdated != 'user-profile.jpg') {
@@ -109,8 +152,8 @@ exports.updateUserProfile = (req, res, next) => {
                 }
               })
               .catch(function () {
-                res.status(500).send({ message: "Erreur de mise à jour du profil id=" + userId });
-              });
+                res.status(500).json({ message: "Erreur de mise à jour du profil id=" + userId });
+              })
           })
         }
         User.update(userObject, { where: { id: userId } })
@@ -126,6 +169,7 @@ exports.updateUserProfile = (req, res, next) => {
           });
       }
     })
+    */
 };
 
 //Supprimer son compte

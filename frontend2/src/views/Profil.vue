@@ -23,9 +23,10 @@ Possibilité de supprimer son compte
         </div>
 
         <!--Image user-->
-        <form>
+        <form action="" method="post">
           <div class="d-flex">
-            <!--Visualiser la photo enregistrée dans le localstorage-->
+
+            <!--Visualiser la photo lors de l'upload-->
             <img
               v-if="imagePreview"
               :src="imagePreview"
@@ -34,7 +35,8 @@ Possibilité de supprimer son compte
               class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
             />
 
-             <img
+           <!-- S'il n'y a pas de photo -> photo par défaut -->
+            <img
               v-else-if="photo == false"
               class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
               alt="photo profil"
@@ -42,6 +44,7 @@ Possibilité de supprimer son compte
               id="preview"
             />
 
+           <!-- Si photo dans le localstorage-->
             <img
               v-else
               :src="photo"
@@ -50,8 +53,6 @@ Possibilité de supprimer son compte
               class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
             />
 
-            <!--Si l'utilisateur n'a jamais modifier sa photo-->
-           
 
             <!--Bouton modifier la photo -->
             <div @click="btnUpload" width="16" height="16" class="mt-auto">
@@ -72,58 +73,58 @@ Possibilité de supprimer son compte
               />
             </div>
           </div>
-        </form>
 
-        <!--Username-->
-        <div class="d-flex mx-auto mt-3 text-center">
-          <div class="d-flex mx-auto">
-            <label class="d-flex" for="username"></label>
-            <input
-              v-model="username"
-              id="username"
-              name="username"
-              type="text"
-              class="text-center border-0 w-100"
-              placeholder="Username"
-            />
-
-            <!--Bouton modifier le username-->
-            <div width="16" height="16" class="mt-auto ms-auto" type="submit">
-              <label classe="label form-label" for="username">
-                <i class="bi bi-pen" title="Modifier mon nom"></i>
-              </label>
+          <!--Username-->
+          <div class="d-flex mx-auto mt-3 text-center">
+            <div class="d-flex mx-auto">
+              <label class="d-flex" for="username"></label>
               <input
-                class="input form-control d-none"
+                v-model="username"
                 id="username"
-                ref="usernameUpload"
-                type="text"
                 name="username"
+                type="text"
+                class="text-center border-0 w-100"
+                placeholder="Username"
               />
+
+              <!--Bouton modifier le username-->
+              <div width="16" height="16" class="mt-auto ms-auto" type="submit">
+                <label classe="label form-label" for="username">
+                  <i class="bi bi-pen" title="Modifier mon nom"></i>
+                </label>
+                <input
+                  class="input form-control d-none"
+                  id="username"
+                  ref="usernameUpload"
+                  type="text"
+                  name="username"
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Boutons -->
-        <div class="d-flex justify-content-around mt-3 text-center flex-wrap">
-          <!--Bouton valider mon profil-->
-          <button
-            class="btn btn-danger btn-sm shadow-sm mt-3"
-            @click.prevent="btnValid"
-            type="submit"
-          >
-            Valider mon profil
-          </button>
+          <!-- Boutons -->
+          <div class="d-flex justify-content-around mt-3 text-center flex-wrap">
+            <!--Bouton valider mon profil-->
+            <button
+              class="btn btn-danger btn-sm shadow-sm mt-3"
+              @click.prevent="btnValid"
+              type="submit"
+            >
+              Valider mon profil
+            </button>
 
-          <!--Bouton supprimer mon compte-->
-          <button
-            class="btn btn-danger btn-sm shadow-sm mt-3"
-            @click="btnDelete()"
-            type="submit"
-          >
-            Supprimer mon compte
-            <router-link to="/"></router-link>
-          </button>
-        </div>
+            <!--Bouton supprimer mon compte-->
+            <button
+              class="btn btn-danger btn-sm shadow-sm mt-3"
+              @click.prevent="btnDelete"
+              type="submit"
+            >
+              Supprimer mon compte
+              <router-link to="/"></router-link>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -133,21 +134,20 @@ Possibilité de supprimer son compte
 export default {
   name: "Profil",
 
-  /*Modification du username*/
   data() {
     return {
       photo: localStorage.getItem("photo"),
       username: localStorage.getItem("username"),
       userId: "",
       imagePreview: null,
-      /* User: [], */
       id: "",
-      User: "",
+      /* User: [], */
+      user: "",
     };
   },
 
   methods: {
-    /*Pour modifier l'image profil*/
+    /* Pour modifier l'image profil */
     btnUpload() {
       this.$refs.image.click();
     },
@@ -156,33 +156,33 @@ export default {
       this.imagePreview = URL.createObjectURL(this.file);
     },
 
-    /*Pour valider les modifications*/
+    /* VALIDER LES MODIFICATIONS */
+
     btnValid() {
-      
+      /* JSON.parse(localStorage.getItem({photo: this.photo}));
+      JSON.parse(localStorage.getItem({username: this.username})); */
       const formData = new FormData();
       console.log(this.file);
+      console.log(this.username);
       formData.append("image", this.file);
       formData.append("username", this.username);
 
       /* JSON.parse({photo: this.photo}); */
       /* const photo=localStorage.getItem('photo'); */
-     
-       /* let photo = JSON.stringify({ photo: this.photo }); */
+
+      /* let photo = JSON.stringify({ photo: this.photo }); */
 
       async function postProfil(formData) {
         const id = localStorage.getItem("id");
 
-        localStorage.getItem('photo');
-
         try {
           const response = await fetch(
             "http://localhost:3000/api/users/" + id + "/profil",
-
             {
               method: "PUT",
               headers: {
                 /* "content-type": "application/json", */
-                'Authorization': "bearer " + localStorage.getItem("token"),
+                Authorization: "bearer " + localStorage.getItem("token"),
               },
               body: formData,
             }
@@ -191,9 +191,10 @@ export default {
           if (response.ok) {
             const responseId = await response.json();
 
-            localStorage.setItem(JSON.stringify('photo')); 
+            /*  localStorage.setItem(JSON.stringify('photo')); 
+            localStorage.setItem(JSON.stringify('username'));  */
 
-           /*  JSON.parse(localStorage.getItem({photo: this.photo})); */           
+            /*  JSON.parse(localStorage.getItem({photo: this.photo})); */
 
             /*  this.imagePreview = '../../../backend/images/${this.photo}'
             localStorage.push('photo', responseId.photo); */
@@ -201,6 +202,7 @@ export default {
             console.log(responseId);
           } else {
             console.error("Retour du serveur : ", response.status);
+            /* location.reload(); */
           }
         } catch (e) {
           /* console.log(e); */
@@ -209,9 +211,10 @@ export default {
       postProfil(formData);
     },
 
-    /*Pour supprimer le compte*/
+    /* SUPPRIMER LE COMPTE */
 
     btnDelete() {
+      alert("Votre compte est supprimé !");
       const id = localStorage.getItem("id");
       fetch("http://localhost:3000/api/users/" + id, {
         method: "DELETE",
@@ -221,8 +224,8 @@ export default {
         },
       })
         .then(() => {
-          confirm("Votre profil a été supprimé");
           localStorage.clear();
+          location.replace(location.origin + "/");
         })
         .catch((err) => {
           console.error(
@@ -231,7 +234,6 @@ export default {
               " " +
               err.response.statusText
           );
-          location.replace(location.origin + "/");
         });
     },
   },
