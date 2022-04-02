@@ -25,7 +25,6 @@ Possibilité de supprimer son compte
         <!--Image user-->
         <form action="" method="post">
           <div class="d-flex">
-
             <!--Visualiser la photo lors de l'upload-->
             <img
               v-if="imagePreview"
@@ -35,7 +34,7 @@ Possibilité de supprimer son compte
               class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
             />
 
-           <!-- S'il n'y a pas de photo -> photo par défaut -->
+            <!-- S'il n'y a pas de photo -> photo par défaut -->
             <img
               v-else-if="photo == false"
               class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
@@ -44,7 +43,7 @@ Possibilité de supprimer son compte
               id="preview"
             />
 
-           <!-- Si photo dans le localstorage-->
+            <!-- Si photo dans le localstorage-->
             <img
               v-else
               :src="photo"
@@ -52,7 +51,6 @@ Possibilité de supprimer son compte
               alt="image profil"
               class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
             />
-
 
             <!--Bouton modifier la photo -->
             <div @click="btnUpload" width="16" height="16" class="mt-auto">
@@ -95,7 +93,7 @@ Possibilité de supprimer son compte
                 <input
                   class="input form-control d-none"
                   id="username"
-                  ref="usernameUpload"
+                  ref="username"
                   type="text"
                   name="username"
                 />
@@ -110,9 +108,10 @@ Possibilité de supprimer son compte
               class="btn btn-danger btn-sm shadow-sm mt-3"
               @click.prevent="btnValid"
               type="submit"
+              id="btnsubmit"
             >
-              Valider mon profil
-            </button>
+              Valider mon profil</button
+            ><!---->
 
             <!--Bouton supprimer mon compte-->
             <button
@@ -159,50 +158,54 @@ export default {
     /* VALIDER LES MODIFICATIONS */
 
     btnValid() {
-      /* JSON.parse(localStorage.getItem({photo: this.photo}));
-      JSON.parse(localStorage.getItem({username: this.username})); */
       const formData = new FormData();
       console.log(this.file);
       console.log(this.username);
+
       formData.append("image", this.file);
       formData.append("username", this.username);
 
-      /* JSON.parse({photo: this.photo}); */
-      /* const photo=localStorage.getItem('photo'); */
-
-      /* let photo = JSON.stringify({ photo: this.photo }); */
+      const newUsername = this.username;
+      const newPhoto =  URL.createObjectURL(this.file);
 
       async function postProfil(formData) {
         const id = localStorage.getItem("id");
-
+        
+        
         try {
           const response = await fetch(
             "http://localhost:3000/api/users/" + id + "/profil",
             {
               method: "PUT",
               headers: {
-                /* "content-type": "application/json", */
+                 /* 'content-type': 'application/json', */
                 Authorization: "bearer " + localStorage.getItem("token"),
               },
               body: formData,
             }
           );
+          
+         /*  var existingPhoto = localStorage.getItem("photo");
+          var data = existingPhoto ? existingPhoto + "photo" : "newphoto";
+          localStorage.setItem("photo", data); */
+
+          /* const photo = JSON.parse(localStorage.getItem("photo")); */
+           /*  localStorage.setItem("photo", `photo`); */
+            /* const username = JSON.parse(localStorage.getItem("username")); */
+            /* localStorage.setItem("username", `username`); */
+
 
           if (response.ok) {
             const responseId = await response.json();
-
-            /*  localStorage.setItem(JSON.stringify('photo')); 
-            localStorage.setItem(JSON.stringify('username'));  */
-
-            /*  JSON.parse(localStorage.getItem({photo: this.photo})); */
-
-            /*  this.imagePreview = '../../../backend/images/${this.photo}'
-            localStorage.push('photo', responseId.photo); */
-
+           
+            localStorage.setItem('username', newUsername)
+            
+            localStorage.setItem('photo', newPhoto)
+            
             console.log(responseId);
+            /* location.reload(); */
           } else {
             console.error("Retour du serveur : ", response.status);
-            /* location.reload(); */
           }
         } catch (e) {
           /* console.log(e); */
