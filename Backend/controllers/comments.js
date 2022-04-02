@@ -29,8 +29,12 @@ exports.getAllComments = (req, res, next) => {
   Comment.findAll(
     {
       include: [
-        { model: User },
-        { model: Gif }
+        { model: User,
+          attributes: ['id', 'username', 'photo']
+         },
+        { model: Gif,
+          attributes: ['id', 'gifs', 'title', 'userId']
+        }
       ],
       order: [['createdAt', 'DESC']],
     })

@@ -37,29 +37,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     }, 
-    /* likes: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'Gif',
-        key: 'id'
-      }
-    }, */
-    gifId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    comments: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      references:{
-        model: 'Comment',
-        key:'id'
-      }
-    },
     isAdmin:{
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
+    },
+    gifId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   }, 
   {

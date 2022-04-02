@@ -10,7 +10,6 @@ exports.createGif = (req, res) => {
 
   //Récupération de l'image pour la mettre dans le dossier images 
   const gif = new Gif({
-    //...gifObject,
     userId: req.userId,
     title: req.body.title,
     gifs: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
@@ -29,13 +28,15 @@ exports.getAllGifs = (req, res, next) => {
     {
       include: [{
         model: Comment,
+        attributes: ['id', 'comments', 'userId', 'createdAt'],
         include: [{
-          model: User
+          model: User,
+          attributes: ['id', 'username', 'photo']
         }]
       },
       {
         model: User,
-        attributes: ['username', 'photo']
+        attributes: ['id', 'username', 'photo']
       }
       ],
       order: [['createdAt', 'DESC']]
@@ -55,7 +56,10 @@ exports.getOneGif = (req, res, next) => {
         model: User,
         attributes: ['id', 'username', 'photo'],
 
-      }, { model: Comment }]
+      }, {
+        model: Comment,
+        attributes: ['id', 'comments', 'userId']
+      }]
     })
     .then((gifs) => res.status(200).json(gifs))
     .catch((error) => res.status(404).json({ error }));

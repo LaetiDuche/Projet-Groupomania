@@ -43,28 +43,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING, 
         allowNull: false 
       },
-      likes: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'Like',
-          key: 'id'
-        }
-      },
-      dislikes: {
-        type: DataTypes.INTEGER,
-        references:{
-          model: 'Like',
-          key:'id'
-        }
-      },
-      comments: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        references:{
-          model: 'Comment',
-          key:'id'
-        }
-      },
     },
     {
       sequelize,

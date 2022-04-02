@@ -84,24 +84,7 @@ exports.getUserProfile = (req, res, next) => {
     .catch(error => res.status(404).json({ error }));
 };
 
-//Modifer son profil , modifier son username et sa photo profil
-
-/* exports.updateUserProfile = (req, res, next) => {
-  const userObject = req.file ?
-    {
-     
-      ...req.body.user,
-      photo: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : { ...req.body };
-
-   
-  User.update({ where: { id: req.params.id }}, { ...userObject, id: req.params.id })
-    .then(() => res.status(200).json({ message: 'User modifiée !' }))
-    .catch(error => res.status(400).json({ error }));
-}; */
-
-
-
+// Mettre à jour son profil, modifier la photo et le username
 exports.updateUserProfile = (req, res, next) => {
   
   console.log(req.body.username)
@@ -128,7 +111,8 @@ exports.updateUserProfile = (req, res, next) => {
       user.save()
         .then(() => {
           fs.unlink(oldFile, () => {
-            res.status(200).json({ message: "Profil enregistré avec succés 1." });
+            res.status(200).json({ message: "Profil modifié avec succés" });
+           
           })
         })
         .catch((error) => {
@@ -138,38 +122,6 @@ exports.updateUserProfile = (req, res, next) => {
     .catch( (error) => {
       res.status(500).send({ message: "Erreur de mise à jour du profil id=" + userId });
     })
-        /*
-      const imageUpdated = User.photo;
-      if (user.id == userId) {
-        if (userObject.photo && userObject.photo != User.photo && imageUpdated != 'user-profile.jpg') {
-          fs.unlink(`images/${imageUpdated}`, () => {
-            user.update(userObject)
-              .then(updateDB => {
-                if (updateDB == 1) {
-                  res.status(200).json({ message: "Profil enregistré avec succés 1." });
-                } else {
-                  res.status(400).json({ message: `Impossible de mettre à jour le profil id=${userId}. Utilisateur non trouvé ou  req.body est vide 1!` });
-                }
-              })
-              .catch(function () {
-                res.status(500).json({ message: "Erreur de mise à jour du profil id=" + userId });
-              })
-          })
-        }
-        User.update(userObject, { where: { id: userId } })
-          .then(updateDB => {
-            if (updateDB == 1) {
-              res.status(200).json({ message: "Profil enregistré avec succés 2." });
-            } else {
-              res.status(400).json({ message: `Impossible de mettre à jour le profil id=${userId}. Utilisateur non trouvé ou req.body est vide 2!` });
-            }
-          })
-          .catch(function () {
-            res.status(500).send({ message: "Erreur de mise à jour du profil id=" + userId });
-          });
-      }
-    })
-    */
 };
 
 //Supprimer son compte

@@ -40,14 +40,6 @@ module.exports = {
           key:'id'
         }
       },
-      comments: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references:{
-          model: 'Comment',
-          key:'id'
-        }
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
