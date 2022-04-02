@@ -1,7 +1,9 @@
+<!-- FORUM , PUBLICATION ET AFFICHAGE DES GIFS ET DES COMMENTAIRES -->
+
 <template>
   <div class="forum">
 
-    <!-- Publier un message -->
+    <!-- PUBLIER UN MESSAGE -->
     <div
       class="
         formulaire
@@ -12,10 +14,10 @@
         rounded-3
         shadow
       "
-    >
+      >
       <div class="d-flex mx-auto">
-        <!--Utilisateur-->
 
+      <!-- Photo user -->
          <img
           v-if="photo == false"
           src="../assets/user-profile.jpg"
@@ -27,15 +29,13 @@
         <img
           v-else
           :src="photo"
-          
           class="rounded-circle me-3 shadow"
           height="40"
           alt="Avatar"
           loading="lazy"
         />
        
-
-        <!--Créer un message-->
+        <!-- Bouton créer un message -->
         <div
           class="p-1 border rounded-pill text-center flex-fill"
           role="button"
@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <!--Affichage des messages du forum-->
+    <!-- AFFICHAGE DES GIFS -->
     <div
       class="
         forum-publication
@@ -63,7 +63,8 @@
       :key="gifs.gifId"
     >
       <div class="d-flex px-3 py-3">
-        <!--Utilisateur-->
+
+        <!-- Photo user -->
         <div class="my-auto">
           <img
             v-if="gifs.User.photo"
@@ -84,7 +85,7 @@
           />
         </div>
 
-        <!--Username et date de publication-->
+        <!-- Username et date de publication -->
         <div class="d-flex flex-column px-3">
           <span
             class="d-flex flex-column justify-content-start fw-bold"
@@ -98,28 +99,28 @@
           </span>
         </div>
 
-        <!-- Bouton supprimer le message pour l'admin et l'utilisateur-->
+        <!-- Bouton supprimer le message pour l'admin et l'utilisateur -->
         <div
           class="p-1 ms-auto"
           style="cursor: pointer"
           role="button"
-          v-if="userId == gifs.userId || isAdmin === 'true'"
+          v-if="userId == gifs.userId || isAdmin == 'true'"
           @click="btnDelete(gifs.id)"
         >
           <i class="bi bi-trash"></i>
         </div>
       </div>
 
-      <!--Titre et gif du message-->
+      <!-- Titre et gif du message -->
       <div>
         <p class="px-3">{{ gifs.title }}</p>
         <img class="w-100 d-flex justify-content-center" :src="gifs.gifs" />
       </div>
 
-      <!--Boutons Like/dislike-->
-
+    <!-- LIKES / DISLIKES -->
       <div class="m-1 d-flex justify-content-end">
-        <!--Like-->
+
+        <!-- Likes -->
         <button
           class="btn-like bg-transparent border-0 py-auto d-flex text-align"
           type="submit"
@@ -131,7 +132,7 @@
           <span class="number-like px-1">{{ count }}</span>
         </button>
 
-        <!--Dislike-->
+        <!-- Dislikes -->
         <button
           class="btn-like bg-transparent border-0 py-auto d-flex text-align"
           type="submit"
@@ -147,11 +148,12 @@
         </button>
       </div>
 
-      <!--Commentaires-->
+      <!-- COMMENTAIRES -->
 
-      <!--Ecrire un commentaire-->
+      <!-- Ecrire un commentaire -->
       <div class="d-flex mb-3 px-4">
 
+        <!-- Photo user -->
         <img
           v-if="photo == false"
           src="../assets/user-profile.jpg"
@@ -169,11 +171,12 @@
           loading="lazy"
         />
         
+         <!-- Formulaire créer un commentaire   -->
         <form
           @submit.prevent="submitComment(gifs.id)"
           class="d-flex flex-fill"
-          method="post"
-        >
+          
+          >
           <label class="form-label" for="comment"></label>
           <input
             v-model="comment"
@@ -182,6 +185,7 @@
             class="form-control p-1 border rounded-pill text-center flex-fill"
             type="text"
             placeholder="Ecrire un commentaire ..."
+            required
           />
 
           <button class="btn" type="submit">
@@ -190,17 +194,18 @@
         </form>
       </div>
 
-      <!--Commentaires des autres utilisateurs-->
+      <!-- COMMENTAIRES DES AUTRES UTILISATEURS -->
       <div
         class="border comment-border mx-4 pt-2 mb-2"
         v-for="comment in gifs.Comments"
         :key="comment.id"
-        id="comment"
+        
       >
         <div class="d-flex flex-column flex-fill">
           <div>
             <div class="px-3 py-1">
               <div class="d-flex">
+
                 <!-- Photo user -->
                 <div class="my-auto">
                   <img
@@ -222,8 +227,9 @@
                   />
                 </div>
 
-                <!-- username et date commentaire -->
+              <!-- username et date commentaire -->
                 <div class="d-flex flex-column px-2">
+
                   <!-- username -->
                   <span
                     class="
@@ -241,6 +247,7 @@
                   <!-- date du commentaire -->
                   <span class="date fw-light">
                     Le {{ dateFormat(comment.createdAt) }}
+              
                   </span>
                 </div>
 
@@ -255,7 +262,7 @@
                 </div>
               </div>
 
-              <!-- commentaire -->
+              <!-- Commentaires -->
               <div class="ms-4 py-2">
                 <p class="fs-6 fw-light mb-0">{{ comment.comments }}</p>
               </div>
@@ -277,7 +284,7 @@ export default {
   data() {
     return {
       isAdmin: "",
-      userId: "",
+      userId: localStorage.getItem("id"),
       gifId: "",
       photo: localStorage.getItem("photo"),
       gifs: "",
@@ -288,8 +295,8 @@ export default {
       /* like: [],
       likes: "", */
       Comment: [],
-      comments: "",
-      comment: "",
+      
+      comment: '',
       id: "",
       /* btnClick1: 0,
       btnClick2: 0, */
