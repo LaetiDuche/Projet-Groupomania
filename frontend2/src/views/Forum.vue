@@ -2,7 +2,6 @@
 
 <template>
   <div class="forum">
-
     <!-- PUBLIER UN MESSAGE -->
     <div
       class="
@@ -14,14 +13,13 @@
         rounded-3
         shadow
       "
-      >
+    >
       <div class="d-flex mx-auto">
-
-      <!-- Photo user -->
-         <img
+        <!-- Photo user -->
+        <img
           v-if="photo == false"
           src="../assets/user-profile.jpg"
-          class="rounded-circle me-3 shadow"
+          class="rounded-circle me-3 shadow py-auto"
           height="40"
           alt="avatar"
           loading="lazy"
@@ -29,12 +27,12 @@
         <img
           v-else
           :src="photo"
-          class="rounded-circle me-3 shadow"
+          class="rounded-circle me-3 shadow py-auto"
           height="40"
           alt="Avatar"
           loading="lazy"
         />
-       
+
         <!-- Bouton créer un message -->
         <div
           class="p-1 border rounded-pill text-center flex-fill"
@@ -63,7 +61,6 @@
       :key="gifs.gifId"
     >
       <div class="d-flex px-3 py-3">
-
         <!-- Photo user -->
         <div class="my-auto">
           <img
@@ -117,9 +114,8 @@
         <img class="w-100 d-flex justify-content-center" :src="gifs.gifs" />
       </div>
 
-    <!-- LIKES / DISLIKES -->
+      <!-- LIKES / DISLIKES -->
       <div class="m-1 d-flex justify-content-end">
-
         <!-- Likes -->
         <button
           class="btn-like bg-transparent border-0 py-auto d-flex text-align"
@@ -152,12 +148,11 @@
 
       <!-- Ecrire un commentaire -->
       <div class="d-flex mb-3 px-4">
-
         <!-- Photo user -->
         <img
           v-if="photo == false"
           src="../assets/user-profile.jpg"
-          class="rounded-circle me-2 shadow"
+          class="rounded-circle me-2 shadow my-auto"
           height="35"
           alt="Avatar"
           loading="lazy"
@@ -165,21 +160,17 @@
         <img
           v-else
           :src="photo"
-          class="rounded-circle me-2 shadow"
+          class="rounded-circle me-2 shadow my-auto"
           height="35"
           alt="Avatar"
           loading="lazy"
         />
-        
-         <!-- Formulaire créer un commentaire   -->
-        <form
-          @submit.prevent="submitComment(gifs.id)"
-          class="d-flex flex-fill"
-          
-          >
+
+        <!-- Formulaire créer un commentaire   -->
+        <form @submit.prevent="submitComment(gifs.id)" class="d-flex flex-fill">
           <label class="form-label" for="comment"></label>
           <input
-            v-model="comment"
+            v-model.lazy="comment"
             id="comment"
             name="comment"
             class="form-control p-1 border rounded-pill text-center flex-fill"
@@ -199,13 +190,11 @@
         class="border comment-border mx-4 pt-2 mb-2"
         v-for="comment in gifs.Comments"
         :key="comment.id"
-        
       >
         <div class="d-flex flex-column flex-fill">
           <div>
             <div class="px-3 py-1">
               <div class="d-flex">
-
                 <!-- Photo user -->
                 <div class="my-auto">
                   <img
@@ -227,9 +216,8 @@
                   />
                 </div>
 
-              <!-- username et date commentaire -->
+                <!-- username et date commentaire -->
                 <div class="d-flex flex-column px-2">
-
                   <!-- username -->
                   <span
                     class="
@@ -247,7 +235,6 @@
                   <!-- date du commentaire -->
                   <span class="date fw-light">
                     Le {{ dateFormat(comment.createdAt) }}
-              
                   </span>
                 </div>
 
@@ -295,8 +282,8 @@ export default {
       /* like: [],
       likes: "", */
       Comment: [],
-      
-      comment: '',
+
+      comment: "",
       id: "",
       /* btnClick1: 0,
       btnClick2: 0, */
@@ -377,6 +364,73 @@ export default {
       }
     },
 
+    //--------------------------------- COMMENTAIRES ---------------------------------
+
+    // POSTER UN COMMENTAIRE
+
+    submitComment(id) {
+      async function commentForm(comment, id) {
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/forum/" + id,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "bearer " + localStorage.getItem("token"),
+              },
+              body: JSON.stringify({ comments: comment }),
+            }
+          );
+          if (response.ok) {
+            const responseId = await response.json();
+            alert("Votre commentaire a été publié !");
+            document.location.reload();
+            console.log(responseId);
+          } else {
+            console.error("Retour du serveur: ", response.status);
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
+      commentForm(this.comment, id);
+    },
+
+    // SUPPRIMER UN COMMENTAIRE (ADMIN)
+
+    btnDeleteComment(id) {
+
+      confirm("Voulez-vous vraiment supprimer ce message ?"); 
+      async function commentForm(id) {
+
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/forum/" + id + "/comment",
+            {
+              method: "DELETE",
+              headers: {
+                "content-type": "application/json",
+                authorization: "bearer " + localStorage.getItem("token"),
+              },
+            }
+          );
+          if (response.ok) {
+            let responseId = await response.json();
+            console.log(responseId);
+            location.reload();
+          } else {
+            console.error("Retour du serveur : ", response.status);
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
+      commentForm(id);
+     
+    },
+
     // ---------------------------------- LIKE / DISLIKE -----------------------------------
 
     // BOUTON LIKER UN GIF
@@ -439,71 +493,6 @@ export default {
         }
       }
       like(postDislike);
-    },
-
-    //--------------------------------- COMMENTAIRES ---------------------------------
-
-    // POSTER UN COMMENTAIRE
-
-    submitComment(id) {
-      async function commentForm(comment, id) {
-        try {
-          const response = await fetch(
-            "http://localhost:3000/api/forum/" + id,
-            {
-              method: "POST",
-
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: "bearer " + localStorage.getItem("token"),
-              },
-              body: JSON.stringify({ comments: comment }),
-            }
-          );
-          if (response.ok) {
-            const responseId = await response.json();
-            alert("Votre commentaire a été publié !");
-            document.location.reload();
-            console.log(responseId);
-          } else {
-            console.error("Retour du serveur: ", response.status);
-          }
-        } catch (e) {
-          console.log(e);
-        }
-      }
-      commentForm(this.comment, id);
-    },
-
-    // SUPPRIMER UN COMMENTAIRE (ADMIN)
-
-    btnDeleteComment(id) {
-     
-      async function commentForm( id) {
-        confirm("Voulez-vous vraiment supprimer ce message ?");
-        try {
-          const response = await fetch(
-            "http://localhost:3000/api/forum/" + id + "/comment",
-            {
-              method: "DELETE",
-              headers: {
-                "content-type": "application/json",
-                authorization: "bearer " + localStorage.getItem("token"),
-              },
-            }
-          );
-          if (response.ok) {
-            let responseId = await response.json();
-            console.log(responseId);
-            location.reload();
-          } else {
-            console.error("Retour du serveur : ", response.status);
-          }
-        } catch (e) {
-          console.log(e); 
-        }
-      }
-      commentForm(id);
     },
   },
 };
