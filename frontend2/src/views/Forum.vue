@@ -166,7 +166,7 @@
           loading="lazy"
         />
 
-        <!-- Formulaire créer un commentaire   -->
+        <!-- Formulaire pour créer un commentaire   -->
         <form @submit.prevent="submitComment(gifs.id)" class="d-flex flex-fill">
           <label class="form-label" for="comment"></label>
           <input
@@ -238,11 +238,12 @@
                   </span>
                 </div>
 
-                <!-- Bouton supprimer le commentaire par l'admin -->
+                <!-- Bouton supprimer le commentaire par l'admin    @onclick="confirmDelete()"-->
                 <div
                   class="p-1 ms-auto"
                   role="button"
                   v-if="isAdmin === 'true'"
+                  id="deleteComment"
                   @click="btnDeleteComment(comment.id)"
                 >
                   <i class="bi bi-trash"></i>
@@ -273,36 +274,36 @@ export default {
       isAdmin: "",
       userId: localStorage.getItem("id"),
       gifId: "",
+      id: "",
       photo: localStorage.getItem("photo"),
+      images: "",
       gifs: "",
       Gif: [],
       User: [],
       users: "",
-
-      /* like: [],
-      likes: "", */
       Comment: [],
-
       comment: "",
-      id: "",
-      /* btnClick1: 0,
-      btnClick2: 0, */
+
       likeChange: false,
       dislikeChange: false,
       clickDislike: false,
       likes: "",
-      /* likes: [], */
       usersLiked: [],
       usersDisliked: [],
       dislikes: "",
-      images: "",
       likesChange: 0,
       dislikesChange: 0,
       count: 0,
+      /* like: [],
+      likes: "", */
+      /* btnClick1: 0,
+      btnClick2: 0, */
+      /* likes: [], */
     };
   },
   created: function () {
-    // Récupération des données des gifs avec user et comments
+
+    // Récupération des données des gifs avec users et comments
     fetch("http://localhost:3000/api/forum", {
       headers: {
         "Content-Type": "application/json",
@@ -322,6 +323,7 @@ export default {
   },
 
   methods: {
+
     // ---------------------------------------- GIFS --------------------------------------
 
     // SUPPRIMER UN GIF (ADMIN ET USER)
@@ -329,7 +331,6 @@ export default {
     btnDelete(id) {
       let gifId = JSON.stringify({ id: this.gifId });
       async function gifForm(dataForm) {
-        confirm("Voulez-vous vraiment supprimer ce message ?");
         try {
           const response = await fetch(
             "http://localhost:3000/api/forum/" + id,
@@ -345,6 +346,7 @@ export default {
           if (response.ok) {
             let responseId = await response.json();
             console.log(responseId);
+            alert("Ce gif est supprimé !");
             location.reload();
           } else {
             console.error("Retour du serveur : ", response.status);
@@ -356,7 +358,7 @@ export default {
       gifForm(gifId);
     },
 
-    // FORMATTE LA DATE DE PUBLICATION DES GIFS
+    // FORMATTE LA DATE DE PUBLICATION DES GIFS ET COMMENTS
 
     dateFormat(dateValue) {
       if (dateValue) {
@@ -385,7 +387,6 @@ export default {
           );
           if (response.ok) {
             const responseId = await response.json();
-            alert("Votre commentaire a été publié !");
             document.location.reload();
             console.log(responseId);
           } else {
@@ -401,10 +402,7 @@ export default {
     // SUPPRIMER UN COMMENTAIRE (ADMIN)
 
     btnDeleteComment(id) {
-
-      confirm("Voulez-vous vraiment supprimer ce message ?"); 
       async function commentForm(id) {
-
         try {
           const response = await fetch(
             "http://localhost:3000/api/forum/" + id + "/comment",
@@ -419,6 +417,7 @@ export default {
           if (response.ok) {
             let responseId = await response.json();
             console.log(responseId);
+            alert("Ce commentaire est supprimé !");
             location.reload();
           } else {
             console.error("Retour du serveur : ", response.status);
@@ -428,7 +427,6 @@ export default {
         }
       }
       commentForm(id);
-     
     },
 
     // ---------------------------------- LIKE / DISLIKE -----------------------------------
