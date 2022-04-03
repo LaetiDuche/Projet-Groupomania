@@ -40,7 +40,7 @@ Possibilité de supprimer son compte
               class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
               alt="photo profil"
               src="../assets/user-profile.jpg"
-              id="preview"
+              id="localPhoto"
             />
 
             <!-- Si photo dans le localstorage-->
@@ -140,12 +140,33 @@ export default {
       userId: "",
       imagePreview: null,
       id: "",
-      /* User: [], */
       user: "",
+      User: [],
     };
   },
 
   methods: {
+    
+    //Affiche le profil de l'utilisateur connecté
+    getProfil() {
+      const id = localStorage.getItem("id");
+
+      fetch("http://localhost:3000/api/users/" + id, {
+        headers: {
+          Authorization: "Bearer" + localStorage.getItem("token"),
+        },
+      })
+        .then((response) => {
+          this.user = response.data;
+        })
+        .catch((err) => {
+          this.error(
+            "Erreur get" + err.response.status + "" + err.response.statusText
+          );
+          window.location.reload();
+        });
+    },
+
     /* Pour modifier l'image profil */
     btnUpload() {
       this.$refs.image.click();
@@ -166,44 +187,42 @@ export default {
       formData.append("username", this.username);
 
       const newUsername = this.username;
-      const newPhoto =  URL.createObjectURL(this.file);
+      const newPhoto = URL.createObjectURL(this.file);
 
       async function postProfil(formData) {
         const id = localStorage.getItem("id");
-        
-        
+
         try {
           const response = await fetch(
             "http://localhost:3000/api/users/" + id + "/profil",
             {
               method: "PUT",
               headers: {
-                 /* 'content-type': 'application/json', */
+                /* 'content-type': image/jpg, */
                 Authorization: "bearer " + localStorage.getItem("token"),
               },
               body: formData,
             }
           );
-          
-         /*  var existingPhoto = localStorage.getItem("photo");
+
+          /*  var existingPhoto = localStorage.getItem("photo");
           var data = existingPhoto ? existingPhoto + "photo" : "newphoto";
           localStorage.setItem("photo", data); */
 
           /* const photo = JSON.parse(localStorage.getItem("photo")); */
-           /*  localStorage.setItem("photo", `photo`); */
-            /* const username = JSON.parse(localStorage.getItem("username")); */
-            /* localStorage.setItem("username", `username`); */
-
+          /*  localStorage.setItem("photo", `photo`); */
+          /* const username = JSON.parse(localStorage.getItem("username")); */
+          /* localStorage.setItem("username", `username`); */
 
           if (response.ok) {
             const responseId = await response.json();
-           
-            localStorage.setItem('username', newUsername)
-            
-            localStorage.setItem('photo', newPhoto)
-            
-            console.log(responseId);
+
+            localStorage.setItem("username", newUsername);
+            localStorage.setItem("photo", newPhoto);
+
+            alert("Votre profil a été modifié !");
             /* location.reload(); */
+            console.log(responseId);
           } else {
             console.error("Retour du serveur : ", response.status);
           }
@@ -217,27 +236,28 @@ export default {
     /* SUPPRIMER LE COMPTE */
 
     btnDelete() {
-      alert("Votre compte est supprimé !");
       const id = localStorage.getItem("id");
-      fetch("http://localhost:3000/api/users/" + id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
-        .then(() => {
-          localStorage.clear();
-          location.replace(location.origin + "/");
+      if (confirm("Voulez-vous supprimé ce compte ?")) {
+        fetch("http://localhost:3000/api/users/" + id, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
         })
-        .catch((err) => {
-          console.error(
-            "Erreur Delete " +
-              err.response.status +
-              " " +
-              err.response.statusText
-          );
-        });
+          .then(() => {
+            localStorage.clear();
+            location.replace(location.origin + "/");
+          })
+          .catch((err) => {
+            console.error(
+              "Erreur Delete " +
+                err.response.status +
+                " " +
+                err.response.statusText
+            );
+          });
+      }
     },
   },
 };
