@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     gifId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
   }, 
   {
