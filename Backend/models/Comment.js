@@ -14,10 +14,12 @@ module.exports = (sequelize, DataTypes) => {
 
       models.Comment.belongsTo(models.Gif,{
         foreignKey: 'gifId',
-         as: 'gif'
+        onDelete: 'Cascade'
+         
       }),
       models.Comment.belongsTo(models.User,{
         foreignKey: 'userId',
+        onDelete: 'Cascade'
       })
     }
   };

@@ -14,13 +14,15 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'User',
-          key: 'id'
+          key: 'id',
+          onDelete: 'Cascade',
         }
       },
       gifId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
+          onDelete: 'Cascade',
           model: 'Gif',
           key: 'id'
         } 
