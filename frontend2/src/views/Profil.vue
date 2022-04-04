@@ -52,7 +52,7 @@ Possibilité de supprimer son compte
               class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
             />
 
-            <!--Bouton modifier la photo -->
+            <!--Bouton uploader la photo -->
             <div @click="btnUpload" width="16" height="16" class="mt-auto">
               <label classe="label form-label mb-0 " for="photo">
                 <i
@@ -146,7 +146,6 @@ export default {
   },
 
   methods: {
-    
     //Affiche le profil de l'utilisateur connecté
     getProfil() {
       const id = localStorage.getItem("id");
@@ -176,7 +175,7 @@ export default {
       this.imagePreview = URL.createObjectURL(this.file);
     },
 
-    /* VALIDER LES MODIFICATIONS */
+    /* VALIDER LE PROFIL */
 
     btnValid() {
       const formData = new FormData();
@@ -185,9 +184,6 @@ export default {
 
       formData.append("image", this.file);
       formData.append("username", this.username);
-
-      const newUsername = this.username;
-      const newPhoto = URL.createObjectURL(this.file);
 
       async function postProfil(formData) {
         const id = localStorage.getItem("id");
@@ -205,23 +201,14 @@ export default {
             }
           );
 
-          /*  var existingPhoto = localStorage.getItem("photo");
-          var data = existingPhoto ? existingPhoto + "photo" : "newphoto";
-          localStorage.setItem("photo", data); */
-
-          /* const photo = JSON.parse(localStorage.getItem("photo")); */
-          /*  localStorage.setItem("photo", `photo`); */
-          /* const username = JSON.parse(localStorage.getItem("username")); */
-          /* localStorage.setItem("username", `username`); */
-
           if (response.ok) {
             const responseId = await response.json();
 
-            localStorage.setItem("username", newUsername);
-            localStorage.setItem("photo", newPhoto);
-
+            localStorage.setItem("username", responseId.username);
+            localStorage.setItem("photo", responseId.photo);
+  
             alert("Votre profil a été modifié !");
-            /* location.reload(); */
+            location.reload();
             console.log(responseId);
           } else {
             console.error("Retour du serveur : ", response.status);

@@ -86,14 +86,9 @@ exports.getUserProfile = (req, res, next) => {
 
 // Mettre à jour son profil, modifier la photo et le username
 exports.updateUserProfile = (req, res, next) => {
-  
+
   console.log(req.body.username)
   const userId = req.params.id;
-  const userObject = req.file ?
-    {
-      ...req.body.User,
-      photo: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-    } : { ...req.body };
 
   User.findOne({ where: { id: userId } })
     .then((user) => {
@@ -109,25 +104,29 @@ exports.updateUserProfile = (req, res, next) => {
       }
       console.log("Updated" + JSON.stringify(user))
       user.save()
-        .then(() => {
-          fs.unlink(oldFile, () => {
-            res.status(200).json({ message: "Profil modifié avec succés" });
-           
-          })
+        .then((user) => {
+          if (oldFile) {
+            fs.unlink(oldFile, () => {
+              res.status(200).json({ id: user.id, username: user.username, photo: user.photo, gifId: user.gifId })
+            })
+          } else {
+            res.status(200).json({ id: user.id, username: user.username, photo: user.photo })
+          }
         })
         .catch((error) => {
+          console.log(error)
           res.status(400).json({ message: `Impossible de mettre à jour le profil id=${userId}. Utilisateur non trouvé ou  req.body est vide 1!` });
         })
     })
-    .catch( (error) => {
+    .catch((error) => {
       res.status(500).send({ message: "Erreur de mise à jour du profil id=" + userId });
     })
 };
 
-//Supprimer son compte
+//Supprimer son compte (supprime user avec tou)
 exports.deleteUserProfile = (req, res) => {
 
-  User.findOne({ where: { id: req.params.id }})
+  User.findOne({ where: { id: req.params.id } })
 
     .then(user => {
       const filename = user.photo.split('/images/')[1];
@@ -135,10 +134,11 @@ exports.deleteUserProfile = (req, res) => {
         const paramId = parseInt(req.params.id);
         console.log(req.user);
         console.log(paramId);
-        User.destroy({ where: { id: req.params.id }})
+        User.destroy({ where: { id: req.params.id } })
           .then(() => res.status(200).json({ message: 'User supprimé !' }))
           .catch(error => res.status(404).json({ error }));
       });
     })
     .catch(error => res.status(500).json({ error }));
 };
+
