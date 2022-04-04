@@ -12,9 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       
       // define association here
-      models.Gif.belongsTo(models.User),
-      models.Gif.hasMany(models.Like);
-      models.Gif.hasMany(models.Comment);
+      models.Gif.belongsTo(models.User,{
+        foreignKey: 'userId',
+        onDelete: 'Cascade'
+      }),
+      /* models.Gif.hasMany(models.Like); */
+      models.Gif.hasMany(models.Comment, {
+        onDelete: 'Cascade'
+      });
     }
 
   };
@@ -31,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false ,
         required: true,
         references: {
+          onDelete: 'Cascade',
           model: 'User',
           key: 'id'
         } 
