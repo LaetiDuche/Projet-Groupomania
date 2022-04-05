@@ -7,7 +7,7 @@ const fs = require('fs');
 const User = require('../models').User;
 require('dotenv').config({ path: './.env' });
 
-//Création d'un nouvel utilisateur email et le mot de pass crypté
+//Création d'un nouvel utilisateur, email et le mot de pass crypté
 exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10)
@@ -52,7 +52,7 @@ exports.login = (req, res) => {
           if (!valid) {
             return res.status(401).json({ error: 'Mot de pass incorrect !' });
           }
-          //On lui attribue un jeton token pour 24H , session connectée pour 24h
+          //  Jeton token , session pour 24H 
           res.status(200).json({
             message: 'Utilisateur connecté !',
             userId: user.id,
@@ -123,7 +123,7 @@ exports.updateUserProfile = (req, res, next) => {
     })
 };
 
-//Supprimer son compte (supprime user avec tou)
+//Supprimer son compte (supprime user, gifs et comments d'un user)
 exports.deleteUserProfile = (req, res) => {
 
   User.findOne({ where: { id: req.params.id } })

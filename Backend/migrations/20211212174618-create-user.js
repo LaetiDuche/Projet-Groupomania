@@ -29,6 +29,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      gifId: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Gifs',
+          key: 'id',
+          onDelete: 'Cascade',
+        } 
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

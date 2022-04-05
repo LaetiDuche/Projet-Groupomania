@@ -13,9 +13,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
 
       // define association here
-      models.User.hasMany(models.Gif);
-      models.User.hasMany(models.Comment);
-      models.User.hasMany(models.Like);
+      models.User.hasMany(models.Gif, {
+        onDelete: 'Cascade'
+      });
+      models.User.hasMany(models.Comment, {
+        onDelete: 'Cascade'
+      });
+      /* models.User.hasMany(models.Like); */
     }
   };
   User.init(
@@ -45,6 +49,10 @@ module.exports = (sequelize, DataTypes) => {
     gifId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+      references: {
+        model: 'Gif',
+        key: 'id'
+    }
     },
   }, 
   {

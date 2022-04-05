@@ -22,7 +22,7 @@ exports.createGif = (req, res) => {
 //Voir tous les messages dans le forum
 exports.getAllGifs = (req, res, next) => {
   console.log("Current user id admin => " + req.user.isAdmin)
-  console.log("toto allgif")
+  console.log("allgif")
 
   Gif.findAll(
     {
@@ -65,7 +65,7 @@ exports.getOneGif = (req, res, next) => {
     .catch((error) => res.status(404).json({ error }));
 };
 
-//Supprimer un message (admin)
+//Supprimer un message 
 exports.deleteGif = (req, res, next) => {
   Gif.findOne({ where: { id: req.params.id } })
     .then(gif => {

@@ -1,13 +1,17 @@
-<!-- FORUM , PUBLICATION ET AFFICHAGE DES GIFS ET DES COMMENTAIRES -->
+<!-- 
+FORUM , 
+AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
+ -->
 
 <template>
   <div class="forum">
-    <!-- PUBLIER UN MESSAGE -->
+
+    <!-- Publier un message -->
     <div
       class="
         formulaire
         mx-auto
-        col-11 col-md-8 col-lg-6
+        col-11 col-md-8 col-lg-8
         p-3
         my-3 my-sm-4
         rounded-3
@@ -33,7 +37,7 @@
           loading="lazy"
         />
 
-        <!-- Bouton créer un message -->
+        <!-- Bouton créer un message => redirection vers page message -->
         <div
           class="p-1 border rounded-pill text-center flex-fill"
           role="button"
@@ -45,13 +49,14 @@
       </div>
     </div>
 
-    <!-- AFFICHAGE DES GIFS -->
+    <!----------------------------------- GIFS -------------------------------->
+
     <div
       class="
         forum-publication
         formulaire
         mx-auto
-        col-11 col-md-8 col-lg-6
+        col-11 col-md-8 col-lg-8
         my-3 my-sm-4
         rounded-3
         shadow
@@ -61,6 +66,7 @@
       :key="gifs.gifId"
     >
       <div class="d-flex px-3 py-3">
+
         <!-- Photo user -->
         <div class="my-auto">
           <img
@@ -144,10 +150,10 @@
         </button>
       </div>
 
-      <!-- COMMENTAIRES -->
+    <!----------------------------------- COMMENTAIRES ------------------------>
 
-      <!-- Ecrire un commentaire -->
       <div class="d-flex mb-3 px-4">
+
         <!-- Photo user -->
         <img
           v-if="photo == false"
@@ -166,7 +172,7 @@
           loading="lazy"
         />
 
-        <!-- Formulaire pour créer un commentaire   -->
+        <!-- Publier un commentaire   -->
         <form @submit.prevent="submitComment(gifs.id)" class="d-flex flex-fill">
           <label class="form-label" for="comment"></label>
           <input
@@ -178,19 +184,19 @@
             placeholder="Ecrire un commentaire ..."
             required
           />
-
           <button class="btn" type="submit">
             <i class="bi bi-send"></i>
           </button>
         </form>
+
       </div>
 
-      <!-- COMMENTAIRES DES AUTRES UTILISATEURS -->
+      <!-- Commentaires des autres utilisateurs -->
       <div
         class="border comment-border mx-4 pt-2 mb-2"
         v-for="comment in gifs.Comments"
         :key="comment.id"
-      >
+        >
         <div class="d-flex flex-column flex-fill">
           <div>
             <div class="px-3 py-1">
@@ -216,9 +222,9 @@
                   />
                 </div>
 
-                <!-- username et date commentaire -->
+                <!-- Username et date commentaire -->
                 <div class="d-flex flex-column px-2">
-                  <!-- username -->
+                  <!-- Username -->
                   <span
                     class="
                       d-flex
@@ -232,13 +238,13 @@
                     {{ comment.User.username }}
                   </span>
 
-                  <!-- date du commentaire -->
+                  <!-- Date du commentaire -->
                   <span class="date fw-light">
                     Le {{ dateFormat(comment.createdAt) }}
                   </span>
                 </div>
 
-                <!-- Bouton supprimer le commentaire par l'admin    @onclick="confirmDelete()"-->
+                <!-- Bouton supprimer le commentaire par l'admin -->
                 <div
                   class="p-1 ms-auto"
                   role="button"
@@ -303,7 +309,8 @@ export default {
   },
   created: function () {
 
-    // Récupération des données des gifs avec users et comments
+    //--- RÉCUPÉRATION DES DONNÉES
+
     fetch("http://localhost:3000/api/forum", {
       headers: {
         "Content-Type": "application/json",
@@ -312,7 +319,6 @@ export default {
     })
       .then((response) => response.json())
       .then((gifs) => {
-        /* console.log(gifs); */
         this.Gif = gifs;
       });
   },
@@ -326,7 +332,7 @@ export default {
 
     // ---------------------------------------- GIFS --------------------------------------
 
-    // SUPPRIMER UN GIF (ADMIN ET USER)
+    //--- SUPPRIMER UN GIF (ADMIN ET USER)
 
     btnDelete(id) {
       let gifId = JSON.stringify({ id: this.gifId });
@@ -358,7 +364,7 @@ export default {
       gifForm(gifId);
     },
 
-    // FORMATTE LA DATE DE PUBLICATION DES GIFS ET COMMENTS
+    //--- FORMATTE LA DATE DE PUBLICATION DES GIFS ET COMMENTS
 
     dateFormat(dateValue) {
       if (dateValue) {
@@ -368,7 +374,7 @@ export default {
 
     //--------------------------------- COMMENTAIRES ---------------------------------
 
-    // POSTER UN COMMENTAIRE
+    //--- BOUTON PUBLIER UN COMMENTAIRE
 
     submitComment(id) {
       async function commentForm(comment, id) {
@@ -399,7 +405,7 @@ export default {
       commentForm(this.comment, id);
     },
 
-    // SUPPRIMER UN COMMENTAIRE (ADMIN)
+    // BOUTON (icon poubelle) SUPPRIMER UN COMMENTAIRE (ADMIN)
 
     btnDeleteComment(id) {
       async function commentForm(id) {

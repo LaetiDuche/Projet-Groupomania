@@ -1,7 +1,7 @@
 <!--
 Page profil de l'utilisateur
 Possibilité de modifier son username et sa photo profil
-Possibilité de supprimer son compte
+Possibilité de supprimer son compte par l'utilisateur seulement
 -->
 
 <template>
@@ -11,7 +11,7 @@ Possibilité de supprimer son compte
         profil-user
         mx-auto
         my-4
-        col-10 col-sm-8 col-md-6
+        col-10 col-sm-10 col-md-8
         p-3
         rounded-3
         shadow
@@ -19,25 +19,25 @@ Possibilité de supprimer son compte
     >
       <div class="mx-auto d-flex flex-column">
         <div>
-          <h3 class="fs-5">Mon profil</h3>
+          <h3 class="fs-5 text-center">Mon profil</h3>
         </div>
 
-        <!--Image user-->
+        <!-- Image user -->
         <form action="" method="post">
-          <div class="d-flex">
-            <!--Visualiser la photo lors de l'upload-->
+          <div class="d-flex mx-auto justify-content-center">
+            <!-- Visualiser la photo lors de l'upload -->
             <img
               v-if="imagePreview"
               :src="imagePreview"
               id="preview"
               alt="image profil"
-              class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
+              class="img-profil img-fluid  rounded-circle mt-3 shadow"
             />
 
-            <!-- S'il n'y a pas de photo -> photo par défaut -->
+            <!-- S'il n'y a pas de photo => photo par défaut -->
             <img
               v-else-if="photo == false"
-              class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
+              class="img-profil img-fluid  rounded-circle mt-3 shadow"
               alt="photo profil"
               src="../assets/user-profile.jpg"
               id="localPhoto"
@@ -49,10 +49,10 @@ Possibilité de supprimer son compte
               :src="photo"
               id="preview"
               alt="image profil"
-              class="img-profil img-fluid mx-auto rounded-circle mt-3 shadow"
+              class="img-profil img-fluid  rounded-circle mt-3 shadow"
             />
 
-            <!--Bouton uploader la photo -->
+            <!-- Bouton uploader la photo -->
             <div @click="btnUpload" width="16" height="16" class="mt-auto">
               <label classe="label form-label mb-0 " for="photo">
                 <i
@@ -72,7 +72,7 @@ Possibilité de supprimer son compte
             </div>
           </div>
 
-          <!--Username-->
+          <!-- Username -->
           <div class="d-flex mx-auto mt-3 text-center">
             <div class="d-flex mx-auto">
               <label class="d-flex" for="username"></label>
@@ -85,7 +85,7 @@ Possibilité de supprimer son compte
                 placeholder="Username"
               />
 
-              <!--Bouton modifier le username-->
+              <!-- Bouton modifier le username -->
               <div width="16" height="16" class="mt-auto ms-auto" type="submit">
                 <label classe="label form-label" for="username">
                   <i class="bi bi-pen" title="Modifier mon nom"></i>
@@ -102,18 +102,19 @@ Possibilité de supprimer son compte
           </div>
 
           <!-- Boutons -->
-          <div class="d-flex justify-content-around mt-3 text-center flex-wrap">
-            <!--Bouton valider mon profil-->
+          <div class="col-12 d-flex mt-3 justify-content-center flex-wrap">
+
+            <!-- Bouton valider mon profil -->
             <button
-              class="btn btn-danger btn-sm shadow-sm mt-3"
+              class="btn btn-danger btn-sm shadow-sm mt-3 me-2"
               @click.prevent="btnValid"
               type="submit"
               id="btnsubmit"
             >
               Valider mon profil</button
-            ><!---->
+            >
 
-            <!--Bouton supprimer mon compte-->
+            <!-- Bouton supprimer mon compte -->
             <button
               class="btn btn-danger btn-sm shadow-sm mt-3"
               @click.prevent="btnDelete"
@@ -146,7 +147,9 @@ export default {
   },
 
   methods: {
-    //Affiche le profil de l'utilisateur connecté
+
+    //------ AFFICHE LE PROFIL USER CONNECTÉ
+
     getProfil() {
       const id = localStorage.getItem("id");
 
@@ -166,7 +169,8 @@ export default {
         });
     },
 
-    /* Pour modifier l'image profil */
+    //---- MODIFIER L'IMAGE PROFIL
+
     btnUpload() {
       this.$refs.image.click();
     },
@@ -175,7 +179,7 @@ export default {
       this.imagePreview = URL.createObjectURL(this.file);
     },
 
-    /* VALIDER LE PROFIL */
+    //---- BOUTON VALIDER LE PROFIL
 
     btnValid() {
       const formData = new FormData();
@@ -194,13 +198,11 @@ export default {
             {
               method: "PUT",
               headers: {
-                /* 'content-type': image/jpg, */
                 Authorization: "bearer " + localStorage.getItem("token"),
               },
               body: formData,
             }
           );
-
           if (response.ok) {
             const responseId = await response.json();
 
@@ -220,10 +222,11 @@ export default {
       postProfil(formData);
     },
 
-    /* SUPPRIMER LE COMPTE */
+  //--- BOUTON SUPPRIMER LE COMPTE USER => SUPPRIME LE PROFIL, TOUS LES GIFS ET LES COMMENTAIRES DU USER
 
     btnDelete() {
       const id = localStorage.getItem("id");
+
       if (confirm("Voulez-vous supprimé ce compte ?")) {
         fetch("http://localhost:3000/api/users/" + id, {
           method: "DELETE",
@@ -256,8 +259,8 @@ export default {
 }
 .img-profil {
   object-fit: cover;
-  height: 240px;
-  width: 240px;
+  height: 230px;
+  width: 230px;
 }
 .profil-user,
 .rounded-circle {

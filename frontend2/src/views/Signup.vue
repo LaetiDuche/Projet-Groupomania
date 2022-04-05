@@ -1,7 +1,7 @@
 <!--
 Formulaire pour s'inscrire sur le forum (username, email, mot de passe)
 Envoie des données au server
-Redirection sur la page de connection
+Redirection sur la page login
 -->
 
 <template>
@@ -9,28 +9,28 @@ Redirection sur la page de connection
 
      <!--Formulaire d'inscription-->
     <div class="formulaire shadow col-sm-8 col-md-6  mx-3 d-block  mx-sm-auto  mx-md-auto  mt-4  p-3 rounded">
-      <h3 class="text-center mb-3">S'inscrire sur le forum</h3>
+      <h3 class="text-center mb-3 fs-5">S'inscrire sur le forum</h3>
 
       <form class="row g-2" @submit.prevent="SignUp">
-        <!--Username-->
+        <!-- Username -->
         <div class="form-group">
           <label classe='form-label mb-0' for="username">Nom utilisateur</label>
           <input class="form-control" id="username" v-model="username" type="text" minlength="3" maxlength="20" required>
         </div>
 
-        <!--Email-->
+        <!-- Email -->
         <div class="form-group">
           <label classe='form-label mb-0' for="email">Email</label>
           <input class="form-control" id="email" v-model="email" type="email" minlength="10" maxlength="40" required>
         </div>
 
-        <!--Password-->
+        <!-- Password -->
         <div class="form-group">
           <label classe='form-label mb-0' for="password">Mot de passe</label>
           <input class="form-control" autocomplete="on" id="password" v-model="password" type="password" minlength="5" maxlength="13" required>
         </div>
 
-        <!--Bouton validation-->
+        <!-- Bouton validation , redirection vers page login -->
         <div class="text-center">
           <button class="btn btn-sm mt-2 btn-danger shadow-sm"  type="submit" value="inscription">M'inscrire</button>
         </div>
@@ -44,7 +44,6 @@ Redirection sur la page de connection
 export default {
   name: "Signup",
 
-  /*Envoie des données utilsateur au server*/ 
   data() {
     return {
       username: "",
@@ -53,6 +52,9 @@ export default {
     };
   },
   methods: {
+
+    //---- BOUTON S'INSCRIRE
+
     SignUp(){
 
       const postFormulaire = JSON.stringify({username: this.username, email: this.email, password: this.password, isAdmin: this.isAdmin});
@@ -77,9 +79,6 @@ export default {
         }
       }
       signUp(postFormulaire);
-
-      /*Renvoie l'utilisateur sur la page de connection*/ 
-     /*  window.location.href = "http://localhost:8080/signup#/login"; */
       window.location.href = "http://localhost:8080/#/login";
     }
   }

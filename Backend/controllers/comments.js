@@ -24,7 +24,7 @@ exports.createComment = (req, res, next) => {
 
 //Voir tous les commentaires dans le forum
 exports.getAllComments = (req, res, next) => {
-  console.log("toto comment")
+  console.log("get comments")
 
   Comment.findAll(
     {
