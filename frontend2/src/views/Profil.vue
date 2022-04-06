@@ -11,7 +11,7 @@ Possibilité de supprimer son compte par l'utilisateur seulement
         profil-user
         mx-auto
         my-4
-        col-10 col-sm-10 col-md-8
+        col-11 col-sm-10 col-md-6
         p-3
         rounded-3
         shadow

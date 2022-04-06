@@ -38,25 +38,7 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
           aria-expanded="false"
         >
 
-          <img
-            v-if="photo == false"
-            class="rounded-circle shadow"
-            height="40"
-            alt="photo profil"
-            loading="lazy"
-            src="../assets/user-profile.jpg"
-            id="preview"
-          />
-
-          <img
-            id="preview"
-            v-else
-            :src="photo"
-            class="rounded-circle shadow"
-            height="40"
-            alt=""
-            loading="lazy"
-          />
+        <PhotoUser />
           
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -81,15 +63,17 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
 </template>
 
 <script>
+import PhotoUser from "@/components/Photo-user.vue";
 export default {
   name: "Header",
+  components: {
+    PhotoUser,
+  },
 
   /*Changement de header si utilisateur connecté*/
   data() {
     return {
       id: '',
-      photo: localStorage.getItem("photo"),
-      imagePreview: null,
       userId: '',
     };
   },

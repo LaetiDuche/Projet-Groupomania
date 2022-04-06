@@ -5,13 +5,12 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
 
 <template>
   <div class="forum">
-
     <!-- Publier un message -->
     <div
       class="
         formulaire
         mx-auto
-        col-11 col-md-8 col-lg-8
+        col-11 col-md-10 col-lg-6
         p-3
         my-3 my-sm-4
         rounded-3
@@ -20,22 +19,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
     >
       <div class="d-flex mx-auto">
         <!-- Photo user -->
-        <img
-          v-if="photo == false"
-          src="../assets/user-profile.jpg"
-          class="rounded-circle me-3 shadow py-auto"
-          height="40"
-          alt="avatar"
-          loading="lazy"
-        />
-        <img
-          v-else
-          :src="photo"
-          class="rounded-circle me-3 shadow py-auto"
-          height="40"
-          alt="Avatar"
-          loading="lazy"
-        />
+        <PhotoUser />
 
         <!-- Bouton créer un message => redirection vers page message -->
         <div
@@ -56,7 +40,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
         forum-publication
         formulaire
         mx-auto
-        col-11 col-md-8 col-lg-8
+        col-11 col-md-10 col-lg-6
         my-3 my-sm-4
         rounded-3
         shadow
@@ -66,8 +50,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
       :key="gifs.gifId"
     >
       <div class="d-flex px-3 py-3">
-
-        <!-- Photo user -->
+        <!-- Photo user gifs-->
         <div class="my-auto">
           <img
             v-if="gifs.User.photo"
@@ -150,27 +133,11 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
         </button>
       </div>
 
-    <!----------------------------------- COMMENTAIRES ------------------------>
+      <!----------------------------------- COMMENTAIRES ------------------------>
 
       <div class="d-flex mb-3 px-4">
-
         <!-- Photo user -->
-        <img
-          v-if="photo == false"
-          src="../assets/user-profile.jpg"
-          class="rounded-circle me-2 shadow my-auto"
-          height="35"
-          alt="Avatar"
-          loading="lazy"
-        />
-        <img
-          v-else
-          :src="photo"
-          class="rounded-circle me-2 shadow my-auto"
-          height="35"
-          alt="Avatar"
-          loading="lazy"
-        />
+        <PhotoUser />
 
         <!-- Publier un commentaire   -->
         <form @submit.prevent="submitComment(gifs.id)" class="d-flex flex-fill">
@@ -188,7 +155,6 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
             <i class="bi bi-send"></i>
           </button>
         </form>
-
       </div>
 
       <!-- Commentaires des autres utilisateurs -->
@@ -196,25 +162,25 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
         class="border comment-border mx-4 pt-2 mb-2"
         v-for="comment in gifs.Comments"
         :key="comment.id"
-        >
+      >
         <div class="d-flex flex-column flex-fill">
           <div>
             <div class="px-3 py-1">
               <div class="d-flex">
-                <!-- Photo user -->
+                <!-- Photo user comments -->
                 <div class="my-auto">
                   <img
                     v-if="comment.User.photo"
                     :src="comment.User.photo"
                     class="rounded-circle text-center shadow"
-                    height="30"
+                    height="40"
                     alt="avatar"
                     loading="lazy"
                   />
                   <img
                     v-else
                     class="rounded-circle shadow"
-                    height="30"
+                    height="40"
                     alt="photo profil"
                     loading="lazy"
                     src="../assets/user-profile.jpg"
@@ -271,9 +237,13 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
 <script>
 import moment from "moment";
 import "moment/locale/fr";
+import PhotoUser from "@/components/Photo-user.vue";
 
 export default {
   name: "Forum",
+  components: {
+    PhotoUser,
+  },
 
   data() {
     return {
@@ -281,7 +251,6 @@ export default {
       userId: localStorage.getItem("id"),
       gifId: "",
       id: "",
-      photo: localStorage.getItem("photo"),
       images: "",
       gifs: "",
       Gif: [],
@@ -308,7 +277,6 @@ export default {
     };
   },
   created: function () {
-
     //--- RÉCUPÉRATION DES DONNÉES
 
     fetch("http://localhost:3000/api/forum", {
@@ -329,7 +297,6 @@ export default {
   },
 
   methods: {
-
     // ---------------------------------------- GIFS --------------------------------------
 
     //--- SUPPRIMER UN GIF (ADMIN ET USER)

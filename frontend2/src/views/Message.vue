@@ -8,7 +8,7 @@ Bouton publier
 
 <!-- Formulaire création du message -->
   <div class="message">
-    <div class="formulaire mx-auto col-10 mt-4 p-3 rounded-3 shadow">
+    <div class="formulaire mx-auto col-11 col-md-8 col-lg-6 mt-4 p-3 rounded-3 shadow">
       <h3 class="text-center mb-3 fs-5">Publier un nouveau message !</h3>
 
       <form class="row g-2" action="" method="post">
@@ -103,7 +103,7 @@ export default {
     },
 
     //--- BOUTON PUBLIER LE MESSAGE
-    
+
     btnPublier() {
       const formData = new FormData();
       console.log(this.file);
