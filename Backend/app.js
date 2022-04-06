@@ -16,10 +16,10 @@ const commentRoute = require('./routes/commentRoute');
 
 const app = express();
 
-//Connection à la base de donnée mysql
+//Connection à la base de donnée 
 const sequelize = new Sequelize(process.env.NAME_DB, process.env.USERNAME_DB, process.env.PASS_DB , {
   dialect: process.env.DIALECT_DB,
-  host: 'localhost',
+  host: process.env.HOST_DB,
   logging: false,
  });
 
