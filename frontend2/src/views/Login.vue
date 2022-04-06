@@ -23,7 +23,6 @@ Création de la session utilisateur sécurisée et redirection sur le forum
 
       <!-- Formulaire de connexion -->
       <form class="row g-2" @submit.prevent="btnLogin">
-        
         <!-- Email -->
         <div class="form-group">
           <label classe="form-label mb-0" for="email">Email</label>
@@ -34,7 +33,6 @@ Création de la session utilisateur sécurisée et redirection sur le forum
             type="email"
             required
           />
-          <span class="d-block"></span>
         </div>
 
         <!-- Password -->
@@ -47,7 +45,7 @@ Création de la session utilisateur sécurisée et redirection sur le forum
             type="password"
             required
           />
-          <span class="d-block"></span>
+          <span class="d-block small text-danger"></span>
         </div>
 
         <!-- Bouton se connecter -->
@@ -57,8 +55,8 @@ Création de la session utilisateur sécurisée et redirection sur le forum
             type="submit"
             value="connexion"
           >
-            Me connecter</button
-          >
+            Me connecter
+          </button>
         </div>
       </form>
     </div>
@@ -108,6 +106,9 @@ export default {
             location.reload();
           } else {
             console.error("Retour du serveur: ", response.status);
+
+            let span = document.getElementsByTagName("span");
+            span[0].innerText = "Email ou mot de passe incorrecte !";
           }
         } catch (e) {
           console.log(e);
