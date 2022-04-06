@@ -45,8 +45,10 @@ Création de la session utilisateur sécurisée et redirection sur le forum
             type="password"
             required
           />
-          <span class="d-block small text-danger"></span>
         </div>
+
+        <!-- Message d'erreur -->
+        <span class="d-block small text-danger"></span>
 
         <!-- Bouton se connecter -->
         <div class="text-center">
