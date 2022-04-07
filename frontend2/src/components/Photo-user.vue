@@ -1,4 +1,9 @@
+<!--
+Photo de l'utilisateur connecté
+-->
+
 <template>
+  <!-- Si pas de photo => photo par defaut -->
   <img
     v-if="photo == false"
     src="../assets/user-profile.jpg"
@@ -7,6 +12,7 @@
     alt="avatar"
     loading="lazy"
   />
+  <!-- Si photo => photo localstorage -->
   <img
     v-else
     :src="photo"

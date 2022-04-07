@@ -1,6 +1,6 @@
 <!--
-Header dynamique entre utilisateur non connecté (s'inscrire, se connecter) 
-et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
+Header dynamique entre utilisateur non connecté (s'inscrire, se connecter)et utilisateur connecté 
+Si utilisateur connecté => menu dropdown photo-user avec liens profil, forum, se déconnecter
 -->
 
 <template>
@@ -17,7 +17,7 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
         </router-link>
       </div>
 
-      <!--Si l'utilisateur n'est pas connecté-->
+      <!-- Si l'utilisateur n'est pas connecté -->
       <div class="m-auto d-flex my-auto" v-if="id === null">
         <nav class="mx-3" aria-label="s'inscrire">
           <router-link to="/signup">S'inscrire</router-link>
@@ -28,7 +28,7 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
         </nav>
       </div>
 
-      <!--Si l'utilisateur est connecté-->
+      <!-- Si l'utilisateur est connecté => menu photo-user -->
       <div class="dropdown dropstart m-auto" v-else aria-label="menu">
         <a
           class="btn dropdown-toggle"
@@ -37,22 +37,29 @@ et utilisateur connecté (menu dropdown: profil, forum, se déconnecter)
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-
-        <PhotoUser />
-          
+          <PhotoUser />
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li>
-            <router-link to="/profil" class="dropdown-item"
-            aria-label="mon profil"
+            <router-link
+              to="/profil"
+              class="dropdown-item"
+              aria-label="mon profil"
               >Mon profil</router-link
             >
           </li>
           <li>
-            <router-link to="/forum" class="dropdown-item" aria-label="forum">Forum</router-link>
+            <router-link to="/forum" class="dropdown-item" aria-label="forum"
+              >Forum</router-link
+            >
           </li>
           <li>
-            <a role="button" class="dropdown-item" @click="logout" aria-label="se deconnecter">
+            <a
+              role="button"
+              class="dropdown-item"
+              @click="logout"
+              aria-label="se deconnecter"
+            >
               Se déconnecter
             </a>
           </li>
@@ -73,18 +80,17 @@ export default {
   /*Changement de header si utilisateur connecté*/
   data() {
     return {
-      id: '',
-      userId: '',
+      id: "",
+      userId: "",
     };
   },
   mounted() {
     let userId = localStorage.getItem("id");
     console.log(userId);
     this.id = userId;
-    
   },
 
-  /*Se déconnecter*/
+  // ---- LIEN SE DECONNECTER
   methods: {
     logout() {
       localStorage.removeItem("token");
