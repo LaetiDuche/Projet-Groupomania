@@ -23,7 +23,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
 
         <!-- Bouton créer un message => redirection vers page message -->
         <div
-          class="p-1 border rounded-pill text-center flex-fill"
+          class="p-1 border rounded-pill text-center flex-fill ms-2"
           role="button"
         >
           <div>
@@ -106,12 +106,12 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
 
       <!-------------------------- COMMENTAIRES ------------------------>
 
-      <div class="d-flex mb-3 px-4">
+      <div class="d-flex  px-4 py-3">
         <!-- Photo user -->
         <PhotoUser />
 
         <!-- Publier un commentaire   -->
-        <form @submit.prevent="submitComment(gifs.id)" class="d-flex flex-fill">
+        <form @submit.prevent="submitComment(gifs.id)" class="d-flex flex-fill ms-2">
           <label class="form-label" for="comment"></label>
           <input
             v-model.lazy="comment"

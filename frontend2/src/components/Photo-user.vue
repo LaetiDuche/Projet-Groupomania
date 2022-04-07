@@ -7,7 +7,7 @@ Photo de l'utilisateur connecté
   <img
     v-if="photo == false"
     src="../assets/user-profile.jpg"
-    class="rounded-circle me-3 shadow py-auto"
+    class="rounded-circle shadow py-auto"
     height="40"
     alt="avatar"
     loading="lazy"
@@ -16,7 +16,7 @@ Photo de l'utilisateur connecté
   <img
     v-else
     :src="photo"
-    class="rounded-circle me-3 shadow py-auto"
+    class="rounded-circle shadow py-auto"
     height="40"
     alt="Avatar"
     loading="lazy"
