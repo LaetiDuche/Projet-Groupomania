@@ -5,14 +5,12 @@ Bouton publier
 -->
 
 <template>
-
-<!-- Formulaire création du message -->
+  <!-- Formulaire création du message -->
   <div class="message">
-    <div class="formulaire mx-auto col-11 col-md-8 col-lg-6 mt-4 p-3 rounded-3 shadow">
+    <div class="formulaire mx-auto col-10 mt-4 p-3 rounded-3 shadow">
       <h3 class="text-center mb-3 fs-5">Publier un nouveau message !</h3>
 
       <form class="row g-2" action="" method="post">
-
         <!-- Titre du message -->
         <div class="form-group">
           <label classe="form-label mb-0 " for="title">Titre du message</label>
@@ -27,11 +25,10 @@ Bouton publier
           />
         </div>
 
-        <div class="d-flex mt-3 flex-wrap justify-content-evenly">
-
+        <div class="mt-3 mx-auto justify-content-center">
           <!-- Bouton Ajouter un gif -->
           <div class="form-group">
-            <div class="btn btn-sm mt-2 btn-danger shadow-sm">
+            <div class="btn btn-sm btn-danger shadow-sm">
               <label classe="label form-label mb-0 " for="gif"
                 >Ajouter un gif</label
               >
@@ -69,6 +66,9 @@ Bouton publier
               Publier
             </button>
           </div>
+
+          <!-- Message d'erreur -->
+          <span class="d-block small text-danger mt-2"></span>
         </div>
       </form>
     </div>
@@ -94,7 +94,6 @@ export default {
     };
   },
   methods: {
-
     //--- POUR UPLOADER LE GIF
 
     gifSelected(event) {
@@ -127,6 +126,9 @@ export default {
             console.log(responseId);
           } else {
             console.error("Retour du serveur: ", response.status);
+
+            let span = document.getElementsByTagName("span");
+            span[0].innerText = "Veuillez ajouter un gif !";
           }
         } catch (e) {
           /* console.log(e); */

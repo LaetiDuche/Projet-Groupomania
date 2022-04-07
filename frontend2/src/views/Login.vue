@@ -105,7 +105,7 @@ export default {
             localStorage.setItem("photo", responseId.photo);
 
             window.location.href = "http://localhost:8080/#/forum";
-            location.reload();
+           
           } else {
             console.error("Retour du serveur: ", response.status);
 
