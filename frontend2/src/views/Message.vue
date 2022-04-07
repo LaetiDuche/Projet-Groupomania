@@ -105,7 +105,6 @@ export default {
 
     btnPublier() {
       const formData = new FormData();
-      console.log(this.file);
 
       formData.append("image", this.file);
       formData.append("title", this.title);

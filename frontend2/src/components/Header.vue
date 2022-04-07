@@ -86,7 +86,6 @@ export default {
   },
   mounted() {
     let userId = localStorage.getItem("id");
-    console.log(userId);
     this.id = userId;
   },
 

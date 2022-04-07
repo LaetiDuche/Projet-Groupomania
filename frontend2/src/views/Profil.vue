@@ -183,8 +183,6 @@ export default {
 
     btnValid() {
       const formData = new FormData();
-      console.log(this.file);
-      console.log(this.username);
 
       formData.append("image", this.file);
       formData.append("username", this.username);
