@@ -7,12 +7,12 @@ Créer un compte utilisateur
 Permettre la publication de messages gifs et de les commenter
 Compte Admin pour la modération des messages et des commentaires
 
-BACKEND
+BACKEND : 
 Ouvrir un terminal dans le dossier backend puis effectuer les lignes de commandes suivantes :
 npm install
 nodemon server
 
-FRONTEND
+FRONTEND : 
 Ouvrir un autre terminal dans le dossier frontend puis effectuer les lignes de commandes suivantes :
 npm install
 npm run serve
