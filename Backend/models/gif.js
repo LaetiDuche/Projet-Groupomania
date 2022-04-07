@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         onDelete: 'Cascade'
       }),
-      /* models.Gif.hasMany(models.Like); */
       models.Gif.hasMany(models.Comment, {
         onDelete: 'Cascade'
       });

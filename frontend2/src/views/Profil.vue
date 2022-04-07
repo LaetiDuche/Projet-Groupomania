@@ -227,7 +227,7 @@ export default {
     btnDelete() {
       const id = localStorage.getItem("id");
 
-      if (confirm("Voulez-vous supprimé ce compte ?")) {
+      if (confirm("Voulez-vous supprimer ce compte ?")) {
         fetch("http://localhost:3000/api/users/" + id, {
           method: "DELETE",
           headers: {

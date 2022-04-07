@@ -3,7 +3,6 @@ const express = require('express');
 const Gif = require('../models').Gif;
 const User = require('../models').User;
 const Comment = require('../models').Comment;
-/* const Like = require('../models').Like;*/
 
 exports.createGif = (req, res) => {
   console.log(req.file)

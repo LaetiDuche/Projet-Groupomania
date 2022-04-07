@@ -103,37 +103,8 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
         <img class="w-100 d-flex justify-content-center" :src="gifs.gifs" />
       </div>
 
-      <!-- LIKES / DISLIKES -->
-      <div class="m-1 d-flex justify-content-end">
-        <!-- Likes -->
-        <button
-          class="btn-like bg-transparent border-0 py-auto d-flex text-align"
-          type="submit"
-          @click="count++"
-        >
-          <i class="bi bi-hand-thumbs-up-fill" v-if="likeChange === true"></i>
-          <i class="bi bi-hand-thumbs-up" v-else></i>
 
-          <span class="number-like px-1">{{ count }}</span>
-        </button>
-
-        <!-- Dislikes -->
-        <button
-          class="btn-like bg-transparent border-0 py-auto d-flex text-align"
-          type="submit"
-          @click="btnDislike(gifs.id), (dislikeChange = !dislikeChange)"
-        >
-          <i
-            class="bi bi-hand-thumbs-down-fill"
-            v-if="dislikeChange === true"
-          ></i>
-          <i class="bi bi-hand-thumbs-down" v-else></i>
-
-          <span class="number-like px-1">{{ dislikes }}</span>
-        </button>
-      </div>
-
-      <!----------------------------------- COMMENTAIRES ------------------------>
+      <!-------------------------- COMMENTAIRES ------------------------>
 
       <div class="d-flex mb-3 px-4">
         <!-- Photo user -->
@@ -258,22 +229,6 @@ export default {
       users: "",
       Comment: [],
       comment: "",
-
-      likeChange: false,
-      dislikeChange: false,
-      clickDislike: false,
-      likes: "",
-      usersLiked: [],
-      usersDisliked: [],
-      dislikes: "",
-      likesChange: 0,
-      dislikesChange: 0,
-      count: 0,
-      /* like: [],
-      likes: "", */
-      /* btnClick1: 0,
-      btnClick2: 0, */
-      /* likes: [], */
     };
   },
   created: function () {
@@ -331,7 +286,7 @@ export default {
       gifForm(gifId);
     },
 
-    //--- FORMATTE LA DATE DE PUBLICATION DES GIFS ET COMMENTS
+  //-------------- FORMATTE LA DATE DE PUBLICATION DES GIFS ET COMMENTS
 
     dateFormat(dateValue) {
       if (dateValue) {
@@ -339,7 +294,7 @@ export default {
       }
     },
 
-    //--------------------------------- COMMENTAIRES ---------------------------------
+  //--------------------------------- COMMENTAIRES ---------------------------------
 
     //--- BOUTON PUBLIER UN COMMENTAIRE
 
@@ -400,70 +355,6 @@ export default {
         }
       }
       commentForm(id);
-    },
-
-    // ---------------------------------- LIKE / DISLIKE -----------------------------------
-
-    // BOUTON LIKER UN GIF
-
-    btnLike(id) {
-      const postLike = JSON.stringify({ like: this.like });
-      async function like(postLike) {
-        try {
-          const response = await fetch(
-            "http://localhost:3000/api/forum/like/" + id,
-            {
-              method: "POST",
-              headers: {
-                "content-type": "application/json",
-                Authorization: "Bearer " + localStorage.getItem("token"),
-              },
-              body: postLike,
-            }
-          );
-          if (response.ok) {
-            const responseId = await response.json();
-            console.log(responseId);
-            console.log("like ok");
-          } else {
-            console.error("Retour du serveur: ", response.status);
-          }
-        } catch (e) {
-          /* console.log(e); */
-        }
-      }
-      like(postLike);
-    },
-
-    // BOUTON DISLIKER UN GIF
-
-    btnDislike(id) {
-      const postDislike = JSON.stringify({ dislike: this.dislike });
-      async function like(postDislike) {
-        try {
-          const response = await fetch(
-            "http://localhost:3000/api/forum/like/" + id,
-            {
-              method: "POST",
-              headers: {
-                "content-type": "application/json",
-                Authorization: "Bearer " + localStorage.getItem("token"),
-              },
-              body: postDislike,
-            }
-          );
-          if (response.ok) {
-            const responseId = await response.json();
-            console.log(responseId);
-            console.log("dislike ok");
-          } else {
-            console.error("Retour du serveur: ", response.status);
-          }
-        } catch (e) {
-          /* console.log(e); */
-        }
-      }
-      like(postDislike);
     },
   },
 };

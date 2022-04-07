@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
       models.User.hasMany(models.Comment, {
         onDelete: 'Cascade'
       });
-      /* models.User.hasMany(models.Like); */
     }
   };
   User.init(
