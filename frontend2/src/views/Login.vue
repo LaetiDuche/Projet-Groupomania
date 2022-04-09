@@ -22,7 +22,7 @@ Création de la session utilisateur sécurisée et redirection sur le forum
       <h3 class="text-center mb-3 fs-5">Se connecter</h3>
 
       <!-- Formulaire de connexion -->
-      <form class="row g-2" @submit.prevent="btnLogin">
+      <form class="row g-2" @submit.prevent="btnLogin" aria-label="formulaire">
         <!-- Email -->
         <div class="form-group">
           <label classe="form-label mb-0" for="email">Email</label>
@@ -31,6 +31,7 @@ Création de la session utilisateur sécurisée et redirection sur le forum
             id="email"
             v-model="email"
             type="email"
+            name="email"
             required
           />
         </div>
@@ -43,12 +44,13 @@ Création de la session utilisateur sécurisée et redirection sur le forum
             id="password"
             v-model="password"
             type="password"
+            name="password"
             required
           />
         </div>
 
         <!-- Message d'erreur -->
-        <span class="d-block small text-danger"></span>
+        <span class="d-block small text-danger" aria-label="erreur"></span>
 
         <!-- Bouton se connecter -->
         <div class="text-center">
@@ -56,6 +58,7 @@ Création de la session utilisateur sécurisée et redirection sur le forum
             class="btn btn-sm mt-2 btn-danger shadow-sm"
             type="submit"
             value="connexion"
+            aria-label="se connecter"
           >
             Me connecter
           </button>
@@ -132,4 +135,12 @@ h3 {
 .formulaire {
   background-color: #ffffff;
 }
+/* :focus {
+    outline: 2px solid red;   
+} */
+.form-control:focus {
+  border-color: #fd2d01;
+  box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.5);
+}
+
 </style>

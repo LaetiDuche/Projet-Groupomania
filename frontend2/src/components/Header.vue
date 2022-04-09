@@ -5,64 +5,55 @@ Si utilisateur connecté => menu dropdown photo-user avec liens profil, forum, s
 
 <template>
   <header class="sticky-top">
-    <nav class="navbar d-flex p-2">
-      <div class="mx-auto">
-        <router-link to="/">
-          <img
-            src="../assets/icon-left-font.png"
-            alt="logo"
-            height="48"
-            width="190"
-          />
-        </router-link>
+    <nav class="navbar d-flex py-0">
+      <div class="logo mx-auto">
+        <nav class="nav-link py-0">
+          <router-link to="/" class="btn">
+            <button class="btn">
+              <img
+                src="../assets/icon-left-font.png"
+                alt="logo"
+                height="48"
+                width="190"
+              />
+            </button>
+          </router-link>
+        </nav>
       </div>
 
       <!-- Si l'utilisateur n'est pas connecté -->
-      <div class="m-auto d-flex my-auto" v-if="id === null">
-        <nav class="mx-3" aria-label="s'inscrire">
-          <router-link to="/signup">S'inscrire</router-link>
-        </nav>
+      <nav class="m-auto d-flex" v-if="id === null">
+        <router-link to="/signup" aria-label="s'inscrire">
+          <button class="btn mx-3">S'inscrire</button>
+        </router-link>
 
-        <nav class="mx-2" aria-label="se connecter">
-          <router-link to="/login">Se connecter </router-link>
-        </nav>
-      </div>
+        <router-link to="/login" aria-label="se connecter">
+          <button class="btn mx-2">Se connecter</button>
+        </router-link>
+      </nav>
 
       <!-- Si l'utilisateur est connecté => menu photo-user -->
       <div class="dropdown dropstart m-auto" v-else aria-label="menu">
-        <a
-          class="btn dropdown-toggle"
-          role="button"
+        <button
+          class="dropdown-toggle btn"
           id="dropdownMenuLink"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
           <PhotoUser />
-        </a>
+        </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <li>
-            <router-link
-              to="/profil"
-              class="dropdown-item"
-              aria-label="mon profil"
-              >Mon profil</router-link
-            >
-          </li>
-          <li>
-            <router-link to="/forum" class="dropdown-item" aria-label="forum"
-              >Forum</router-link
-            >
-          </li>
-          <li>
-            <a
-              role="button"
-              class="dropdown-item"
-              @click="logout"
-              aria-label="se deconnecter"
-            >
-              Se déconnecter
-            </a>
-          </li>
+          <router-link to="/profil" class="dropdown-item" aria-label="profil">
+            <button class="btn">Mon profil</button>
+          </router-link>
+
+          <router-link to="/forum" class="dropdown-item" aria-label="forum">
+            <button class="btn">Forum</button>
+          </router-link>
+
+          <router-link to="/" class="dropdown-item" aria-label="se deconnecter">
+            <button class="btn" @click="logout">Se déconnecter</button>
+          </router-link>
         </ul>
       </div>
     </nav>
@@ -71,6 +62,7 @@ Si utilisateur connecté => menu dropdown photo-user avec liens profil, forum, s
 
 <script>
 import PhotoUser from "@/components/Photo-user.vue";
+
 export default {
   name: "Header",
   components: {
@@ -128,6 +120,7 @@ a {
     color: black;
   }
 }
+
 @media screen and (max-width: 440px) and (min-width: 320px) {
   .navbar {
     display: flex;

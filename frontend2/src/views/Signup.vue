@@ -20,9 +20,9 @@ Redirection sur la page login
         rounded
       "
     >
-      <h3 class="text-center mb-3 fs-5">S'inscrire sur le forum</h3>
+      <h3 class="text-center mb-3 fs-5" aria-label="inscription">S'inscrire sur le forum</h3>
 
-      <form class="row g-2" @submit.prevent="SignUp">
+      <form class="row g-2" @submit.prevent="SignUp" aria-label="formulaire">
         <!-- Username -->
         <div class="form-group">
           <label classe="form-label mb-0" for="username">Nom utilisateur</label>
@@ -33,6 +33,7 @@ Redirection sur la page login
             type="text"
             minlength="3"
             maxlength="20"
+            name="username"
             required
           />
         </div>
@@ -47,12 +48,13 @@ Redirection sur la page login
             type="email"
             minlength="10"
             maxlength="40"
+            name="email"
             required
           />
         </div>
 
         <!-- Message d'erreur (email unique) -->
-        <span class="d-block small text-danger"></span>
+        <span class="d-block small text-danger" aria-label="erreur email"></span>
 
         <!-- Password -->
         <div class="form-group">
@@ -65,6 +67,7 @@ Redirection sur la page login
             type="password"
             minlength="5"
             maxlength="13"
+            name="password"
             required
           />
         </div>
@@ -75,6 +78,7 @@ Redirection sur la page login
             class="btn btn-sm mt-2 btn-danger shadow-sm"
             type="submit"
             value="inscription"
+            aria-label="s'inscrire"
           >
             M'inscrire
           </button>
@@ -156,4 +160,5 @@ h3 {
     border-color: #fd2d01;
   }
 }
+
 </style>

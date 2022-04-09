@@ -7,18 +7,18 @@ Photo de l'utilisateur connecté
   <img
     v-if="photo == false"
     src="../assets/user-profile.jpg"
-    class="rounded-circle shadow py-auto"
+    class="rounded-circle shadow py-auto border border-2 border-light"
     height="40"
-    alt="avatar"
+    alt="photo"
     loading="lazy"
   />
   <!-- Si photo => photo localstorage -->
   <img
     v-else
     :src="photo"
-    class="rounded-circle shadow py-auto"
+    class="rounded-circle shadow py-auto border border-2 border-light"
     height="40"
-    alt="Avatar"
+    alt="photo"
     loading="lazy"
   />
 </template>

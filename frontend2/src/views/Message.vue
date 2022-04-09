@@ -8,9 +8,11 @@ Bouton publier
   <!-- Formulaire création du message -->
   <div class="message">
     <div class="formulaire mx-auto col-10 mt-4 p-3 rounded-3 shadow">
-      <h3 class="text-center mb-3 fs-5">Publier un nouveau message !</h3>
+      <h3 class="text-center mb-3 fs-5" aria-label="nouveau message">
+        Publier un nouveau message !
+      </h3>
 
-      <form class="row g-2" action="" method="post">
+      <form class="row g-2" action="" method="post" aria-label="formulaire">
         <!-- Titre du message -->
         <div class="form-group">
           <label classe="form-label mb-0 " for="title">Titre du message</label>
@@ -21,19 +23,16 @@ Bouton publier
             type="text"
             name="title"
             minlength="2"
-            required
           />
         </div>
 
         <div class="mt-3 mx-auto justify-content-center">
           <!-- Bouton Ajouter un gif -->
-          <div class="form-group">
-            <div class="btn btn-sm btn-danger shadow-sm">
-              <label classe="label form-label mb-0 " for="gif"
-                >Ajouter un gif</label
-              >
+
+          <div class="upload">
+            <button class="btn-danger btn shadow-sm">
+              <i class="fa fa-upload"></i> Ajouter un gif
               <input
-                class="input form-control d-none"
                 id="gif"
                 @change="gifSelected"
                 ref="image"
@@ -42,14 +41,13 @@ Bouton publier
                 accept="image/*"
                 required
               />
-            </div>
-
+            </button>
             <div class="d-flex mx-auto text-center mt-2 p-1" id="gif-preview">
               <img
                 v-if="gifPreview"
                 :src="gifPreview"
                 id="preview"
-                alt="Responsive image"
+                alt="preview gif"
                 class="img-fluid mx-auto"
               />
             </div>
@@ -61,6 +59,7 @@ Bouton publier
               class="btn btn-sm mt-2 btn-danger shadow-sm"
               type="submit"
               value="creer"
+              aria-label="publier"
               @click.prevent="btnPublier"
             >
               Publier
@@ -68,7 +67,10 @@ Bouton publier
           </div>
 
           <!-- Message d'erreur -->
-          <span class="d-block small text-danger mt-2"></span>
+          <span
+            class="d-block small text-danger mt-2"
+            aria-label="erreur"
+          ></span>
         </div>
       </form>
     </div>
@@ -138,3 +140,33 @@ export default {
   },
 };
 </script>
+
+<style lang='scss'>
+.btn-danger {
+  position: relative;
+  padding: 11px 16px;
+  font-size: 15px;
+  line-height: 1.5;
+  border-radius: 3px;
+  color: #fff;
+  background-color: #fd2d01;
+  border: 0;
+  transition: 0.2s;
+  overflow: hidden;
+}
+
+.btn-danger input[type="file"] {
+  cursor: pointer;
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  transform: scale(3);
+  opacity: 0;
+}
+
+.btn-danger:hover {
+  outline-color: #fd2d01;
+  border-style: solid;
+  border-width: 1px;
+}
+</style>

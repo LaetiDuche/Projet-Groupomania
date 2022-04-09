@@ -19,7 +19,7 @@ Possibilité de supprimer son compte par l'utilisateur seulement
     >
       <div class="mx-auto d-flex flex-column">
         <div>
-          <h3 class="fs-5 text-center">Mon profil</h3>
+          <h3 class="fs-5 text-center" aria-label="profil">Mon profil</h3>
         </div>
 
         <!-- Image user -->
@@ -30,15 +30,15 @@ Possibilité de supprimer son compte par l'utilisateur seulement
               v-if="imagePreview"
               :src="imagePreview"
               id="preview"
-              alt="image profil"
-              class="img-profil img-fluid  rounded-circle mt-3 shadow"
+              alt="photo"
+              class="img-profil img-fluid rounded-circle mt-3 shadow"
             />
 
             <!-- S'il n'y a pas de photo => photo par défaut -->
             <img
               v-else-if="photo == false"
-              class="img-profil img-fluid  rounded-circle mt-3 shadow"
-              alt="photo profil"
+              class="img-profil img-fluid rounded-circle mt-3 shadow"
+              alt="photo"
               src="../assets/user-profile.jpg"
               id="localPhoto"
             />
@@ -48,50 +48,52 @@ Possibilité de supprimer son compte par l'utilisateur seulement
               v-else
               :src="photo"
               id="preview"
-              alt="image profil"
-              class="img-profil img-fluid  rounded-circle mt-3 shadow"
+              alt="photo"
+              class="img-profil img-fluid rounded-circle mt-3 shadow"
             />
 
             <!-- Bouton uploader la photo -->
-            <div @click="btnUpload" width="16" height="16" class="mt-auto">
-              <label classe="label form-label mb-0 " for="photo">
-                <i
-                  class="bi bi-box-arrow-in-down mt-auto"
-                  title="Modifier ma photo"
-                ></i>
-              </label>
-              <input
-                class="input form-control d-none"
-                id="photo"
-                @change="photoSelected"
-                ref="image"
-                name="photo"
-                type="file"
-                accept="image/*"
-              />
+            <div @click="btnUpload" class="upload mt-auto">
+              <button type="button" class="btn btn-light rounded-1 p-0">
+                <i class="bi bi-box-arrow-in-down"></i>
+                <input
+                  id="photo"
+                  @change="photoSelected"
+                  ref="image"
+                  name="photo"
+                  type="file"
+                  accept="image/*"
+                  class="form-control"
+                />
+              </button>
             </div>
           </div>
 
           <!-- Username -->
-          <div class="d-flex mx-auto mt-3 text-center">
-            <div class="d-flex mx-auto">
+          <div class="d-flex mx-auto text-center">
+            <div class="d-flex mx-auto mt-3 text-center">
               <label class="d-flex" for="username"></label>
               <input
                 v-model="username"
-                id="username"
+                id="btn-username"
                 name="username"
                 type="text"
-                class="text-center border-0 w-100"
+                class="form-control text-center border-0 w-100 rounded-1 input"
                 placeholder="Username"
               />
 
               <!-- Bouton modifier le username -->
-              <div width="16" height="16" class="mt-auto ms-auto" type="submit">
+
+              <div width="16" height="16" class="my-auto ms-auto">
                 <label classe="label form-label" for="username">
-                  <i class="bi bi-pen" title="Modifier mon nom"></i>
+                  <i
+                    class="bi bi-pen"
+                    title="Modifier mon nom"
+                    aria-label="modifier nom"
+                  ></i>
                 </label>
                 <input
-                  class="input form-control d-none"
+                  class="form-control d-none"
                   id="username"
                   ref="username"
                   type="text"
@@ -103,22 +105,23 @@ Possibilité de supprimer son compte par l'utilisateur seulement
 
           <!-- Boutons -->
           <div class="col-12 d-flex mt-3 justify-content-center flex-wrap">
-
             <!-- Bouton valider mon profil -->
             <button
               class="btn btn-danger btn-sm shadow-sm mt-3 me-2"
               @click.prevent="btnValid"
               type="submit"
               id="btnsubmit"
+              aria-label="valider profil"
             >
-              Valider mon profil</button
-            >
+              Valider mon profil
+            </button>
 
             <!-- Bouton supprimer mon compte -->
             <button
               class="btn btn-danger btn-sm shadow-sm mt-3"
               @click.prevent="btnDelete"
               type="submit"
+              aria-label="supprimer compte"
             >
               Supprimer mon compte
               <router-link to="/"></router-link>
@@ -147,7 +150,6 @@ export default {
   },
 
   methods: {
-
     //------ AFFICHE LE PROFIL USER CONNECTÉ
 
     getProfil() {
@@ -206,7 +208,7 @@ export default {
 
             localStorage.setItem("username", responseId.username);
             localStorage.setItem("photo", responseId.photo);
-  
+
             alert("Votre profil a été modifié !");
             location.reload();
             console.log(responseId);
@@ -220,7 +222,7 @@ export default {
       postProfil(formData);
     },
 
-  //--- BOUTON SUPPRIMER LE COMPTE USER => SUPPRIME LE PROFIL, TOUS LES GIFS ET LES COMMENTAIRES DU USER
+    //--- BOUTON SUPPRIMER LE COMPTE USER => SUPPRIME LE PROFIL, TOUS LES GIFS ET LES COMMENTAIRES DU USER
 
     btnDelete() {
       const id = localStorage.getItem("id");
@@ -269,5 +271,29 @@ export default {
 }
 p {
   font-weight: bold;
+}
+
+// bouton upload photo
+.btn-light {
+  position: relative;
+  font-size: 20px;
+  color: #fff;
+  background-color: transparent;
+  border: 0;
+  &:focus {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #fd2d01;
+  }
+  transition: 0.2s;
+  overflow: hidden;
+}
+.btn-light input[type="file"] {
+  cursor: pointer;
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  transform: scale(3);
+  opacity: 0;
 }
 </style>

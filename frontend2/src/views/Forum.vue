@@ -4,7 +4,9 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
  -->
 
 <template>
+
   <div class="forum">
+    
     <!-- Publier un message -->
     <div
       class="
@@ -22,14 +24,14 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
         <PhotoUser />
 
         <!-- Bouton créer un message => redirection vers page message -->
-        <div
-          class="p-1 border rounded-pill text-center flex-fill ms-2"
-          role="button"
-        >
-          <div>
-            <router-link to="/message">Publier un message ...</router-link>
-          </div>
-        </div>
+        <router-link to="/message" class="flex-fill d-flex">
+          <button
+            class="btn p-1 border rounded-pill text-center flex-fill ms-2"
+            aria-label="créer message"
+          >
+            Publier un message ...
+          </button>
+        </router-link>
       </div>
     </div>
 
@@ -57,14 +59,14 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
             :src="gifs.User.photo"
             class="rounded-circle text-center shadow"
             height="40"
-            alt="avatar"
+            alt="photo"
             loading="lazy"
           />
           <img
             v-else
             class="rounded-circle shadow"
             height="40"
-            alt="photo profil"
+            alt="photo"
             loading="lazy"
             src="../assets/user-profile.jpg"
             id="preview"
@@ -76,53 +78,62 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
           <span
             class="d-flex flex-column justify-content-start fw-bold"
             id="username"
+            aria-label="username"
           >
             {{ gifs.User.username }}
 
-            <span class="date fw-light">
+            <span class="date fw-light" aria-label="date">
               Le {{ dateFormat(gifs.createdAt) }}
             </span>
           </span>
         </div>
 
         <!-- Bouton supprimer le message pour l'admin et l'utilisateur -->
-        <div
-          class="p-1 ms-auto"
+        <button
+          class="btn p-1 ms-auto"
           style="cursor: pointer"
           role="button"
+          aria-label="supprimer message"
           v-if="userId == gifs.userId || isAdmin == 'true'"
           @click="btnDelete(gifs.id)"
         >
           <i class="bi bi-trash"></i>
-        </div>
+        </button>
       </div>
 
       <!-- Titre et gif du message -->
       <div>
-        <p class="px-3">{{ gifs.title }}</p>
-        <img class="w-100 d-flex justify-content-center" :src="gifs.gifs" />
+        <p class="px-3" aria-label="titre">{{ gifs.title }}</p>
+        <img
+          class="w-100 d-flex justify-content-center"
+          :src="gifs.gifs"
+          alt="gif"
+        />
       </div>
-
 
       <!-------------------------- COMMENTAIRES ------------------------>
 
-      <div class="d-flex  px-4 py-3">
+      <div class="d-flex px-4 py-3">
         <!-- Photo user -->
         <PhotoUser />
 
         <!-- Publier un commentaire   -->
-        <form @submit.prevent="submitComment(gifs.id)" class="d-flex flex-fill ms-2">
+        <form
+          @submit.prevent="submitComment(gifs.id)"
+          class="d-flex flex-fill ms-2"
+          aria-label="formulaire commentaire"
+        >
           <label class="form-label" for="comment"></label>
           <input
             v-model.lazy="comment"
             id="comment"
             name="comment"
-            class="form-control p-1 border rounded-pill text-center flex-fill"
+            class="form-control p-1  rounded-pill text-center flex-fill"
             type="text"
             placeholder="Ecrire un commentaire ..."
             required
           />
-          <button class="btn" type="submit">
+          <button class="btn" type="submit" aria-label="envoyer">
             <i class="bi bi-send"></i>
           </button>
         </form>
@@ -145,14 +156,14 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
                     :src="comment.User.photo"
                     class="rounded-circle text-center shadow"
                     height="40"
-                    alt="avatar"
+                    alt="photo"
                     loading="lazy"
                   />
                   <img
                     v-else
                     class="rounded-circle shadow"
                     height="40"
-                    alt="photo profil"
+                    alt="photo"
                     loading="lazy"
                     src="../assets/user-profile.jpg"
                     id="preview"
@@ -171,12 +182,13 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
                       fw-bold
                     "
                     id="username"
+                    aria-label="username"
                   >
                     {{ comment.User.username }}
                   </span>
 
                   <!-- Date du commentaire -->
-                  <span class="date fw-light">
+                  <span class="date fw-light" aria-label="date">
                     Le {{ dateFormat(comment.createdAt) }}
                   </span>
                 </div>
@@ -187,6 +199,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
                   role="button"
                   v-if="isAdmin === 'true'"
                   id="deleteComment"
+                  aria-label="supprimer commentaire"
                   @click="btnDeleteComment(comment.id)"
                 >
                   <i class="bi bi-trash"></i>
@@ -195,7 +208,9 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
 
               <!-- Commentaires -->
               <div class="ms-4 py-2">
-                <p class="fs-6 fw-light mb-0">{{ comment.comments }}</p>
+                <p class="fs-6 fw-light mb-0" aria-label="commentaire">
+                  {{ comment.comments }}
+                </p>
               </div>
             </div>
           </div>
@@ -285,7 +300,7 @@ export default {
       gifForm(gifId);
     },
 
-  //-------------- FORMATTE LA DATE DE PUBLICATION DES GIFS ET COMMENTS
+    //-------------- FORMATTE LA DATE DE PUBLICATION DES GIFS ET COMMENTS
 
     dateFormat(dateValue) {
       if (dateValue) {
@@ -293,7 +308,7 @@ export default {
       }
     },
 
-  //--------------------------------- COMMENTAIRES ---------------------------------
+    //--------------------------------- COMMENTAIRES ---------------------------------
 
     //--- BOUTON PUBLIER UN COMMENTAIRE
 
@@ -379,4 +394,5 @@ export default {
 ::placeholder {
   font-size: 0.8rem;
 }
+
 </style>
