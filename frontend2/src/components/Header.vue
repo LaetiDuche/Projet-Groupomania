@@ -8,7 +8,7 @@ Si utilisateur connecté => menu dropdown photo-user avec liens profil, forum, s
     <nav class="navbar d-flex py-0">
       <div class="logo mx-auto">
         <nav class="nav-link py-0">
-          <router-link to="/" class="btn">
+          <router-link to="/">
             <button class="btn">
               <img
                 src="../assets/icon-left-font.png"
@@ -23,36 +23,37 @@ Si utilisateur connecté => menu dropdown photo-user avec liens profil, forum, s
 
       <!-- Si l'utilisateur n'est pas connecté -->
       <nav class="m-auto d-flex" v-if="id === null">
-        <router-link to="/signup" aria-label="s'inscrire">
-          <button class="btn mx-3">S'inscrire</button>
+        <router-link to="/signup">
+          <button class="btn mx-3" aria-labelledby="s'inscrire">S'inscrire</button>
         </router-link>
 
-        <router-link to="/login" aria-label="se connecter">
-          <button class="btn mx-2">Se connecter</button>
+        <router-link to="/login">
+          <button class="btn mx-2" aria-label="se connecter">Se connecter</button>
         </router-link>
       </nav>
 
       <!-- Si l'utilisateur est connecté => menu photo-user -->
-      <div class="dropdown dropstart m-auto" v-else aria-label="menu">
+      <div class="dropdown dropstart m-auto" v-else >
         <button
           class="dropdown-toggle btn"
           id="dropdownMenuLink"
           data-bs-toggle="dropdown"
           aria-expanded="false"
+          aria-labelledby="menu"
         >
           <PhotoUser />
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <router-link to="/profil" class="dropdown-item" aria-label="profil">
-            <button class="btn">Mon profil</button>
+          <router-link to="/profil" class="dropdown-item">
+            <button class="btn" aria-labelledby="profil">Mon profil</button>
           </router-link>
 
-          <router-link to="/forum" class="dropdown-item" aria-label="forum">
-            <button class="btn">Forum</button>
+          <router-link to="/forum" class="dropdown-item">
+            <button class="btn" aria-labelledby="forum">Forum</button>
           </router-link>
 
-          <router-link to="/" class="dropdown-item" aria-label="se deconnecter">
-            <button class="btn" @click="logout">Se déconnecter</button>
+          <router-link to="/" class="dropdown-item">
+            <button class="btn" @click="logout" aria-labelledby="se deconnecter">Se déconnecter</button>
           </router-link>
         </ul>
       </div>
@@ -119,6 +120,9 @@ a {
   &:hover {
     color: black;
   }
+}
+.dropdown-item:hover{
+  background-color: #ffffff;
 }
 
 @media screen and (max-width: 440px) and (min-width: 320px) {

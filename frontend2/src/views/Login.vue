@@ -58,7 +58,7 @@ Création de la session utilisateur sécurisée et redirection sur le forum
             class="btn btn-sm mt-2 btn-danger shadow-sm"
             type="submit"
             value="connexion"
-            aria-label="se connecter"
+            aria-labelledby="se connecter"
           >
             Me connecter
           </button>

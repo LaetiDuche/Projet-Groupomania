@@ -8,11 +8,11 @@ Bouton publier
   <!-- Formulaire création du message -->
   <div class="message">
     <div class="formulaire mx-auto col-10 mt-4 p-3 rounded-3 shadow">
-      <h3 class="text-center mb-3 fs-5" aria-label="nouveau message">
+      <h3 class="text-center mb-3 fs-5">
         Publier un nouveau message !
       </h3>
 
-      <form class="row g-2" action="" method="post" aria-label="formulaire">
+      <form class="row g-2" action="" method="post" aria-labelledby="formulaire">
         <!-- Titre du message -->
         <div class="form-group">
           <label classe="form-label mb-0 " for="title">Titre du message</label>
@@ -30,7 +30,7 @@ Bouton publier
           <!-- Bouton Ajouter un gif -->
 
           <div class="upload">
-            <button class="btn-danger btn shadow-sm">
+            <button class="btn-danger btn shadow-sm"  aria-labelledby="upload gif">
               <i class="fa fa-upload"></i> Ajouter un gif
               <input
                 id="gif"
@@ -59,7 +59,7 @@ Bouton publier
               class="btn btn-sm mt-2 btn-danger shadow-sm"
               type="submit"
               value="creer"
-              aria-label="publier"
+              aria-labelledby="publier"
               @click.prevent="btnPublier"
             >
               Publier
@@ -69,7 +69,7 @@ Bouton publier
           <!-- Message d'erreur -->
           <span
             class="d-block small text-danger mt-2"
-            aria-label="erreur"
+            aria-labelledby="erreur"
           ></span>
         </div>
       </form>

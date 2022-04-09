@@ -9,7 +9,7 @@ Message de bienvenue sur le forum
 
     <!--Message de bienvenue-->
     <div class="wellcome mx-md-5 mx-3 my-3 my-md-5 rounded">
-      <p class="pt-5 text-center mx-2 fw-bold fs-2" aria-label="bienvenue">Bienvenue sur le forum !</p>
+      <p class="pt-5 text-center mx-2 fw-bold fs-2">Bienvenue sur le forum !</p>
       <img class="logo mx-auto d-block" src="../assets/icon-above-font.png" alt="logo" height="150"/>
     </div>
 

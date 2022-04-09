@@ -20,7 +20,7 @@ Redirection sur la page login
         rounded
       "
     >
-      <h3 class="text-center mb-3 fs-5" aria-label="inscription">S'inscrire sur le forum</h3>
+      <h3 class="text-center mb-3 fs-5">S'inscrire sur le forum</h3>
 
       <form class="row g-2" @submit.prevent="SignUp" aria-label="formulaire">
         <!-- Username -->
@@ -78,7 +78,7 @@ Redirection sur la page login
             class="btn btn-sm mt-2 btn-danger shadow-sm"
             type="submit"
             value="inscription"
-            aria-label="s'inscrire"
+            aria-labelledby="s'inscrire"
           >
             M'inscrire
           </button>

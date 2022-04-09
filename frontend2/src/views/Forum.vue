@@ -27,7 +27,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
         <router-link to="/message" class="flex-fill d-flex">
           <button
             class="btn p-1 border rounded-pill text-center flex-fill ms-2"
-            aria-label="créer message"
+            aria-labelledby="créer message"
           >
             Publier un message ...
           </button>
@@ -78,11 +78,11 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
           <span
             class="d-flex flex-column justify-content-start fw-bold"
             id="username"
-            aria-label="username"
+            aria-labelledby="username"
           >
             {{ gifs.User.username }}
 
-            <span class="date fw-light" aria-label="date">
+            <span class="date fw-light" aria-labelledby="date">
               Le {{ dateFormat(gifs.createdAt) }}
             </span>
           </span>
@@ -93,7 +93,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
           class="btn p-1 ms-auto"
           style="cursor: pointer"
           role="button"
-          aria-label="supprimer message"
+          aria-labelledby="supprimer message"
           v-if="userId == gifs.userId || isAdmin == 'true'"
           @click="btnDelete(gifs.id)"
         >
@@ -103,7 +103,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
 
       <!-- Titre et gif du message -->
       <div>
-        <p class="px-3" aria-label="titre">{{ gifs.title }}</p>
+        <p class="px-3">{{ gifs.title }}</p>
         <img
           class="w-100 d-flex justify-content-center"
           :src="gifs.gifs"
@@ -133,7 +133,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
             placeholder="Ecrire un commentaire ..."
             required
           />
-          <button class="btn" type="submit" aria-label="envoyer">
+          <button class="btn" type="submit" aria-labelledby="envoyer">
             <i class="bi bi-send"></i>
           </button>
         </form>
@@ -182,33 +182,33 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
                       fw-bold
                     "
                     id="username"
-                    aria-label="username"
+                    aria-labelledby="username"
                   >
                     {{ comment.User.username }}
                   </span>
 
                   <!-- Date du commentaire -->
-                  <span class="date fw-light" aria-label="date">
+                  <span class="date fw-light" aria-labelledby="date">
                     Le {{ dateFormat(comment.createdAt) }}
                   </span>
                 </div>
 
                 <!-- Bouton supprimer le commentaire par l'admin -->
-                <div
-                  class="p-1 ms-auto"
+                <button
+                  class="p-1 ms-auto btn"
                   role="button"
                   v-if="isAdmin === 'true'"
                   id="deleteComment"
-                  aria-label="supprimer commentaire"
+                  aria-labelledby="supprimer commentaire"
                   @click="btnDeleteComment(comment.id)"
                 >
                   <i class="bi bi-trash"></i>
-                </div>
+                </button>
               </div>
 
               <!-- Commentaires -->
               <div class="ms-4 py-2">
-                <p class="fs-6 fw-light mb-0" aria-label="commentaire">
+                <p class="fs-6 fw-light mb-0">
                   {{ comment.comments }}
                 </p>
               </div>

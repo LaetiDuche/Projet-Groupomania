@@ -19,7 +19,7 @@ Possibilité de supprimer son compte par l'utilisateur seulement
     >
       <div class="mx-auto d-flex flex-column">
         <div>
-          <h3 class="fs-5 text-center" aria-label="profil">Mon profil</h3>
+          <h3 class="fs-5 text-center">Mon profil</h3>
         </div>
 
         <!-- Image user -->
@@ -54,7 +54,7 @@ Possibilité de supprimer son compte par l'utilisateur seulement
 
             <!-- Bouton uploader la photo -->
             <div @click="btnUpload" class="upload mt-auto">
-              <button type="button" class="btn btn-light rounded-1 p-0">
+              <button type="button" class="btn btn-light rounded-1 p-0" aria-labelledby="upload photo">
                 <i class="bi bi-box-arrow-in-down"></i>
                 <input
                   id="photo"
@@ -89,7 +89,6 @@ Possibilité de supprimer son compte par l'utilisateur seulement
                   <i
                     class="bi bi-pen"
                     title="Modifier mon nom"
-                    aria-label="modifier nom"
                   ></i>
                 </label>
                 <input
@@ -111,7 +110,7 @@ Possibilité de supprimer son compte par l'utilisateur seulement
               @click.prevent="btnValid"
               type="submit"
               id="btnsubmit"
-              aria-label="valider profil"
+              aria-labelledby="valider profil"
             >
               Valider mon profil
             </button>
@@ -121,7 +120,7 @@ Possibilité de supprimer son compte par l'utilisateur seulement
               class="btn btn-danger btn-sm shadow-sm mt-3"
               @click.prevent="btnDelete"
               type="submit"
-              aria-label="supprimer compte"
+              aria-labelledby="supprimer compte"
             >
               Supprimer mon compte
               <router-link to="/"></router-link>
