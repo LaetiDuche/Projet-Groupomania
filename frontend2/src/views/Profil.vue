@@ -10,8 +10,8 @@ Possibilité de supprimer son compte par l'utilisateur seulement
       class="
         profil-user
         mx-auto
-        my-4
-        col-11 col-sm-10 col-md-6
+        my-3 my-sm-4
+        col-11 col-md-10 col-lg-6
         p-3
         rounded-3
         shadow
@@ -55,7 +55,7 @@ Possibilité de supprimer son compte par l'utilisateur seulement
             <!-- Bouton uploader la photo -->
             <div @click="btnUpload" class="upload mt-auto">
               <button type="button" class="btn btn-light rounded-1 p-0" aria-labelledby="upload photo">
-                <i class="bi bi-box-arrow-in-down"></i>
+                <i class="bi bi-camera-fill"></i>
                 <input
                   id="photo"
                   @change="photoSelected"
@@ -75,7 +75,7 @@ Possibilité de supprimer son compte par l'utilisateur seulement
               <label class="d-flex" for="username"></label>
               <input
                 v-model="username"
-                id="btn-username"
+                id="username"
                 name="username"
                 type="text"
                 class="form-control text-center border-0 w-100 rounded-1 input"
@@ -84,10 +84,10 @@ Possibilité de supprimer son compte par l'utilisateur seulement
 
               <!-- Bouton modifier le username -->
 
-              <div width="16" height="16" class="my-auto ms-auto">
+              <div width="16" height="16" class="my-auto ms-auto" type="submit">
                 <label classe="label form-label" for="username">
                   <i
-                    class="bi bi-pen"
+                    class="bi bi-pen-fill new-username"
                     title="Modifier mon nom"
                   ></i>
                 </label>
@@ -294,5 +294,8 @@ p {
   top: 0%;
   transform: scale(3);
   opacity: 0;
+}
+.new-username{
+  cursor: pointer;
 }
 </style>

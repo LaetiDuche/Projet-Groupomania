@@ -7,7 +7,7 @@ Bouton publier
 <template>
   <!-- Formulaire création du message -->
   <div class="message">
-    <div class="formulaire mx-auto col-10 mt-4 p-3 rounded-3 shadow">
+    <div class="formulaire mx-auto col-11 col-md-10 col-lg-6 my-3 my-sm-4 p-3 rounded-3 shadow">
       <h3 class="text-center mb-3 fs-5">
         Publier un nouveau message !
       </h3>

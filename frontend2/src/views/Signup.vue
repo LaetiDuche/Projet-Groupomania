@@ -11,11 +11,9 @@ Redirection sur la page login
       class="
         formulaire
         shadow
-        col-sm-8 col-md-6
-        mx-3
-        d-block
-        mx-sm-auto mx-md-auto
-        mt-4
+        col-11 col-md-10 col-lg-6
+        mx-auto
+        my-3 my-sm-4
         p-3
         rounded
       "

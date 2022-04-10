@@ -97,7 +97,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
           v-if="userId == gifs.userId || isAdmin == 'true'"
           @click="btnDelete(gifs.id)"
         >
-          <i class="bi bi-trash"></i>
+          <i class="bi bi-trash-fill"></i>
         </button>
       </div>
 
@@ -134,7 +134,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
             required
           />
           <button class="btn" type="submit" aria-labelledby="envoyer">
-            <i class="bi bi-send"></i>
+            <i class="bi bi-send-fill"></i>
           </button>
         </form>
       </div>
@@ -202,7 +202,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
                   aria-labelledby="supprimer commentaire"
                   @click="btnDeleteComment(comment.id)"
                 >
-                  <i class="bi bi-trash"></i>
+                  <i class="bi bi-trash-fill"></i>
                 </button>
               </div>
 
@@ -375,7 +375,7 @@ export default {
 </script>
 
 <style lang='scss'>
-.bi-trash {
+.bi-trash-fill {
   margin-right: auto;
 }
 .date {
