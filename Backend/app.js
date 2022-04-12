@@ -2,7 +2,7 @@
 
 const express = require('express');
 const path = require('path');
-const Sequelize  = require('sequelize');
+const { Sequelize }  = require('sequelize');
 const cors = require('cors');
 
 require('dotenv').config({path: './.env'});
@@ -17,7 +17,7 @@ const app = express();
 
 //Connection à la base de donnée 
 const sequelize = new Sequelize(process.env.NAME_DB, process.env.USERNAME_DB, process.env.PASS_DB , {
-  dialect: process.env.DIALECT_DB,
+  dialect: 'mysql',
   host: process.env.HOST_DB,
   logging: false,
  });

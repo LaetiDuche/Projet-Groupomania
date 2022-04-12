@@ -27,18 +27,10 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'User',
-        key: 'id'
-    }
     },
     gifId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'Gif',
-        key: 'id'
-    }
     },
     comments: {
       type: DataTypes.STRING,
