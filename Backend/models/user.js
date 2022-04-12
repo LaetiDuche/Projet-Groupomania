@@ -48,6 +48,10 @@ module.exports = (sequelize, DataTypes) => {
     gifId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+      references: {
+        model: 'Gif',
+        key: 'id'
+    }
     },
   }, 
   {

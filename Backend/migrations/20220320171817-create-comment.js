@@ -22,9 +22,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          onDelete: 'Cascade',
           model: 'Gif',
-          key: 'id'
+          key: 'id',
+          onDelete: 'Cascade',
         } 
       },
       comments: {
