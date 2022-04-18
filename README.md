@@ -19,10 +19,11 @@ Suivre les étapes dans cet ordre :
 
 #### Dans Vscode :
 
-- Installer node_modules dans le terminal de chaque dossier Backend et frontend2 :
+- Installer node_modules dans le terminal de chaque dossier Backend et frontend2 :  
+
 npm install
 
-- Dans le fichier .env :
+- Dans le fichier .env :  
 Ajouter le nom (NAME_DB) et le mot de pass (PASS_DB) de votre base de donnée puis les autres paramètres ci-dessous, et créer un numéro token (SECRET_TOKEN) :
 
 NAME_DB = ""  
@@ -32,7 +33,7 @@ DIALECT_DB = "mysql"
 HOST_DB = "localhost"  
 SECRET_TOKEN = ""
 
-- Dans le dossier config puis fichier config.json :
+- Dans le dossier config puis fichier config.json :  
 Ajouter le nom et le mot de passe de votre base de donnée dans la partie development database et password.
 
 - Créer un dossier images dans le dossier Backend
@@ -51,7 +52,8 @@ Dans les trois fichiers migrations :
 Mettre en commentaires toutes les références 
 ( car les références bloquent la migration des fichiers vers mysql) .
 
-- Ouvrir un terminal dans le dossier Backend et appliquer la ligne de commande  : 
+- Ouvrir un terminal dans le dossier Backend et appliquer la ligne de commande  :  
+
 sequelize db:migrate
   
 (=> les trois tables, Users, Gifs, Comments, vont être enregistrées dans votre base de donnée dans Mysql)
