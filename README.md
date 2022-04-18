@@ -74,7 +74,7 @@ Créer les références dans Mysql :
 
 ALTER TABLE Users MODIFY COLUMN gifId int, ADD key(gifId);  
 
-Ajouter des key aux tables Gifs et Comments :
+-  Ajouter des key aux tables Gifs et Comments :
 
 Vérifier d’abord s’il y a des constraints dans les tables avec la requête suivante en 
 remplaçant le database_name par le nom de votre base de donnée :   
