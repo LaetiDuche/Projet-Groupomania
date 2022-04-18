@@ -4,9 +4,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
  -->
 
 <template>
-
   <div class="forum">
-    
     <!-- Publier un message -->
     <div
       class="
@@ -27,7 +25,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
         <router-link to="/message" class="flex-fill d-flex">
           <button
             class="btn p-1 border rounded-pill text-center flex-fill ms-2"
-            aria-labelledby="créer message"
+            aria-label="créer message"
           >
             Publier un message ...
           </button>
@@ -78,11 +76,11 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
           <span
             class="d-flex flex-column justify-content-start fw-bold"
             id="username"
-            aria-labelledby="username"
+            aria-label="username"
           >
             {{ gifs.User.username }}
 
-            <span class="date fw-light" aria-labelledby="date">
+            <span class="date fw-light" aria-label="date">
               Le {{ dateFormat(gifs.createdAt) }}
             </span>
           </span>
@@ -93,7 +91,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
           class="btn p-1 ms-auto"
           style="cursor: pointer"
           role="button"
-          aria-labelledby="supprimer message"
+          aria-label="supprimer message"
           v-if="userId == gifs.userId || isAdmin == 'true'"
           @click="btnDelete(gifs.id)"
         >
@@ -128,12 +126,12 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
             v-model.lazy="comment"
             id="comment"
             name="comment"
-            class="form-control p-1  rounded-pill text-center flex-fill"
+            class="form-control p-1 rounded-pill text-center flex-fill"
             type="text"
             placeholder="Ecrire un commentaire ..."
             required
           />
-          <button class="btn" type="submit" aria-labelledby="envoyer">
+          <button class="btn" type="submit" aria-label="envoyer">
             <i class="bi bi-send-fill"></i>
           </button>
         </form>
@@ -182,13 +180,13 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
                       fw-bold
                     "
                     id="username"
-                    aria-labelledby="username"
+                    aria-label="username"
                   >
                     {{ comment.User.username }}
                   </span>
 
                   <!-- Date du commentaire -->
-                  <span class="date fw-light" aria-labelledby="date">
+                  <span class="date fw-light" aria-label="date">
                     Le {{ dateFormat(comment.createdAt) }}
                   </span>
                 </div>
@@ -199,7 +197,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
                   role="button"
                   v-if="isAdmin === 'true'"
                   id="deleteComment"
-                  aria-labelledby="supprimer commentaire"
+                  aria-label="supprimer commentaire"
                   @click="btnDeleteComment(comment.id)"
                 >
                   <i class="bi bi-trash-fill"></i>
@@ -394,5 +392,4 @@ export default {
 ::placeholder {
   font-size: 0.8rem;
 }
-
 </style>

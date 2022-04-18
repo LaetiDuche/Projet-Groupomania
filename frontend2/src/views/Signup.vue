@@ -52,7 +52,11 @@ Redirection sur la page login
         </div>
 
         <!-- Message d'erreur (email unique) -->
-        <span class="d-block small text-danger" aria-label="erreur email"></span>
+        <span
+          class="d-block small text-danger"
+          role="alert"
+          aria-label="erreur email"
+        ></span>
 
         <!-- Password -->
         <div class="form-group">
@@ -76,7 +80,7 @@ Redirection sur la page login
             class="btn btn-sm mt-2 btn-danger shadow-sm"
             type="submit"
             value="inscription"
-            aria-labelledby="s'inscrire"
+            aria-label="s'inscrire"
           >
             M'inscrire
           </button>
@@ -158,5 +162,4 @@ h3 {
     border-color: #fd2d01;
   }
 }
-
 </style>

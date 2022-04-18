@@ -54,8 +54,13 @@ Possibilité de supprimer son compte par l'utilisateur seulement
 
             <!-- Bouton uploader la photo -->
             <div @click="btnUpload" class="upload mt-auto">
-              <button type="button" class="btn btn-light rounded-1 p-0" aria-labelledby="upload photo">
+              <button
+                type="button"
+                class="btn btn-light rounded-1 p-0"
+                aria-label="upload photo"
+              >
                 <i class="bi bi-camera-fill"></i>
+                <label for="photo"></label>
                 <input
                   id="photo"
                   @change="photoSelected"
@@ -64,6 +69,7 @@ Possibilité de supprimer son compte par l'utilisateur seulement
                   type="file"
                   accept="image/*"
                   class="form-control"
+                  aria-label="upload photo"
                 />
               </button>
             </div>
@@ -72,20 +78,27 @@ Possibilité de supprimer son compte par l'utilisateur seulement
           <!-- Username -->
           <div class="d-flex mx-auto text-center">
             <div class="d-flex mx-auto mt-3 text-center">
-              <label class="d-flex" for="username"></label>
+              <label class="d-flex" for="username1"></label>
               <input
                 v-model="username"
-                id="username"
-                name="username"
+                id="username1"
+                name="username1"
                 type="text"
                 class="form-control text-center border-0 w-100 rounded-1 input"
                 placeholder="Username"
+                aria-label="username"
               />
 
               <!-- Bouton modifier le username -->
 
-              <div width="16" height="16" class="my-auto ms-auto" type="submit">
-                <label classe="label form-label" for="username">
+              <div
+                width="16"
+                height="16"
+                class="my-auto ms-auto"
+                type="submit"
+                aria-label="modifier username"
+              >
+                <label classe="label form-label" for="username2">
                   <i
                     class="bi bi-pen-fill new-username"
                     title="Modifier mon nom"
@@ -93,10 +106,11 @@ Possibilité de supprimer son compte par l'utilisateur seulement
                 </label>
                 <input
                   class="form-control d-none"
-                  id="username"
+                  id="username2"
                   ref="username"
                   type="text"
-                  name="username"
+                  name="username2"
+                  aria-label="modifier username"
                 />
               </div>
             </div>
@@ -110,21 +124,22 @@ Possibilité de supprimer son compte par l'utilisateur seulement
               @click.prevent="btnValid"
               type="submit"
               id="btnsubmit"
-              aria-labelledby="valider profil"
+              aria-label="valider profil"
             >
               Valider mon profil
             </button>
 
             <!-- Bouton supprimer mon compte -->
-            <button
-              class="btn btn-danger btn-sm shadow-sm mt-3"
-              @click.prevent="btnDelete"
-              type="submit"
-              aria-labelledby="supprimer compte"
-            >
-              Supprimer mon compte
-              <router-link to="/"></router-link>
-            </button>
+            <router-link to="/" name="retour accueil">
+              <button
+                class="btn btn-danger btn-sm shadow-sm mt-3"
+                @click.prevent="btnDelete"
+                type="submit"
+                aria-label="supprimer compte"
+              >
+                Supprimer mon compte
+              </button>
+            </router-link>
           </div>
         </form>
       </div>
@@ -295,7 +310,7 @@ p {
   transform: scale(3);
   opacity: 0;
 }
-.new-username{
+.new-username {
   cursor: pointer;
 }
 </style>

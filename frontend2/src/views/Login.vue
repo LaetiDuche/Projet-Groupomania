@@ -48,7 +48,11 @@ Création de la session utilisateur sécurisée et redirection sur le forum
         </div>
 
         <!-- Message d'erreur -->
-        <span class="d-block small text-danger" aria-label="erreur"></span>
+        <span
+          class="d-block small text-danger"
+          role="alert"
+          aria-label="erreur"
+        ></span>
 
         <!-- Bouton se connecter -->
         <div class="text-center">
@@ -56,7 +60,7 @@ Création de la session utilisateur sécurisée et redirection sur le forum
             class="btn btn-sm mt-2 btn-danger shadow-sm"
             type="submit"
             value="connexion"
-            aria-labelledby="se connecter"
+            aria-label="se connecter"
           >
             Me connecter
           </button>
@@ -140,5 +144,4 @@ h3 {
   border-color: #fd2d01;
   box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.5);
 }
-
 </style>
