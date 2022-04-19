@@ -43,7 +43,7 @@ Ajouter le nom et le mot de passe de votre base de donnée dans la partie develo
 
 Connecter-vous à Mysql , créer le nom de votre base de donnée.
 
-```CREATE DATABASE database_name;``` 
+```CREATE DATABASE database_name;```   
 ```USE database_name;```
 
 #### Dans Vscode :
