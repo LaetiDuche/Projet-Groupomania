@@ -7,7 +7,7 @@ Si utilisateur connecté => menu dropdown photo-user avec liens profil, forum, s
   <header class="sticky-top">
     <nav class="navbar d-flex py-0">
       <div class="logo mx-auto">
-        <nav class="nav-link py-0">
+        <nav class="nav-link py-0 px-0">
           <router-link to="/">
             <button class="btn">
               <img
@@ -35,7 +35,7 @@ Si utilisateur connecté => menu dropdown photo-user avec liens profil, forum, s
       <!-- Si l'utilisateur est connecté => menu photo-user -->
       <div class="dropdown dropstart m-auto" v-else >
         <button
-          class="dropdown-toggle btn"
+          class="dropdown-toggle btn pe-1"
           id="dropdownMenuLink"
           data-bs-toggle="dropdown"
           aria-expanded="false"
@@ -43,16 +43,16 @@ Si utilisateur connecté => menu dropdown photo-user avec liens profil, forum, s
         >
           <PhotoUser />
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <router-link to="/profil" class="dropdown-item">
+        <ul class="dropdown-menu show p-0 m-0" aria-labelledby="dropdownMenuLink">
+          <router-link to="/profil" class="dropdown-item ">
             <button class="btn" aria-labelledby="profil">Mon profil</button>
           </router-link>
 
-          <router-link to="/forum" class="dropdown-item">
+          <router-link to="/forum" class="dropdown-item ">
             <button class="btn" aria-labelledby="forum">Forum</button>
           </router-link>
 
-          <router-link to="/" class="dropdown-item">
+          <router-link to="/" class="dropdown-item ">
             <button class="btn" @click="logout" aria-labelledby="se deconnecter">Se déconnecter</button>
           </router-link>
         </ul>
@@ -121,6 +121,9 @@ a {
     color: black;
   }
 }
+.show{
+  border-radius: 20px;
+}
 .dropdown-item:hover{
   background-color: #ffffff;
 }
@@ -128,7 +131,7 @@ a {
 @media screen and (max-width: 440px) and (min-width: 320px) {
   .navbar {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     margin: 0;
   }
 }

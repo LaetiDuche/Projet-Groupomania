@@ -13,7 +13,6 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
         col-11 col-md-10 col-lg-6
         p-3
         my-3 my-sm-4
-        rounded-3
         shadow
       "
     >
@@ -42,7 +41,6 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
         mx-auto
         col-11 col-md-10 col-lg-6
         my-3 my-sm-4
-        rounded-3
         shadow
         pb-1
       "
@@ -139,7 +137,7 @@ AFFICHAGE DES GIFS ET PUBLICATION DES COMMENTAIRES
 
       <!-- Commentaires des autres utilisateurs -->
       <div
-        class="border comment-border mx-4 pt-2 mb-2"
+        class="border comment-border mx-4 pt-2 mb-3"
         v-for="comment in gifs.Comments"
         :key="comment.id"
       >
@@ -373,6 +371,9 @@ export default {
 </script>
 
 <style lang='scss'>
+.forum, .forum-publication{
+  border-radius: 20px;
+}
 .bi-trash-fill {
   margin-right: auto;
 }

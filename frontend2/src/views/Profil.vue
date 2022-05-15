@@ -13,13 +13,12 @@ Possibilité de supprimer son compte par l'utilisateur seulement
         my-3 my-sm-4
         col-11 col-md-10 col-lg-6
         p-3
-        rounded-3
         shadow
       "
     >
       <div class="mx-auto d-flex flex-column">
         <div>
-          <h3 class="fs-5 text-center">Mon profil</h3>
+          <h3 class="fs-5 my-2 text-center">Mon profil</h3>
         </div>
 
         <!-- Image user -->
@@ -56,7 +55,7 @@ Possibilité de supprimer son compte par l'utilisateur seulement
             <div @click="btnUpload" class="upload mt-auto">
               <button
                 type="button"
-                class="btn btn-light rounded-1 p-0"
+                class="btn btn-light btn-danger p-0"
                 aria-label="upload photo"
               >
                 <i class="bi bi-camera-fill"></i>
@@ -117,10 +116,10 @@ Possibilité de supprimer son compte par l'utilisateur seulement
           </div>
 
           <!-- Boutons -->
-          <div class="col-12 d-flex mt-3 justify-content-center flex-wrap">
+          <div class="col-12 d-flex my-3 justify-content-center flex-wrap">
             <!-- Bouton valider mon profil -->
             <button
-              class="btn btn-danger btn-sm shadow-sm mt-3 me-2"
+              class="btn bouton btn-sm  mt-3 me-2"
               @click.prevent="btnValid"
               type="submit"
               id="btnsubmit"
@@ -132,7 +131,7 @@ Possibilité de supprimer son compte par l'utilisateur seulement
             <!-- Bouton supprimer mon compte -->
             <router-link to="/" name="retour accueil">
               <button
-                class="btn btn-danger btn-sm shadow-sm mt-3"
+                class="btn bouton btn-sm mt-3"
                 @click.prevent="btnDelete"
                 type="submit"
                 aria-label="supprimer compte"
@@ -282,6 +281,7 @@ export default {
 }
 .profil-user {
   background-color: #ffff;
+  border-radius: 20px;
 }
 p {
   font-weight: bold;

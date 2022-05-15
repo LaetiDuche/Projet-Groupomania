@@ -14,13 +14,12 @@ Bouton publier
         col-11 col-md-10 col-lg-6
         my-3 my-sm-4
         p-3
-        rounded-3
         shadow
       "
     >
-      <h3 class="text-center mb-3 fs-5">Publier un nouveau message !</h3>
+      <h3 class="text-center my-3 fs-5">Publier un nouveau message !</h3>
 
-      <form class="row g-2" action="" method="post" aria-label="formulaire">
+      <form class="row g-2 mt-2" action="" method="post" aria-label="formulaire">
         <!-- Titre du message -->
         <div class="form-group">
           <label classe="form-label mb-0 " for="title">Titre du message</label>
@@ -38,7 +37,7 @@ Bouton publier
           <!-- Bouton Ajouter un gif -->
 
           <div class="upload">
-            <button class="btn-danger btn shadow-sm" aria-label="upload gif">
+            <button class="btn bouton  " aria-label="upload gif">
               <i class="fa fa-upload"></i>
               <label for="gif">Ajouter un gif</label>
               <input
@@ -65,7 +64,7 @@ Bouton publier
           <!-- Bouton Publier -->
           <div class="text-center">
             <button
-              class="btn btn-sm mt-2 btn-danger shadow-sm"
+              class="btn btn-sm mt-2 bouton "
               type="submit"
               value="creer"
               aria-label="publier"
@@ -152,12 +151,15 @@ export default {
 </script>
 
 <style lang='scss'>
-.btn-danger {
+.message{
+  border-radius: 20px;
+}
+.bouton {
   position: relative;
   padding: 11px 16px;
   font-size: 15px;
   line-height: 1.5;
-  border-radius: 3px;
+  border-radius: 25px;
   color: #fff;
   background-color: #fd2d01;
   border: 0;
@@ -165,7 +167,7 @@ export default {
   overflow: hidden;
 }
 
-.btn-danger input[type="file"] {
+.bouton input[type="file"] {
   cursor: pointer;
   position: absolute;
   left: 0%;
@@ -174,7 +176,7 @@ export default {
   opacity: 0;
 }
 
-.btn-danger:hover {
+.bouton:hover {
   outline-color: #fd2d01;
   border-style: solid;
   border-width: 1px;

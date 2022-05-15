@@ -14,7 +14,6 @@ Message de bienvenue sur le forum
         col-11 col-md-10 col-lg-6
         p-3
         my-3 my-sm-4
-        rounded
       "
     >
       <p class="pt-5 text-center mx-2 fw-bold fs-2">Bienvenue sur le forum !</p>
@@ -41,5 +40,6 @@ export default {
 .wellcome {
   background-color: #ffff;
   box-shadow: 2px 2px 12px lightgrey;
+  border-radius: 20px;
 }
 </style>

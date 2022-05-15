@@ -15,10 +15,9 @@ Redirection sur la page login
         mx-auto
         my-3 my-sm-4
         p-3
-        rounded
       "
     >
-      <h3 class="text-center mb-3 fs-5">S'inscrire sur le forum</h3>
+      <h3 class="text-center mt-3 mb-4 fs-5">S'inscrire sur le forum</h3>
 
       <form class="row g-2" @submit.prevent="SignUp" aria-label="formulaire">
         <!-- Username -->
@@ -77,7 +76,7 @@ Redirection sur la page login
         <!-- Bouton validation , redirection vers page login -->
         <div class="text-center">
           <button
-            class="btn btn-sm mt-2 btn-danger shadow-sm"
+            class="btn bouton btn-sm mt-3 mb-2"
             type="submit"
             value="inscription"
             aria-label="s'inscrire"
@@ -148,14 +147,20 @@ export default {
 .signup {
   background-color: #eeeeee;
 }
+.formulaire, .form-control{
+  border-radius: 20px;
+}
 h3 {
   font-weight: bold;
 }
-.btn-danger {
+.bouton {
   border-color: #fd2d01;
   background-color: #fd2d01;
   color: #ffffff;
   font-weight: bold;
+  border-radius: 2.1rem;
+  padding: 0.5rem 1rem;
+  box-shadow: 0px 7px 7px 0px rgba(51, 47, 23, 0.15);
   &:hover {
     background-color: #ffffff;
     color: #fd2d01;

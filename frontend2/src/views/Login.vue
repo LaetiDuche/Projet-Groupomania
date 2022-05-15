@@ -14,10 +14,9 @@ Création de la session utilisateur sécurisée et redirection sur le forum
         mx-auto
         my-3 my-sm-4
         p-3
-        rounded
       "
     >
-      <h3 class="text-center mb-3 fs-5">Se connecter</h3>
+      <h3 class="text-center mt-3 mb-4 fs-5">Se connecter</h3>
 
       <!-- Formulaire de connexion -->
       <form class="row g-2" @submit.prevent="btnLogin" aria-label="formulaire">
@@ -57,7 +56,7 @@ Création de la session utilisateur sécurisée et redirection sur le forum
         <!-- Bouton se connecter -->
         <div class="text-center">
           <button
-            class="btn btn-sm mt-2 btn-danger shadow-sm"
+            class="btn btn-sm my-2 bouton"
             type="submit"
             value="connexion"
             aria-label="se connecter"
@@ -130,6 +129,7 @@ export default {
 <style lang='scss'>
 .login {
   background-color: #eeeeee;
+  border-radius: 20px;
 }
 h3 {
   font-weight: bold;
