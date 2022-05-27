@@ -40,6 +40,6 @@ export default {
 .wellcome {
   background-color: #ffff;
   box-shadow: 2px 2px 12px lightgrey;
-  border-radius: 20px;
+  border-radius: 15px;
 }
 </style>

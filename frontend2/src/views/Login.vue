@@ -12,7 +12,7 @@ Création de la session utilisateur sécurisée et redirection sur le forum
         shadow
         col-11 col-md-10 col-lg-6
         mx-auto
-        my-3 my-sm-4
+        mt-5 
         p-3
       "
     >
@@ -129,7 +129,7 @@ export default {
 <style lang='scss'>
 .login {
   background-color: #eeeeee;
-  border-radius: 20px;
+  border-radius: 15px;
 }
 h3 {
   font-weight: bold;

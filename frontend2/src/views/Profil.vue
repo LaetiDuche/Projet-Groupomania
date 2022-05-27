@@ -10,7 +10,7 @@ Possibilité de supprimer son compte par l'utilisateur seulement
       class="
         profil-user
         mx-auto
-        my-3 my-sm-4
+        mt-5
         col-11 col-md-10 col-lg-6
         p-3
         shadow
@@ -281,7 +281,7 @@ export default {
 }
 .profil-user {
   background-color: #ffff;
-  border-radius: 20px;
+  border-radius: 15px;
 }
 p {
   font-weight: bold;

@@ -372,7 +372,7 @@ export default {
 
 <style lang='scss'>
 .forum, .forum-publication{
-  border-radius: 20px;
+  border-radius: 15px;
 }
 .bi-trash-fill {
   margin-right: auto;

@@ -12,7 +12,7 @@ Bouton publier
         formulaire
         mx-auto
         col-11 col-md-10 col-lg-6
-        my-3 my-sm-4
+        mt-5
         p-3
         shadow
       "
@@ -22,9 +22,9 @@ Bouton publier
       <form class="row g-2 mt-2" action="" method="post" aria-label="formulaire">
         <!-- Titre du message -->
         <div class="form-group">
-          <label classe="form-label mb-0 " for="title">Titre du message</label>
+          <label classe="form-label" for="title">Titre du message</label>
           <input
-            class="form-control"
+            class="form-control mt-2"
             id="title"
             v-model="title"
             type="text"
@@ -37,7 +37,7 @@ Bouton publier
           <!-- Bouton Ajouter un gif -->
 
           <div class="upload">
-            <button class="btn bouton  " aria-label="upload gif">
+            <button class="btn bouton" aria-label="upload gif">
               <i class="fa fa-upload"></i>
               <label for="gif">Ajouter un gif</label>
               <input
@@ -152,11 +152,10 @@ export default {
 
 <style lang='scss'>
 .message{
-  border-radius: 20px;
+  border-radius: 15px;
 }
 .bouton {
   position: relative;
-  padding: 11px 16px;
   font-size: 15px;
   line-height: 1.5;
   border-radius: 25px;
@@ -166,7 +165,6 @@ export default {
   transition: 0.2s;
   overflow: hidden;
 }
-
 .bouton input[type="file"] {
   cursor: pointer;
   position: absolute;

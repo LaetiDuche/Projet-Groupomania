@@ -13,7 +13,7 @@ Redirection sur la page login
         shadow
         col-11 col-md-10 col-lg-6
         mx-auto
-        my-3 my-sm-4
+        mt-5 
         p-3
       "
     >
@@ -147,7 +147,10 @@ export default {
 .signup {
   background-color: #eeeeee;
 }
-.formulaire, .form-control{
+.formulaire {
+  border-radius: 15px;
+}
+.form-control{
   border-radius: 20px;
 }
 h3 {
